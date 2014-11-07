@@ -6,7 +6,6 @@
 package kkdev.kksystem.plugin.leddisplay;
 
 import kkdev.kksystem.base.classes.PluginInfo;
-import kkdev.kksystem.base.classes.PluginMessage;
 import kkdev.kksystem.base.classes.PluginPin;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
 
