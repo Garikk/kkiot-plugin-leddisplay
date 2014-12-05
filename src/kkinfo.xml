@@ -10,6 +10,11 @@ and open the template in the editor.
   <PluginDescription>Basic LED Display plugin</PluginDescription>
   <PluginType>PLUGIN_OUTPUT</PluginType>
   <PluginVersion>0</PluginVersion>
-  <ConnectorClass>kkdev.kksystem.plugins.leddisplay.KKPlugin</ConnectorClass>
-  <Enabled>false</Enabled>
+  <ConnectorClass>kkdev.kksystem.plugin.leddisplay.KKPlugin</ConnectorClass>
+  <TransmitPins>
+      <String>KKPIN_O_SELFTEST</String>
+  </TransmitPins>
+  <ReceivePins>
+      <String>KKPIN_I_SELFTEST</String>
+  </ReceivePins>
 </kkdev.kksystem.base.classes.PluginInfo>

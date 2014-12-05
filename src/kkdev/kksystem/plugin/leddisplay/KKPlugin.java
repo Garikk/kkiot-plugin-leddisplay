@@ -7,6 +7,7 @@ package kkdev.kksystem.plugin.leddisplay;
 
 import kkdev.kksystem.base.classes.PluginInfo;
 import kkdev.kksystem.base.classes.PluginPin;
+import kkdev.kksystem.base.interfaces.IKKConnector;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
 
 /**     
@@ -14,7 +15,8 @@ import kkdev.kksystem.base.interfaces.IPluginKKConnector;
  * @author blinov_is
  */
 public class KKPlugin implements IPluginKKConnector   {
-
+    IKKConnector Connector;
+    
     @Override
     public PluginInfo GetPluginInfo() {
          return LEDPluginInfo.GetPluginInfo();
@@ -26,8 +28,8 @@ public class KKPlugin implements IPluginKKConnector   {
     }
 
     @Override
-    public void PluginInit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void PluginInit(IKKConnector BaseConnector) {
+       Connector=BaseConnector;
     }
 
     @Override
@@ -37,6 +39,11 @@ public class KKPlugin implements IPluginKKConnector   {
 
     @Override
     public void PluginStop() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PluginPin ExecutePin(PluginPin Pin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

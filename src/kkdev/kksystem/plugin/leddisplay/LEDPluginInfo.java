@@ -7,6 +7,7 @@ package kkdev.kksystem.plugin.leddisplay;
 
 import kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_TYPE;
 import kkdev.kksystem.base.classes.PluginInfo;
+import kkdev.kksystem.base.constants.PluginConsts;
 
 /**
  *
@@ -22,6 +23,29 @@ public final class LEDPluginInfo  {
         Ret.PluginType = KK_PLUGIN_TYPE.PLUGIN_INPUT;
         Ret.PluginVersion=1;
         Ret.Enabled=true;
+        Ret.ReceivePins = GetMyReceivePinInfo();
+        Ret.TransmitPins = GetMyTransmitPinInfo();
         return Ret;
     }
+    
+    
+    private static String[] GetMyReceivePinInfo(){
+    
+        String[] Ret=new String[1];
+    
+        //Ret[0]=PluginConsts.KK_PLUGIN_PIN_IN_DEF_SELFTEST;
+        Ret[0]=PluginConsts.KK_PLUGIN_PIN_S_DEF_SELFTEST;
+        
+        return Ret;
+    }
+    private static String[] GetMyTransmitPinInfo(){
+    
+        String[] Ret=new String[1];
+    
+       // Ret[0]=PluginConsts.KK_PLUGIN_PIN_IN_DEF_SELFTEST;
+        Ret[0]=PluginConsts.KK_PLUGIN_PIN_S_DEF_SELFTEST;
+        
+        return Ret;
+    }
+    
 }
