@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 
 <kkdev.kksystem.base.classes.PluginInfo>
+  <PluginUUID>7fbac0f7-6939-4380-bcb0-0ef8b1580fbf</PluginUUID>
   <PluginName>KKLEDDisplay</PluginName>
   <PluginDescription>Basic LED Display plugin</PluginDescription>
   <PluginType>PLUGIN_OUTPUT</PluginType>
