@@ -33,10 +33,10 @@ public final class LEDPluginInfo  {
     
         String[] Ret=new String[1];
     
-        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_TARGET_COMMAND;
-        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_TARGET_LED_COMMAND;
-        Ret[2]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_TARGET_LED_DATA;
-        Ret[3]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_TARGET_LED_RAW;
+        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_COMMAND;
+        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_COMMAND;
+        Ret[2]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
+        Ret[3]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_RAW;
         
         return Ret;
     }
@@ -44,8 +44,8 @@ public final class LEDPluginInfo  {
     
         String[] Ret=new String[1];
     
-        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_SOURCE_LED_DATA;
-        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_SOURCE_LED_RAW;
+        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
+        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_RAW;
         
         return Ret;
     }
