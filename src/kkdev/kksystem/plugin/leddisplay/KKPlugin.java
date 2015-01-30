@@ -7,7 +7,7 @@ package kkdev.kksystem.plugin.leddisplay;
 
 import kkdev.kksystem.base.classes.PluginInfo;
 import kkdev.kksystem.base.classes.PluginMessage;
-import kkdev.kksystem.base.interfaces.IKKConnector;
+import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
 
 /**     
@@ -15,7 +15,7 @@ import kkdev.kksystem.base.interfaces.IPluginKKConnector;
  * @author blinov_is
  */
 public class KKPlugin implements IPluginKKConnector   {
-    IKKConnector Connector;
+    IPluginBaseInterface Connector;
   
     public PluginInfo GetPluginInfo() {
          return LEDPluginInfo.GetPluginInfo();
@@ -24,7 +24,7 @@ public class KKPlugin implements IPluginKKConnector   {
     
 
     @Override
-    public void PluginInit(IKKConnector BaseConnector) {
+    public void PluginInit(IPluginBaseInterface BaseConnector) {
        Connector=BaseConnector;
     }
 
