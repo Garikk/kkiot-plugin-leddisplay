@@ -16,7 +16,7 @@ import kkdev.kksystem.plugin.leddisplay.IDisplayConnector;
 public class Display2Lines implements IDisplayConnector{
 
     @Override
-    public void SetGamma(int Gamma) {
+    public void SetContrast(int Contrast) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -46,7 +46,6 @@ public class Display2Lines implements IDisplayConnector{
         return GetMyInfo(); 
     }
     
-    
     private DisplayInfo GetMyInfo()
     {
         DisplayInfo Ret=new DisplayInfo();
@@ -57,5 +56,8 @@ public class Display2Lines implements IDisplayConnector{
         Ret.Text_Height_chars=2;
         Ret.Graphic_Height_px=0;
         Ret.Graphic_Width_px=0;
+        
+        return Ret;
     }
+
 }

@@ -12,7 +12,7 @@ import kkdev.kksystem.base.classes.led.DisplayInfo;
  * @author blinov_is
  */
 public interface IDisplayConnector {
-    void SetGamma(int Gamma);
+    void SetContrast(int Contrast);
     void SetLight(int Light);
     void SetPower(boolean Power);
     //
