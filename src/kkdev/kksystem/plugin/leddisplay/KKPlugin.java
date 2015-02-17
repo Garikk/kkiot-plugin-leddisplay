@@ -14,11 +14,12 @@ import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
 import kkdev.kksystem.plugin.leddisplay.manager.LedDisplayManager;
 
+
 /**     
  *
  * @author blinov_is
  */
-public class KKPlugin implements IPluginKKConnector   {
+public final class KKPlugin implements IPluginKKConnector   {
     IPluginBaseInterface Connector;
     
     LedDisplayManager LDisplay;
@@ -31,6 +32,7 @@ public class KKPlugin implements IPluginKKConnector   {
         DisplayID=java.util.UUID.randomUUID().toString();
     }
     
+    @Override
     public PluginInfo GetPluginInfo() {
          return LEDPluginInfo.GetPluginInfo();
     }
@@ -38,7 +40,7 @@ public class KKPlugin implements IPluginKKConnector   {
     @Override
     public void PluginInit(IPluginBaseInterface BaseConnector) {
        Connector=BaseConnector;
-       LDisplay=new LedDisplayManager();
+       LDisplay=new LedDisplayManager(this);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class KKPlugin implements IPluginKKConnector   {
    
      public void SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA Command, PinLedData Data)
     {
-         PluginMessage Msg=new PluginMessage();
+        PluginMessage Msg=new PluginMessage();
         Msg.SenderUID=MyUID;
         Msg.PinName=KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
         //

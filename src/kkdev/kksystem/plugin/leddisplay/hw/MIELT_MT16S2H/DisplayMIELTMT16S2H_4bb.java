@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.leddisplay.display_text2lines;
+package kkdev.kksystem.plugin.leddisplay.hw.MIELT_MT16S2H;
 
 import kkdev.kksystem.base.classes.led.DisplayInfo;
 import kkdev.kksystem.base.classes.led.DisplayInfo.UIDisplayType;
@@ -13,7 +13,7 @@ import kkdev.kksystem.plugin.leddisplay.IDisplayConnector;
  *
  * @author blinov_is
  */
-public class Display2Lines implements IDisplayConnector{
+public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
 
     @Override
     public void SetContrast(int Contrast) {
