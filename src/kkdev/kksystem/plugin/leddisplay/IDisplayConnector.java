@@ -5,7 +5,7 @@
  */
 package kkdev.kksystem.plugin.leddisplay;
 
-import kkdev.kksystem.base.classes.led.DisplayInfo;
+import kkdev.kksystem.base.classes.display.DisplayInfo;
 
 /**
  *

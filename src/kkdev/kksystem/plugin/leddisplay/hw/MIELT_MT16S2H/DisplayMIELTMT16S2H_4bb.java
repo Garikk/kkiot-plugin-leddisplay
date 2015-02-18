@@ -5,8 +5,8 @@
  */
 package kkdev.kksystem.plugin.leddisplay.hw.MIELT_MT16S2H;
 
-import kkdev.kksystem.base.classes.led.DisplayInfo;
-import kkdev.kksystem.base.classes.led.DisplayInfo.UIDisplayType;
+import kkdev.kksystem.base.classes.display.DisplayInfo;
+import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
 import kkdev.kksystem.plugin.leddisplay.IDisplayConnector;
 
 /**

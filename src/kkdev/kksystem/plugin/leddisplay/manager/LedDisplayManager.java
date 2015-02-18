@@ -6,14 +6,13 @@
 package kkdev.kksystem.plugin.leddisplay.manager;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import kkdev.kksystem.base.classes.PluginMessage;
-import kkdev.kksystem.base.classes.led.DisplayConstants;
-import kkdev.kksystem.base.classes.led.DisplayInfo;
-import kkdev.kksystem.base.classes.led.PinLedCommand;
-import kkdev.kksystem.base.classes.led.PinLedData;
+import kkdev.kksystem.base.classes.display.DisplayConstants;
+import kkdev.kksystem.base.classes.display.DisplayInfo;
+import kkdev.kksystem.base.classes.display.PinLedCommand;
+import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.leddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.leddisplay.KKPlugin;
@@ -21,6 +20,9 @@ import kkdev.kksystem.plugin.leddisplay.KKPlugin;
 /**
  *
  * @author blinov_is
+ * 
+ * in now, create and manage only one page "Main", and only one hw display
+ * 
  */
 public class LedDisplayManager {
     
@@ -41,7 +43,7 @@ public class LedDisplayManager {
         Displays=kk_defaultConfig.GetDefConfig();
         DefaultDisplay="MAIN";
         //
-        AddDisplayPage("MAIN","MAIN");
+        AddDisplayPage("MAIN","MAIN"); //only one hardcoded page by now
     }
     
     private void AddDisplayPage(String PageID, String DisplayID)
@@ -62,7 +64,11 @@ public class LedDisplayManager {
         if (DV.Enabled & !DV.ErrorState)
             DV.SendText(Text);
     }
-    
+     private void SendTextLineToPageArr(String PageID, String[] Text)
+    {
+        for (String TL:Text)
+            SendTextLineToPage(PageID,TL);
+    }
     public void RecivePin(PluginMessage Msg)
     {
         switch (Msg.PinName)
@@ -84,6 +90,10 @@ public class LedDisplayManager {
     {
         switch (Command.Command)
         {
+            case DISPLAY_KKSYS_PAGE_INIT:
+                break;
+            case DISPLAY_KKSYS_PAGE_ACTIVATE:
+                break;
             case DISPLAY_KKSYS_GETINFO:
                 AnswerDisplayInfo();
                 break;
@@ -95,9 +105,9 @@ public class LedDisplayManager {
         
         switch (Data.DataType)
         {
-//            case DISPLAY_KKSYS_DISPLAY_STATE:
-                
-  //              break;
+            case DISPLAY_KKSYS_TEXT:
+                SendTextLineToPageArr(Data.TargetPage,Data.DisplayText);
+                break;
         }
     }
     //////////////////

@@ -7,8 +7,8 @@ package kkdev.kksystem.plugin.leddisplay;
 
 import kkdev.kksystem.base.classes.PluginInfo;
 import kkdev.kksystem.base.classes.PluginMessage;
-import kkdev.kksystem.base.classes.led.DisplayConstants;
-import kkdev.kksystem.base.classes.led.PinLedData;
+import kkdev.kksystem.base.classes.display.DisplayConstants;
+import kkdev.kksystem.base.classes.display.PinLedData;
 import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
