@@ -26,7 +26,7 @@ public final class KKPlugin implements IPluginKKConnector   {
     String MyUID;
     String DisplayID;
     
-    KKPlugin()
+    public KKPlugin()
     {
         MyUID=GetPluginInfo().PluginUUID;
         DisplayID=java.util.UUID.randomUUID().toString();
