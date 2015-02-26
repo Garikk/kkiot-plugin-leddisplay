@@ -18,6 +18,8 @@ public interface IDisplayConnector {
     //
     void DisplayText(String Text);
     void DisplayTextUpdate(String Text, int Column, int Line);
+    //    
+    void InitDisplayHW();
     //
     DisplayInfo GetDisplayInfo();
             

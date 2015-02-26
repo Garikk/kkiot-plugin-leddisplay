@@ -40,7 +40,7 @@ public final class KKPlugin implements IPluginKKConnector   {
     @Override
     public void PluginInit(IPluginBaseInterface BaseConnector) {
        Connector=BaseConnector;
-       LDisplay=new LedDisplayManager(this);
+       LedDisplayManager.Init(this);
     }
 
     @Override

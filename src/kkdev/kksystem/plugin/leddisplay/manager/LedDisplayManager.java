@@ -6,6 +6,7 @@
 package kkdev.kksystem.plugin.leddisplay.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import kkdev.kksystem.base.classes.PluginMessage;
@@ -16,6 +17,7 @@ import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.leddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.leddisplay.KKPlugin;
+import kkdev.kksystem.plugin.leddisplay.hw.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
 
 /**
  *
@@ -24,52 +26,84 @@ import kkdev.kksystem.plugin.leddisplay.KKPlugin;
  * in now, create and manage only one page "Main", and only one hw display
  * 
  */
-public class LedDisplayManager {
+public abstract class LedDisplayManager {
     
-    KKPlugin Connector;
-    String DefaultDisplay;
-    Map<String,KKDisplayView> Displays;
-    Map<String, List<String>> Pages;
+    static KKPlugin Connector;
+    static String DefaultDisplay;
+    static Map<String,KKDisplayView> Displays;
+    static Map<String, List<String>> Pages;
         
-    public LedDisplayManager(KKPlugin Conn){
+    public static void Init(KKPlugin Conn){
         Connector=Conn;
         ConfigAndHWInit();
     }
     
-    private void ConfigAndHWInit()
+    private static void ConfigAndHWInit()
     {
         //TODO: create config loader, detect and test hardware
         // for debug
-        Displays=kk_defaultConfig.GetDefConfig();
+        
+        
         DefaultDisplay="MAIN";
         //
-        AddDisplayPage("MAIN","MAIN"); //only one hardcoded page by now
+       
+        AddDisplayToPage("MAIN",InitAndConnectHWDisplay("MAIN")); //only one hardcoded page by now
     }
     
-    private void AddDisplayPage(String PageID, String DisplayID)
+    private static void AddDisplayToPage(String PageID, KKDisplayView Display)
     {
         if (!Pages.containsKey(PageID))
             Pages.put(PageID, new ArrayList<>());
         
-        if (!Pages.get(PageID).contains(DisplayID))
-            Pages.get(PageID).add(DisplayID);
+        if (!Pages.get(PageID).contains(Display.DisplayID))
+            Pages.get(PageID).add(Display.DisplayID);
     }
-    private void SendTextLineToPage(String PageID, String Text)
+    
+    //TODO: Made connect displays from configuration scripts, now is hardcoded
+    private static KKDisplayView InitAndConnectHWDisplay(String DisplayID)
+    {
+        //
+     KKDisplayView Ret=new KKDisplayView(new DisplayMIELTMT16S2H_4bb());
+     Ret.Enabled=true;
+     Ret.PowerOn();
+     //
+     if (Displays==null)
+     {
+         Displays=new HashMap<>();
+         Displays.put(DisplayID, Ret);
+     }
+     else
+     {
+         if (!Displays.containsKey(DisplayID))
+             Displays.put(DisplayID, Ret);
+         else
+             System.out.println("Wrong dipsplay configuration!");
+     }
+     return Ret;
+    }
+    private static void SendTextLineToPage(String PageID, String Text)
     {
         if (!Pages.containsKey(PageID))
             PageID="MAIN";
         //
-        KKDisplayView DV=Displays.get(Pages.get(PageID));
-        //
-        if (DV.Enabled & !DV.ErrorState)
-            DV.SendText(Text);
+        List<String> DisplayToView;
+        DisplayToView=Pages.get(PageID);
+        
+        KKDisplayView DV;
+        for (String D:DisplayToView)
+        {
+            DV=Displays.get(D);
+            if (DV!=null)
+                if (DV.Enabled & !DV.ErrorState)
+                    DV.SendText(Text);
+        }
     }
-     private void SendTextLineToPageArr(String PageID, String[] Text)
+     private static void SendTextLineToPageArr(String PageID, String[] Text)
     {
         for (String TL:Text)
             SendTextLineToPage(PageID,TL);
     }
-    public void RecivePin(PluginMessage Msg)
+    public static void RecivePin(PluginMessage Msg)
     {
         switch (Msg.PinName)
         { case PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_COMMAND:
@@ -86,7 +120,7 @@ public class LedDisplayManager {
     }
     ///////////////////
     ///////////////////
-    public void ProcessCommand(PinLedCommand Command)
+    public static void ProcessCommand(PinLedCommand Command)
     {
         switch (Command.Command)
         {
@@ -100,7 +134,7 @@ public class LedDisplayManager {
         
         }
     }
-    public void ProcessData(PinLedData Data)
+    public static void ProcessData(PinLedData Data)
     {
         
         switch (Data.DataType)
@@ -112,7 +146,7 @@ public class LedDisplayManager {
     }
     //////////////////
     ///////////////////
-    private void AnswerDisplayInfo()
+    private static void AnswerDisplayInfo()
     {
         PinLedData Ret;
         DisplayInfo[] DI = new DisplayInfo[Displays.values().size()];

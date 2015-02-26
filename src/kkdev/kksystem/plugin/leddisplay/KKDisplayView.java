@@ -11,14 +11,31 @@ package kkdev.kksystem.plugin.leddisplay;
  */
 public class KKDisplayView {
    public IDisplayConnector Connector;
-   public String DipslayID;
-   public KKDisplayTypeHW DisplayType;
+   public String DisplayID;
    public boolean Enabled;
    public boolean ErrorState;
    
+   public KKDisplayView(IDisplayConnector InitConn)
+   {
+       Connector=InitConn;
+       //
+       DisplayID=Connector.GetDisplayInfo().DisplayID;
+   }
+   public void PowerOn()
+   {
+       Enabled=true;
+       Connector.SetPower(Enabled);
+               
+   }
+   public void PowerOff()
+   {
+       Enabled=false;
+       Connector.SetPower(Enabled);
+   }
    public void SendText(String Text)
    {
        Connector.DisplayText(Text);
    
    }
+   
 }

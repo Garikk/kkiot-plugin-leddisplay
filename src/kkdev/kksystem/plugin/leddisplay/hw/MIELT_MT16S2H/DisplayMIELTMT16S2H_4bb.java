@@ -27,7 +27,7 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
 
     @Override
     public void SetPower(boolean Power) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       System.out.println("ME POWER " + Power);
     }
 
     @Override
@@ -58,6 +58,11 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
         Ret.Graphic_Width_px=0;
         
         return Ret;
+    }
+
+    @Override
+    public void InitDisplayHW() {
+
     }
 
 }
