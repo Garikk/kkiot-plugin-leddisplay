@@ -42,7 +42,7 @@ public abstract class LedDisplayManager {
     {
         //TODO: create config loader, detect and test hardware
         // for debug
-        
+        Pages=new HashMap<>();
         
         DefaultDisplay="MAIN";
         //
@@ -66,6 +66,7 @@ public abstract class LedDisplayManager {
      KKDisplayView Ret=new KKDisplayView(new DisplayMIELTMT16S2H_4bb());
      Ret.Enabled=true;
      Ret.PowerOn();
+     Ret.DisplayID=DisplayID;
      //
      if (Displays==null)
      {
@@ -103,24 +104,25 @@ public abstract class LedDisplayManager {
         for (String TL:Text)
             SendTextLineToPage(PageID,TL);
     }
-    public static void RecivePin(PluginMessage Msg)
+    public static void ReceivePin(String PinName, Object PinData)
     {
-        switch (Msg.PinName)
+        
+        switch (PinName)
         { case PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_COMMAND:
                 PinLedCommand CMD;
-                CMD=(PinLedCommand)Msg.PinData;
+                CMD=(PinLedCommand)PinData;
                 ProcessCommand(CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA:
                 PinLedData DAT;
-                DAT=(PinLedData)Msg.PinData;
+                DAT=(PinLedData)PinData;
                 ProcessData(DAT);
                 break;
         }
     }
     ///////////////////
     ///////////////////
-    public static void ProcessCommand(PinLedCommand Command)
+    private  static void ProcessCommand(PinLedCommand Command)
     {
         switch (Command.Command)
         {
@@ -134,7 +136,7 @@ public abstract class LedDisplayManager {
         
         }
     }
-    public static void ProcessData(PinLedData Data)
+    private  static void ProcessData(PinLedData Data)
     {
         
         switch (Data.DataType)

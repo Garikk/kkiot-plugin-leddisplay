@@ -20,6 +20,7 @@ public class KKDisplayView {
        Connector=InitConn;
        //
        DisplayID=Connector.GetDisplayInfo().DisplayID;
+       Connector.InitDisplayHW();
    }
    public void PowerOn()
    {

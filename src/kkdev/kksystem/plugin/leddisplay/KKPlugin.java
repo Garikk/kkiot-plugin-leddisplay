@@ -55,6 +55,8 @@ public final class KKPlugin implements IPluginKKConnector   {
 
     @Override
     public PluginMessage ExecutePin(PluginMessage Pin) {
+
+        LedDisplayManager.ReceivePin(Pin.PinName,Pin.PinData);
         return null;
     }
 

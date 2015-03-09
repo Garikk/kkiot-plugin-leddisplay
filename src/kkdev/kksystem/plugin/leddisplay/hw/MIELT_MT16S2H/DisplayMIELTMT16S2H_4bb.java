@@ -8,13 +8,56 @@ package kkdev.kksystem.plugin.leddisplay.hw.MIELT_MT16S2H;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
 import kkdev.kksystem.plugin.leddisplay.IDisplayConnector;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPin;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinDirection;
+import com.pi4j.io.gpio.PinMode;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.trigger.GpioCallbackTrigger;
+import com.pi4j.io.gpio.trigger.GpioPulseStateTrigger;
+import com.pi4j.io.gpio.trigger.GpioSetStateTrigger;
+import com.pi4j.io.gpio.trigger.GpioSyncStateTrigger;
+import com.pi4j.io.gpio.event.GpioPinListener;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import com.pi4j.io.gpio.event.PinEventType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author blinov_is
  */
 public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
+   
+    final GpioController gpio = GpioFactory.getInstance();
+       GpioPinDigitalOutput A0 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15,   // PIN NUMBER
+                                                               "A0 Addr",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
 
+        GpioPinDigitalOutput RW = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_16,   // PIN NUMBER
+                                                               "RW Selector",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
+
+        GpioPinDigitalOutput DD4 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05,   // PIN NUMBER
+                                                               "DD4",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
+        GpioPinDigitalOutput DD5 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06,   // PIN NUMBER
+                                                               "DD5",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
+        GpioPinDigitalOutput DD6 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10,   // PIN NUMBER
+                                                               "DD6",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
+        GpioPinDigitalOutput DD7 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11,   // PIN NUMBER
+                                                               "DD7",           // PIN FRIENDLY NAME (optional)
+                                                               PinState.LOW);      // PIN STARTUP STATE (optional)
+   
     @Override
     public void SetContrast(int Contrast) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -62,7 +105,120 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
 
     @Override
     public void InitDisplayHW() {
-
+     
+        try {
+            //Try init
+            //Thread.sleep(20);
+            
+            //Set BUS
+            Thread.sleep(200);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.HIGH);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Set BUS
+             Thread.sleep(400);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.HIGH);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Set BUS
+            Thread.sleep(400);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.HIGH);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Set BUS
+            Thread.sleep(400);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Set Params
+            //Step 1
+            Thread.sleep(400);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Step2
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.HIGH);
+            //Step3
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Step4
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.HIGH);
+            //Step5
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Step6
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.HIGH);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Step7
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.LOW);
+            DD7.setState(PinState.LOW);
+            //Step8
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.LOW);
+            DD5.setState(PinState.HIGH);
+            DD6.setState(PinState.HIGH);
+            DD7.setState(PinState.LOW);
+            
+            Thread.sleep(400);
+            A0.setState(PinState.LOW);
+            RW.setState(PinState.LOW);
+            DD4.setState(PinState.HIGH);
+            DD5.setState(PinState.LOW);
+            DD6.setState(PinState.HIGH);
+            DD7.setState(PinState.HIGH);
+            
+            
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
+    
+    private void WriteText(String TXT)
 
+    {
+    }
 }
