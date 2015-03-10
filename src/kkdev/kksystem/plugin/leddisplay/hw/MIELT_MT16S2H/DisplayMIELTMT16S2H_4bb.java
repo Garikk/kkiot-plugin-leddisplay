@@ -21,7 +21,14 @@ import java.util.logging.Logger;
  * @author blinov_is
  */
 public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
-   
+   final int B_0 = 0;
+   final int B_1_A0 = 1;
+   final int B_2_RW = 2;
+   final int B_3_D4 = 4;
+   final int B_4_D5 = 8;
+   final int B_5_D6 = 16;
+   final int B_6_D7 = 32;
+    
     final GpioController gpio = GpioFactory.getInstance();
        GpioPinDigitalOutput A0 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15,   // PIN NUMBER
                                                                "A0 Addr",           // PIN FRIENDLY NAME (optional)
@@ -95,105 +102,118 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
         try {
             //Try init
             //Thread.sleep(20);
-            
+ 
             //Set BUS
             Thread.sleep(200);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.HIGH);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_3_D4 | B_4_D5);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.HIGH);
+            //DD5.setState(PinState.HIGH);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Set BUS
              Thread.sleep(400);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.HIGH);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_3_D4 | B_4_D5);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.HIGH);
+            //DD5.setState(PinState.HIGH);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Set BUS
             Thread.sleep(400);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.HIGH);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_3_D4 | B_4_D5);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.HIGH);
+            //DD5.setState(PinState.HIGH);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Set BUS
             Thread.sleep(400);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_4_D5);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.LOW);
+            //DD5.setState(PinState.HIGH);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Set Params
             //Step 1
             Thread.sleep(400);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_4_D5);
+            ////A0.setState(PinState.LOW);
+           // RW.setState(PinState.LOW);
+            //DD4.setState(PinState.LOW);
+           // DD5.setState(PinState.HIGH);
+           //DD6.setState(PinState.LOW);
+           // DD7.setState(PinState.LOW);
             //Step2
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.HIGH);
+            SetBusState(B_6_D7);
+           // A0.setState(PinState.LOW);
+           // RW.setState(PinState.LOW);
+           // DD4.setState(PinState.LOW);
+           // DD5.setState(PinState.LOW);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.HIGH);
             //Step3
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_0);
+           // A0.setState(PinState.LOW);
+           // RW.setState(PinState.LOW);
+            //DD4.setState(PinState.LOW);
+           // DD5.setState(PinState.LOW);
+           // DD6.setState(PinState.LOW);
+           // DD7.setState(PinState.LOW);
             //Step4
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.HIGH);
+            SetBusState(B_6_D7);
+           // A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+           // DD4.setState(PinState.LOW);
+            //DD5.setState(PinState.LOW);
+           // DD6.setState(PinState.LOW);
+           // DD7.setState(PinState.HIGH);
             //Step5
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_0);
+           // A0.setState(PinState.LOW);
+           // RW.setState(PinState.LOW);
+           // DD4.setState(PinState.LOW);
+           // DD5.setState(PinState.LOW);
+           // DD6.setState(PinState.LOW);
+           // DD7.setState(PinState.LOW);
             //Step6
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.HIGH);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_3_D4);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.HIGH);
+            //DD5.setState(PinState.LOW);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Step7
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.LOW);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_0);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.LOW);
+            //DD5.setState(PinState.LOW);
+            //DD6.setState(PinState.LOW);
+            //DD7.setState(PinState.LOW);
             //Step8
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.LOW);
-            DD5.setState(PinState.HIGH);
-            DD6.setState(PinState.HIGH);
-            DD7.setState(PinState.LOW);
+            SetBusState(B_4_D5 | B_5_D6);
+            //A0.setState(PinState.LOW);
+            //RW.setState(PinState.LOW);
+            //DD4.setState(PinState.LOW);
+            //DD5.setState(PinState.HIGH);
+            //DD6.setState(PinState.HIGH);
+            //DD7.setState(PinState.LOW);
             
             Thread.sleep(400);
-            A0.setState(PinState.LOW);
-            RW.setState(PinState.LOW);
-            DD4.setState(PinState.HIGH);
-            DD5.setState(PinState.LOW);
-            DD6.setState(PinState.HIGH);
-            DD7.setState(PinState.HIGH);
+            SetBusState(B_3_D4 | B_5_D6 | B_6_D7);
+           // A0.setState(PinState.LOW);
+           // RW.setState(PinState.LOW);
+           // DD4.setState(PinState.HIGH);
+           // DD5.setState(PinState.LOW);
+            //DD6.setState(PinState.HIGH);
+           // DD7.setState(PinState.HIGH);
             
             
             
@@ -202,6 +222,17 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
         }
       
     }
+    
+    private void SetBusState(int value)
+    {
+      A0.setState((value & B_1_A0)==B_1_A0);
+      A0.setState((value & B_2_RW)==B_2_RW);
+      A0.setState((value & B_3_D4)==B_3_D4);
+      A0.setState((value & B_4_D5)==B_4_D5);
+      A0.setState((value & B_5_D6)==B_5_D6);
+      A0.setState((value & B_6_D7)==B_6_D7);
+    }
+    
     
     private void WriteText(String TXT)
 
