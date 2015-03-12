@@ -13,6 +13,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +29,7 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
    final int B_4_D5 = 8;
    final int B_5_D6 = 16;
    final int B_6_D7 = 32;
-    
+
     final GpioController gpio = GpioFactory.getInstance();
        GpioPinDigitalOutput A0 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15,   // PIN NUMBER
                                                                "A0 Addr",           // PIN FRIENDLY NAME (optional)
@@ -50,6 +51,9 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
         GpioPinDigitalOutput DD7 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11,   // PIN NUMBER
                                                                "DD7",           // PIN FRIENDLY NAME (optional)
                                                                PinState.LOW);      // PIN STARTUP STATE (optional)
+   
+   
+   
    
     @Override
     public void SetContrast(int Contrast) {
@@ -214,9 +218,11 @@ public class DisplayMIELTMT16S2H_4bb implements IDisplayConnector{
            // DD5.setState(PinState.LOW);
             //DD6.setState(PinState.HIGH);
            // DD7.setState(PinState.HIGH);
-            
-            
-            
+            Thread.sleep(400);
+            SetBusState(B_4_D5 | B_3_D4 | B_6_D7);
+            Thread.sleep(400);
+            SetBusState(B_1_A0 | B_4_D5 | B_3_D4 );
+            Thread.sleep(10000);
         } catch (InterruptedException ex) {
             Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
         }
