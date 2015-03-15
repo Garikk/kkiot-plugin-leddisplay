@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.leddisplay.manager;
+package kkdev.kksystem.plugin.lcddisplay.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +15,9 @@ import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
-import kkdev.kksystem.plugin.leddisplay.KKDisplayView;
-import kkdev.kksystem.plugin.leddisplay.KKPlugin;
-import kkdev.kksystem.plugin.leddisplay.hw.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
+import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
+import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
+import kkdev.kksystem.plugin.lcddisplay.hw.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
 
 /**
  *
@@ -108,12 +108,12 @@ public abstract class LedDisplayManager {
     {
         
         switch (PinName)
-        { case PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_COMMAND:
+        { case PluginConsts.KK_PLUGIN_PIN_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD=(PinLedCommand)PinData;
                 ProcessCommand(CMD);
                 break;
-            case PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA:
+            case PluginConsts.KK_PLUGIN_PIN_LED_DATA:
                 PinLedData DAT;
                 DAT=(PinLedData)PinData;
                 ProcessData(DAT);

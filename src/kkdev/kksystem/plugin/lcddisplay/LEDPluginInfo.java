@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.leddisplay;
+package kkdev.kksystem.plugin.lcddisplay;
 
 import kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_TYPE;
 import kkdev.kksystem.base.classes.PluginInfo;
@@ -34,10 +34,10 @@ public final class LEDPluginInfo  {
     
         String[] Ret=new String[4];
     
-        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_COMMAND;
-        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_COMMAND;
-        Ret[2]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
-        Ret[3]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_RAW;
+        Ret[0]=PluginConsts.KK_PLUGIN_PIN_COMMAND;
+        Ret[1]=PluginConsts.KK_PLUGIN_PIN_LED_COMMAND;
+        Ret[2]=PluginConsts.KK_PLUGIN_PIN_LED_DATA;
+        Ret[3]=PluginConsts.KK_PLUGIN_PIN_LED_RAW;
         
         return Ret;
     }
@@ -45,8 +45,8 @@ public final class LEDPluginInfo  {
     
         String[] Ret=new String[2];
     
-        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
-        Ret[1]=PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_RAW;
+        Ret[0]=PluginConsts.KK_PLUGIN_PIN_LED_DATA;
+        Ret[1]=PluginConsts.KK_PLUGIN_PIN_LED_RAW;
         
         return Ret;
     }

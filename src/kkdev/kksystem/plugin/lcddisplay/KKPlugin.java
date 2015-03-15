@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.leddisplay;
+package kkdev.kksystem.plugin.lcddisplay;
 
 import kkdev.kksystem.base.classes.PluginInfo;
 import kkdev.kksystem.base.classes.PluginMessage;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.PinLedData;
-import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
+import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_PIN_LED_DATA;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.base.interfaces.IPluginKKConnector;
-import kkdev.kksystem.plugin.leddisplay.manager.LedDisplayManager;
+import kkdev.kksystem.plugin.lcddisplay.manager.LedDisplayManager;
 
 
 /**     
@@ -65,7 +65,7 @@ public final class KKPlugin implements IPluginKKConnector   {
     {
         PluginMessage Msg=new PluginMessage();
         Msg.SenderUID=MyUID;
-        Msg.PinName=KK_PLUGIN_BASE_PLUGIN_DEF_PIN_LED_DATA;
+        Msg.PinName=KK_PLUGIN_PIN_LED_DATA;
         //
         Msg.PinData=Data;
         //
