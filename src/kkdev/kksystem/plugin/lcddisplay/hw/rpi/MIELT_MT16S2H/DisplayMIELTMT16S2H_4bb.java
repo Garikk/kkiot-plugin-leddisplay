@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.hw.MIELT_MT16S2H;
+package kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H;
 
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
-import kkdev.kksystem.plugin.lcddisplay.IDisplayConnector;
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.RaspiPin;
+import kkdev.kksystem.plugin.lcddisplay.IDisplayConnectorHW;
+//import com.pi4j.io.gpio.GpioController;
+//import com.pi4j.io.gpio.GpioFactory;
+//import com.pi4j.io.gpio.RaspiPin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author blinov_is
  */
-public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector  {
+public class DisplayMIELTMT16S2H_4bb extends Thread {/* implements IDisplayConnectorHW  {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
@@ -29,25 +29,25 @@ public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector
     GpioLcdDisplay lcd;
     final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
-
+*/
     @Override
     public void run() {
         
-       InitDisplayHW();
-       while (!CmdStopDisplay)
-       {
-           try {
-               Thread.sleep(5000);
-           } catch (InterruptedException ex) {
-               Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }
-       lcd.clear();
-       // super.run(); //To change body of generated methods, choose Tools | Templates.
+     //  InitDisplayHW();
+     //  while (!CmdStopDisplay)
+     //  {
+      //     try {
+       //        Thread.sleep(5000);
+     //      } catch (InterruptedException ex) {
+      //         Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
+      //     }
+      // }
+       //lcd.clear();
+        super.run(); //To change body of generated methods, choose Tools | Templates.
     }   
 
     
-    
+    /*
     @Override
     public void SetContrast(int Contrast) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -133,5 +133,6 @@ public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector
 
     }
 
-  
+*/  
 }
+

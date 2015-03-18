@@ -11,7 +11,7 @@ import kkdev.kksystem.base.classes.display.DisplayInfo;
  *
  * @author blinov_is
  */
-public interface IDisplayConnector {
+public interface IDisplayConnectorHW {
     void SetContrast(int Contrast);
     void SetLight(int Light);
     void SetPower(boolean Power);

@@ -17,7 +17,8 @@ import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
-import kkdev.kksystem.plugin.lcddisplay.hw.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
+import kkdev.kksystem.plugin.lcddisplay.configuration.SettingsManager;
+import kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
 
 /**
  *
@@ -35,6 +36,8 @@ public abstract class LedDisplayManager {
         
     public static void Init(KKPlugin Conn){
         Connector=Conn;
+        SettingsManager.InitConfig();
+        //
         ConfigAndHWInit();
     }
     
@@ -42,12 +45,15 @@ public abstract class LedDisplayManager {
     {
         //TODO: create config loader, detect and test hardware
         // for debug
+        
+        
+        
         Pages=new HashMap<>();
         
         DefaultDisplay="MAIN";
         //
        
-        AddDisplayToPage("MAIN",InitAndConnectHWDisplay("MAIN")); //only one hardcoded page by now
+       // AddDisplayToPage("MAIN",InitAndConnectHWDisplay("MAIN")); //only one hardcoded page by now
     }
     
     private static void AddDisplayToPage(String PageID, KKDisplayView Display)
@@ -63,6 +69,7 @@ public abstract class LedDisplayManager {
     private static KKDisplayView InitAndConnectHWDisplay(String DisplayID)
     {
         //
+        /*
     // ThrDis.Start();
      KKDisplayView Ret=new KKDisplayView(new DisplayMIELTMT16S2H_4bb());
      Ret.Enabled=true;
@@ -82,6 +89,8 @@ public abstract class LedDisplayManager {
              System.out.println("Wrong dipsplay configuration!");
      }
      return Ret;
+     */
+        return null;
     }
     private static void SendTextLineToPage(String PageID, String Text)
     {

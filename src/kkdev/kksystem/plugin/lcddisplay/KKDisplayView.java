@@ -10,12 +10,12 @@ package kkdev.kksystem.plugin.lcddisplay;
  * @author blinov_is
  */
 public class KKDisplayView {
-   public IDisplayConnector Connector;
+   public IDisplayConnectorHW Connector;
    public String DisplayID;
    public boolean Enabled;
    public boolean ErrorState;
    
-   public KKDisplayView(IDisplayConnector InitConn)
+   public KKDisplayView(IDisplayConnectorHW InitConn)
    {
        Connector=InitConn;
        //
