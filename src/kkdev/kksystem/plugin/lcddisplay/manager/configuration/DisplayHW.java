@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.configuration;
+package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
+
+import java.io.Serializable;
 
 /**
  *
  * @author blinov_is
  */
-public class DisplayHW {
+public class DisplayHW  {
     public static enum HWHostTypes
     {
         RaspberryPI_B

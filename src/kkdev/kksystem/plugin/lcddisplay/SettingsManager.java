@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.configuration;
+package kkdev.kksystem.plugin.lcddisplay;
 
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.kk_DefaultConfig;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.LcdDisplayConf;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.StreamException;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -19,7 +21,7 @@ import kkdev.kksystem.base.constants.SystemConsts;
 public abstract class SettingsManager {
    public static final String DISPLAY_CONF="kk_plugin_lcddisplay.conf";
     
-    public static DisplayConfiguration MainConfiguration;
+    public static LcdDisplayConf MainConfiguration;
     
     public static void InitConfig()
     {
@@ -54,12 +56,14 @@ public abstract class SettingsManager {
             }
 
             XStream xstream = new XStream(new DomDriver());
-            MainConfiguration = (DisplayConfiguration) xstream.fromXML(fr);
+            MainConfiguration = (LcdDisplayConf) xstream.fromXML(fr);
+
         } catch (StreamException Ex) {
             System.out.println("[LCDDisplayPlugin][SettingsManager] Conf file load error");
             return;
+           
         }
-  
+
     }
     
 }

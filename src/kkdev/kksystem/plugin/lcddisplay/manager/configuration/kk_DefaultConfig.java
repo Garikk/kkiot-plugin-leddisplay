@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.configuration;
+package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.LcdDisplayConf;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.FileWriter;
 import java.io.IOException;
 import kkdev.kksystem.base.constants.SystemConsts;
-import static kkdev.kksystem.plugin.lcddisplay.configuration.DisplayHW.HWDisplayTypes.MIELT_4bit;
-import static kkdev.kksystem.plugin.lcddisplay.configuration.DisplayHW.HWHostTypes.RaspberryPI_B;
+import kkdev.kksystem.plugin.lcddisplay.SettingsManager;
+import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes.MIELT_4bit;
+import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes.RaspberryPI_B;
 
 /**
  *
@@ -25,7 +29,7 @@ import static kkdev.kksystem.plugin.lcddisplay.configuration.DisplayHW.HWHostTyp
 public abstract class kk_DefaultConfig {
 
     public static void MakeDefaultConfig() {
-        DisplayConfiguration DP;
+        LcdDisplayConf DP;
         DP = GetDefaultconfig();
         //
         try {
@@ -41,11 +45,11 @@ public abstract class kk_DefaultConfig {
 
     }
 
-    private static DisplayConfiguration GetDefaultconfig() {
+    private static LcdDisplayConf GetDefaultconfig() {
         final int PAGE_MAIN = 0;
         final int PAGE_DETAIL = 1;
 
-        DisplayConfiguration DefConf = new DisplayConfiguration();
+        LcdDisplayConf DefConf = new LcdDisplayConf();
 
         DisplayPage[] DP = new DisplayPage[2];
         //
@@ -74,7 +78,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DETAIL].HWDisplays = new String[1];
         DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
         //
-        DefConf.Name="Default config";
+        DefConf.ConfName="Default config";
         DefConf.DisplayPages = DP;
         DefConf.HWDisplays=new DisplayHW[1];
         DefConf.HWDisplays[0]=DHW;

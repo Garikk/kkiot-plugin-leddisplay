@@ -17,7 +17,7 @@ import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
-import kkdev.kksystem.plugin.lcddisplay.configuration.SettingsManager;
+import kkdev.kksystem.plugin.lcddisplay.SettingsManager;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
 
 /**
