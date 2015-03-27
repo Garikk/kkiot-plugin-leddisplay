@@ -5,17 +5,17 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
+import com.google.gson.Gson;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.LcdDisplayConf;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import kkdev.kksystem.plugin.lcddisplay.LcdDisplayConf;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kkdev.kksystem.base.constants.SystemConsts;
-import kkdev.kksystem.plugin.lcddisplay.SettingsManager;
 import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes.MIELT_4bit;
 import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes.RaspberryPI_B;
+import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager.DISPLAY_CONF;
 
 /**
  *
@@ -29,19 +29,26 @@ import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.H
 public abstract class kk_DefaultConfig {
 
     public static void MakeDefaultConfig() {
-        LcdDisplayConf DP;
-        DP = GetDefaultconfig();
-        //
+       
         try {
-            XStream xstream = new XStream(new DomDriver());
+            LcdDisplayConf DefConf=GetDefaultconfig();
+            
+            Gson gson=new Gson();
+            
+            String Res=gson.toJson(DefConf);
+            
             FileWriter fw;
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/" + SettingsManager.DISPLAY_CONF);
-            xstream.toXML(DP, fw);
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/"+DISPLAY_CONF);
+            fw.write(Res);
+            fw.flush();
             fw.close();
-        } catch (IOException Ex) {
-            System.out.println("[LCDPlugin][DefConfig] error on create def config");
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //
+
+        
 
     }
 
