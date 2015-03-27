@@ -6,6 +6,7 @@
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H.DisplayMIELTMT16S2H
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 
 /**
  *
@@ -61,6 +63,14 @@ public abstract class LedDisplayManager {
             }
         
         }
+        
+        for (DisplayPage DP:SettingsManager.MainConfiguration.DisplayPages)
+        {
+            List<String> LS=new ArrayList<>();
+            LS.addAll(Arrays.asList(DP.HWDisplays));
+            
+            Pages.put(DP.PageName, LS);
+        }
 
 
 //
@@ -68,15 +78,7 @@ public abstract class LedDisplayManager {
         
        // AddDisplayToPage("MAIN",InitAndConnectHWDisplay("MAIN")); //only one hardcoded page by now
     }
-    
-    private static void AddDisplayToPage(String PageID, KKDisplayView Display)
-    {
-        if (!Pages.containsKey(PageID))
-            Pages.put(PageID, new ArrayList<>());
-        
-        if (!Pages.get(PageID).contains(Display.DisplayID))
-            Pages.get(PageID).add(Display.DisplayID);
-    }
+
     
     //TODO: Made connect displays from configuration scripts, now is hardcoded
     private static KKDisplayView InitAndConnectHWDisplay(String DisplayID)
