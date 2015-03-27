@@ -15,10 +15,14 @@ import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
+import kkdev.kksystem.plugin.lcddisplay.IDisplayConnectorHW;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes;
 
 /**
  *
@@ -37,6 +41,7 @@ public abstract class LedDisplayManager {
     public static void Init(KKPlugin Conn){
         Connector=Conn;
         SettingsManager.InitConfig();
+        
         //
         ConfigAndHWInit();
     }
@@ -47,7 +52,15 @@ public abstract class LedDisplayManager {
         
         DefaultDisplay="MAIN";
         
-
+        for (DisplayHW DH:SettingsManager.MainConfiguration.HWDisplays)
+        {
+            if (DH.HWBoard==HWHostTypes.RaspberryPI_B)
+            {
+                if (DH.HWDisplay==HWDisplayTypes.MIELT_4bit)
+                    Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayMIELTMT16S2H_4bb()));
+            }
+        
+        }
 
 
 //

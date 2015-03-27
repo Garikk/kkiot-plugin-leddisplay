@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author blinov_is
  */
-public class DisplayMIELTMT16S2H_4bb extends Thread {/* implements IDisplayConnectorHW  {
+public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnectorHW {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
@@ -27,9 +27,9 @@ public class DisplayMIELTMT16S2H_4bb extends Thread {/* implements IDisplayConne
         final int LCD_BITS = 4;
     
     GpioLcdDisplay lcd;
-    final GpioController gpio = GpioFactory.getInstance();
+    //final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
-*/
+
     @Override
     public void run() {
         
@@ -47,7 +47,7 @@ public class DisplayMIELTMT16S2H_4bb extends Thread {/* implements IDisplayConne
     }   
 
     
-    /*
+ 
     @Override
     public void SetContrast(int Contrast) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -107,32 +107,10 @@ public class DisplayMIELTMT16S2H_4bb extends Thread {/* implements IDisplayConne
     @Override
     public void InitDisplayHW() {
 
-        //TODO Make confiuration pins
-         lcd = new GpioLcdDisplay(LCD_ROWS, // number of row supported by LCD
-                LCD_COLUMNS, // number of columns supported by LCD
-                RaspiPin.GPIO_15, // LCD RS pin
-                RaspiPin.GPIO_16, // LCD strobe pin
-                RaspiPin.GPIO_05, // LCD data bit 1
-                RaspiPin.GPIO_06, // LCD data bit 2
-                RaspiPin.GPIO_10, // LCD data bit 3
-                RaspiPin.GPIO_11); // LCD data bit 4
-
-        lcd.clear();
-        try {
-            Thread.sleep(1000);
-
-            // write line 1 to LCD
-            lcd.writeln(LCD_ROW_1, "KKCar LCD Display");
-            lcd.writeln(LCD_ROW_2, "Wait for data");
-
-         
-         
-        } catch (InterruptedException ex) {
-            Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
 
     }
 
-*/  
+
 }
 
