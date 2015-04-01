@@ -6,6 +6,8 @@
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
+import java.io.File;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 import kkdev.kksystem.plugin.lcddisplay.LcdDisplayConf;
 import java.io.FileWriter;
@@ -47,8 +49,9 @@ public abstract class kk_DefaultConfig {
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
+        //
+        CreateDefaultFrames();
+        //
 
     }
 
@@ -78,12 +81,23 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_MAIN].PageName = "MAIN";
         DP[PAGE_MAIN].HWDisplays = new String[1];
         DP[PAGE_MAIN].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_MAIN].UIFrameFiles=new String[7];
+        DP[PAGE_MAIN].UIFrameFiles[0]="kk_lcddisplay_uiframe_main_1.frame";
+        DP[PAGE_MAIN].UIFrameFiles[1]="kk_lcddisplay_uiframe_main_2.frame";
+        DP[PAGE_MAIN].UIFrameFiles[2]="kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_MAIN].UIFrameFiles[3]="kk_lcddisplay_uiframe_main_4.frame";
+        DP[PAGE_MAIN].UIFrameFiles[4]="kk_lcddisplay_uiframe_main_5.frame";
+        DP[PAGE_MAIN].UIFrameFiles[5]="kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_MAIN].UIFrameFiles[6]="kk_lcddisplay_uiframe_main_6.frame";
+        
 
         DP[PAGE_DETAIL]=new DisplayPage();
         DP[PAGE_DETAIL].HaveDynamicElements = false;
         DP[PAGE_DETAIL].PageName = "DETAIL";
         DP[PAGE_DETAIL].HWDisplays = new String[1];
         DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DETAIL].UIFrameFiles=new String[1];
+        DP[PAGE_DETAIL].UIFrameFiles[0]="kk_lcddisplay_uiframe_detail_1.frame";
         //
         DefConf.ConfName="Default config";
         DefConf.DisplayPages = DP;
@@ -91,5 +105,66 @@ public abstract class kk_DefaultConfig {
         DefConf.HWDisplays[0]=DHW;
 
         return DefConf;
+    }
+    
+    private static void CreateDefaultFrames()
+    {
+        File dir=new java.io.File(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR);
+        if (!dir.exists())
+            dir.mkdir();
+        else
+            return;
+        
+        FileWriter fw;
+        BufferedWriter out;
+        try {
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R1]SPD [SPD] TMP [TMP] "); //16
+            out.newLine();
+            out.write("[R2]TIME:  [TIME] |"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+           fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_2.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R2]TIME: [TIME] /"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_3.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R2]TIME: [TIME] -"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_4.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R2]TIME: [TIME]  |"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_5.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R2]TIME: [TIME] /"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_6.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R2]TIME: [TIME] \\"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -22,6 +22,7 @@ import kkdev.kksystem.plugin.lcddisplay.LcdDisplayConf;
  */
 public abstract class SettingsManager {
    public static final String DISPLAY_CONF="kk_plugin_lcddisplay.json";
+   public static final String DISPLAY_CONF_FRAMES_DIR="//kk_plugin_lcddisplay_frames//";
     
     public static LcdDisplayConf MainConfiguration;
     

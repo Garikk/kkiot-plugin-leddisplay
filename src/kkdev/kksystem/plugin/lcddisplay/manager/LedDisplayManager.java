@@ -5,6 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,7 +44,6 @@ public abstract class LedDisplayManager {
     public static void Init(KKPlugin Conn){
         Connector=Conn;
         SettingsManager.InitConfig();
-        
         //
         ConfigAndHWInit();
     }
@@ -51,19 +51,26 @@ public abstract class LedDisplayManager {
     private static void ConfigAndHWInit()
     {
         Pages=new HashMap<>();
+        Displays=new HashMap<>();
         
         DefaultDisplay="MAIN";
-        
+        //Add HWDisplays and init
         for (DisplayHW DH:SettingsManager.MainConfiguration.HWDisplays)
         {
             if (DH.HWBoard==HWHostTypes.RaspberryPI_B)
             {
                 if (DH.HWDisplay==HWDisplayTypes.MIELT_4bit)
                     Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayMIELTMT16S2H_4bb()));
+                else
+                    System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
+            }
+            else
+            {
+                System.out.println("[LCDDisplay][CONFLOADER] Unknown HW board in config!! + " + DH.HWBoard);
             }
         
         }
-        
+        //Add Pages
         for (DisplayPage DP:SettingsManager.MainConfiguration.DisplayPages)
         {
             List<String> LS=new ArrayList<>();
@@ -71,45 +78,12 @@ public abstract class LedDisplayManager {
             
             Pages.put(DP.PageName, LS);
         }
-
-
-//
-
-        
-       // AddDisplayToPage("MAIN",InitAndConnectHWDisplay("MAIN")); //only one hardcoded page by now
     }
 
     
-    //TODO: Made connect displays from configuration scripts, now is hardcoded
-    private static KKDisplayView InitAndConnectHWDisplay(String DisplayID)
-    {
-        
-        //
-        /*
-    // ThrDis.Start();
-     KKDisplayView Ret=new KKDisplayView(new DisplayMIELTMT16S2H_4bb());
-     Ret.Enabled=true;
-     Ret.PowerOn();
-     Ret.DisplayID=DisplayID;
-     //
-     if (Displays==null)
-     {
-         Displays=new HashMap<>();
-         Displays.put(DisplayID, Ret);
-     }
-     else
-     {
-         if (!Displays.containsKey(DisplayID))
-             Displays.put(DisplayID, Ret);
-         else
-             System.out.println("Wrong dipsplay configuration!");
-     }
-     return Ret;
-     */
-        return null;
-    }
     private static void SendTextLineToPage(String PageID, String Text)
     {
+        //Redirect unknown pages to main
         if (!Pages.containsKey(PageID))
             PageID="MAIN";
         //
@@ -130,6 +104,28 @@ public abstract class LedDisplayManager {
         for (String TL:Text)
             SendTextLineToPage(PageID,TL);
     }
+     private static void UpdateTextOnPage(String PageID,String[] Text, int[] PositionsCol, int[] PositionRow)
+     {
+          //Redirect unknown pages to main
+        if (!Pages.containsKey(PageID))
+            PageID="MAIN";
+        //
+        List<String> DisplayToView;
+        DisplayToView=Pages.get(PageID);
+        
+        for (int i=0;i<=Text.length;i++)
+        {   
+            KKDisplayView DV;
+            for (String D:DisplayToView)
+            {
+                DV=Displays.get(D);
+                if (DV!=null)
+                    if (DV.Enabled & !DV.ErrorState)
+                        DV.UpdateText(Text[i], PositionsCol[i], PositionRow[i]);
+            } 
+        }
+     
+     }
     public static void ReceivePin(String PinName, Object PinData)
     {
         
@@ -167,8 +163,14 @@ public abstract class LedDisplayManager {
         
         switch (Data.DataType)
         {
-            case DISPLAY_KKSYS_TEXT:
-                SendTextLineToPageArr(Data.TargetPage,Data.DisplayText);
+            case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
+                SendTextLineToPageArr(Data.TargetPage,Data.Direct_DisplayText);
+                break;
+            case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
+                
+                break;
+             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
+                
                 break;
         }
     }

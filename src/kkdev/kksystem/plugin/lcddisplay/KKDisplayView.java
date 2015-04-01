@@ -37,7 +37,10 @@ public class KKDisplayView {
    public void SendText(String Text)
    {
        Connector.DisplayText(Text);
-   
+   }
+   public void UpdateText(String Text, int Col, int Row)
+   {
+       Connector.DisplayTextUpdate(Text, Col, Row);
    }
    
 }
