@@ -58,7 +58,8 @@ public abstract class kk_DefaultConfig {
     private static LcdDisplayConf GetDefaultconfig() {
         final int PAGE_MAIN = 0;
         final int PAGE_DETAIL = 1;
-
+        final int PAGE_WAIT = 2;
+        
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
         DisplayPage[] DP = new DisplayPage[2];
@@ -98,6 +99,14 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DETAIL].UIFrameFiles=new String[1];
         DP[PAGE_DETAIL].UIFrameFiles[0]="kk_lcddisplay_uiframe_detail_1.frame";
+        //
+        DP[PAGE_WAIT]=new DisplayPage();
+        DP[PAGE_WAIT].HaveDynamicElements = false;
+        DP[PAGE_WAIT].PageName = "WAIT";
+        DP[PAGE_WAIT].HWDisplays = new String[1];
+        DP[PAGE_WAIT].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_WAIT].UIFrameFiles=new String[1];
+        DP[PAGE_WAIT].UIFrameFiles[0]="kk_lcddisplay_uiframe_wait_1.frame";
         //
         DefConf.ConfName="Default config";
         DefConf.DisplayPages = DP;
@@ -161,7 +170,25 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-            
+            ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_detail_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R1]T: [TMP] V:[VOLTAGE]"); //16
+            out.write("[R2]S: [SPD] ERR: [ERR]"); //16
+            out.flush();
+            out.close();
+            fw.close();
+             ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_wait_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R1] Wait data..."); //16
+            out.flush();
+            out.close();
+            fw.close();
             
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
