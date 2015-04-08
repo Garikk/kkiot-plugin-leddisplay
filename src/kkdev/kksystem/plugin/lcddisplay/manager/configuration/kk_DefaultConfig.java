@@ -62,7 +62,7 @@ public abstract class kk_DefaultConfig {
         
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[2];
+        DisplayPage[] DP = new DisplayPage[3];
         //
         DisplayHW DHW = new DisplayHW();
         DHW.HWDisplayName = "MIELT";
