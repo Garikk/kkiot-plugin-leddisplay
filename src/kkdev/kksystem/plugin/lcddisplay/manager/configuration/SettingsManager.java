@@ -28,16 +28,18 @@ public abstract class SettingsManager {
     
     public static void InitConfig()
     {
+        System.out.println("[LCDDisplay][CONFIG] Load configuration");
         LoadConfig();
         
         if (MainConfiguration==null)
         {
+            System.out.println("[LCDDisplay][CONFIG] Error Load configuration, try create default config");
             kk_DefaultConfig.MakeDefaultConfig();
             LoadConfig();
         }
         if (MainConfiguration==null)
         {
-            System.out.println("[LCDDisplay] Config load error");
+            System.out.println("[LCDDisplay][CONFIG] Load configuration, fatal");
             return;
         }
        //

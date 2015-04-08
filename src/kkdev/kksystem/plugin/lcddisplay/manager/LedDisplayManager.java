@@ -5,19 +5,16 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kkdev.kksystem.base.classes.PluginMessage;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
-import kkdev.kksystem.plugin.lcddisplay.IDisplayConnectorHW;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager;
@@ -43,6 +40,7 @@ public abstract class LedDisplayManager {
         
     public static void Init(KKPlugin Conn){
         Connector=Conn;
+        
         SettingsManager.InitConfig();
         //
         ConfigAndHWInit();
