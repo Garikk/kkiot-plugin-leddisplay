@@ -8,12 +8,10 @@ package kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
-import kkdev.kksystem.plugin.lcddisplay.IDisplayConnectorHW;
+import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 //import com.pi4j.io.gpio.GpioController;
 //import com.pi4j.io.gpio.GpioFactory;
 //import com.pi4j.io.gpio.RaspiPin;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

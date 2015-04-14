@@ -5,6 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
+import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
+
 /**
  *
  * @author blinov_is

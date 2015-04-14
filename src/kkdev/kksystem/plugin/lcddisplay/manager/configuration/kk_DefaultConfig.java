@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import java.io.BufferedWriter;
 import java.io.File;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
-import kkdev.kksystem.plugin.lcddisplay.LcdDisplayConf;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
