@@ -23,7 +23,7 @@ public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector
         final int LCD_ROW_2 = 1;
         final int LCD_COLUMNS = 16;
         final int LCD_BITS = 4;
-    
+
     GpioLcdDisplay lcd;
     //final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
