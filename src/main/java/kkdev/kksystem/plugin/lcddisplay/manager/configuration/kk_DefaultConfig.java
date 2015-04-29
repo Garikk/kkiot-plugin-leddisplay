@@ -39,7 +39,7 @@ public abstract class kk_DefaultConfig {
             String Res=gson.toJson(DefConf);
             
             FileWriter fw;
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/"+DISPLAY_CONF);
+            fw = new FileWriter(SystemConsts.KK_BASE_FORPLUGINS_CONFPATH + "/"+DISPLAY_CONF);
             fw.write(Res);
             fw.flush();
             fw.close();
