@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H;
+package kkdev.kksystem.plugin.lcddisplay.hw.debug;
+
 
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
@@ -17,15 +18,13 @@ import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
  *
  * @author blinov_is
  */
-public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnectorHW {
+public class DisplayDebug extends Thread implements IDisplayConnectorHW {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
         final int LCD_COLUMNS = 16;
         final int LCD_BITS = 4;
 
-    GpioLcdDisplay lcd;
-    //final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
 
     @Override
@@ -48,17 +47,17 @@ public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector
  
     @Override
     public void SetContrast(int Contrast) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("[LCDDisplay][DEBUG] Set Contrast " + Contrast);
     }
 
     @Override
     public void SetLight(int Light) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("[LCDDisplay][DEBUG] Set Light " + Light);
     }
 
     @Override
     public void SetPower(boolean Power) {
-        System.out.println("ME POWER " + Power);
+         System.out.println("[LCDDisplay][DEBUG] Set Light " + Power);
     }
 
     @Override
@@ -68,20 +67,12 @@ public class DisplayMIELTMT16S2H_4bb extends Thread implements IDisplayConnector
 
     @Override
     public void DisplayText(String Text) {
-        String L1="";
-        String L2="";
-        
-        L1=Text.substring(0, LCD_COLUMNS);
-        if (Text.length()>LCD_COLUMNS)
-            L2=Text.substring(LCD_COLUMNS,Text.length()-LCD_COLUMNS);
-        
-      lcd.writeln(0, L1);
-      lcd.writeln(0, L2);
+       System.out.println("[LCDDisplay][DEBUG] " + Text);
     }
 
     @Override
     public void DisplayTextUpdate(String Text, int Column, int Line) {
-        lcd.write(Line, Column, Text);
+         System.out.println("[LCDDisplay][DEBUG] ["+Column+"][" +Line +"]" + Text);
     }
 
     @Override

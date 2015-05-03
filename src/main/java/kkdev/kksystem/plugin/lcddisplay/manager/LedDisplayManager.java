@@ -17,12 +17,11 @@ import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
+import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager;
-import kkdev.kksystem.plugin.lcddisplay.hw.rpi.MIELT_MT16S2H.DisplayMIELTMT16S2H_4bb;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
+import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780;
+import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes;
+import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
 
 /**
  *
@@ -55,13 +54,20 @@ public abstract class LedDisplayManager {
         //Add HWDisplays and init
         for (DisplayHW DH:SettingsManager.MainConfiguration.HWDisplays)
         {
+            //Init on RPi Host
             if (DH.HWBoard==HWHostTypes.RaspberryPI_B)
             {
-                if (DH.HWDisplay==HWDisplayTypes.MIELT_4bit)
-                    Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayMIELTMT16S2H_4bb()));
+                if (DH.HWDisplay==HWDisplayTypes.HD44780_4bit)
+                    Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayHD44780()));
                 else
                     System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
             }
+            //Debug host
+            else if (DH.HWBoard==HWHostTypes.DisplayDebug)
+            {
+                 Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayDebug()));
+            }
+            //Config error
             else
             {
                 System.out.println("[LCDDisplay][CONFLOADER] Unknown HW board in config!! + " + DH.HWBoard);

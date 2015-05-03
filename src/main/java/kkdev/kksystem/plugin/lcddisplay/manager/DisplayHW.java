@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
+package kkdev.kksystem.plugin.lcddisplay.manager;
 
 import java.io.Serializable;
 
@@ -14,11 +14,13 @@ import java.io.Serializable;
 public class DisplayHW  {
     public static enum HWHostTypes
     {
-        RaspberryPI_B
+        RaspberryPI_B,
+        DisplayDebug
     }
     public static enum HWDisplayTypes
     {
-        MIELT_4bit
+        HD44780_4bit,
+        HostDebug
     }
     
     public String HWDisplayName;

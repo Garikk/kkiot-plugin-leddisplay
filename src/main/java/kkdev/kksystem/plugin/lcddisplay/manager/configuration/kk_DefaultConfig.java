@@ -5,17 +5,20 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
+import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW;
 import com.google.gson.Gson;
 import java.io.BufferedWriter;
 import java.io.File;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
+import kkdev.kksystem.plugin.lcddisplay.manager.DisplayPage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.constants.SystemConsts;
-import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWDisplayTypes.MIELT_4bit;
-import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayHW.HWHostTypes.RaspberryPI_B;
+import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
+import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HD44780_4bit;
+import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HostDebug;
+import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes.RaspberryPI_B;
 import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager.DISPLAY_CONF;
 
 /**
@@ -58,15 +61,18 @@ public abstract class kk_DefaultConfig {
         final int PAGE_MAIN = 0;
         final int PAGE_DETAIL = 1;
         final int PAGE_WAIT = 2;
+        final int PAGE_ERROR = 3;
         
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
         DisplayPage[] DP = new DisplayPage[3];
         //
         DisplayHW DHW = new DisplayHW();
-        DHW.HWDisplayName = "MIELT";
-        DHW.HWBoard = RaspberryPI_B;
-        DHW.HWDisplay = MIELT_4bit;
+        DHW.HWDisplayName = "DEBUG";
+        //DHW.HWBoard = RaspberryPI_B;
+        //DHW.HWDisplay = HD44780_4bit;
+        DHW.HWBoard=DisplayHW.HWHostTypes.DisplayDebug;
+        DHW.HWDisplay=DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
@@ -106,6 +112,14 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_WAIT].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_WAIT].UIFrameFiles=new String[1];
         DP[PAGE_WAIT].UIFrameFiles[0]="kk_lcddisplay_uiframe_wait_1.frame";
+        //
+        DP[PAGE_ERROR]=new DisplayPage();
+        DP[PAGE_ERROR].HaveDynamicElements = false;
+        DP[PAGE_ERROR].PageName = "ERROR";
+        DP[PAGE_ERROR].HWDisplays = new String[1];
+        DP[PAGE_ERROR].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_ERROR].UIFrameFiles=new String[1];
+        DP[PAGE_ERROR].UIFrameFiles[0]="kk_lcddisplay_uiframe_error_1.frame";
         //
         DefConf.ConfName="Default config";
         DefConf.DisplayPages = DP;
@@ -175,7 +189,8 @@ public abstract class kk_DefaultConfig {
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_detail_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]T: [TMP] V:[VOLTAGE]"); //16
-            out.write("[R2]S: [SPD] ERR: [ERR]"); //16
+            out.newLine();
+            out.write("[R2]S: [SPD] R: [RPM]"); //16
             out.flush();
             out.close();
             fw.close();
@@ -185,6 +200,17 @@ public abstract class kk_DefaultConfig {
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_wait_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1] Wait data..."); //16
+            out.flush();
+            out.close();
+            fw.close();
+              ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_error_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("[R1]ODB Adapter Err"); //16
+            out.newLine();
+            out.write("[R2][ADAPTER_ERROR]"); //16
             out.flush();
             out.close();
             fw.close();
