@@ -9,9 +9,9 @@ import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
-//import com.pi4j.io.gpio.GpioController;
-//import com.pi4j.io.gpio.GpioFactory;
-//import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.RaspiPin;
 
 /**
  *
@@ -25,22 +25,22 @@ public class DisplayHD44780 extends Thread implements IDisplayConnectorHW {
         final int LCD_BITS = 4;
 
     GpioLcdDisplay lcd;
-    //final GpioController gpio = GpioFactory.getInstance();
+    final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
 
     @Override
     public void run() {
         
-     //  InitDisplayHW();
-     //  while (!CmdStopDisplay)
-     //  {
-      //     try {
-       //        Thread.sleep(5000);
-     //      } catch (InterruptedException ex) {
-      //         Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
-      //     }
-      // }
-       //lcd.clear();
+       InitDisplayHW();
+       while (!CmdStopDisplay)
+       {
+           try {
+               Thread.sleep(5000);
+           } catch (InterruptedException ex) {
+               //Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+      lcd.clear();
         super.run(); //To change body of generated methods, choose Tools | Templates.
     }   
 
@@ -104,8 +104,7 @@ public class DisplayHD44780 extends Thread implements IDisplayConnectorHW {
 
     @Override
     public void InitDisplayHW() {
-
-        
+        lcd=new GpioLcdDisplay(LCD_ROWS,LCD_COLUMNS,RaspiPin.GPIO_15,RaspiPin.GPIO_16,RaspiPin.GPIO_05,RaspiPin.GPIO_06,RaspiPin.GPIO_10,RaspiPin.GPIO_11);
 
     }
 

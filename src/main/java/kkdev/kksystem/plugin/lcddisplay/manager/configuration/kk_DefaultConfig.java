@@ -65,7 +65,7 @@ public abstract class kk_DefaultConfig {
         
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[3];
+        DisplayPage[] DP = new DisplayPage[4];
         //
         DisplayHW DHW = new DisplayHW();
         DHW.HWDisplayName = "DEBUG";
