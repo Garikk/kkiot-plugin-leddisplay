@@ -16,4 +16,6 @@ public class LcdDisplayConf  {
     public String ConfName;
     public DisplayPage[] DisplayPages;
     public DisplayHW[] HWDisplays;
+    
+    public String DefaultFeature;
 }

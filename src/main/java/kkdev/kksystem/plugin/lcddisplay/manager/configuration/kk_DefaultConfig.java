@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.constants.SystemConsts;
+import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
+import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENU_UID;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HD44780_4bit;
 import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HostDebug;
@@ -42,7 +44,7 @@ public abstract class kk_DefaultConfig {
             String Res=gson.toJson(DefConf);
             
             FileWriter fw;
-            fw = new FileWriter(SystemConsts.KK_BASE_FORPLUGINS_CONFPATH + "/"+DISPLAY_CONF);
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/"+DISPLAY_CONF);
             fw.write(Res);
             fw.flush();
             fw.close();
@@ -62,10 +64,14 @@ public abstract class kk_DefaultConfig {
         final int PAGE_DETAIL = 1;
         final int PAGE_WAIT = 2;
         final int PAGE_ERROR = 3;
+        final int PAGE_SYSMENU_P1 = 4;
+        final int PAGE_SYSMENU_P2 = 5;
+        final int PAGE_SYSMENU_VER = 6;
+        final int PAGE_SYSMENU_SETT = 7;
         
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[4];
+        DisplayPage[] DP = new DisplayPage[7];
         //
         DisplayHW DHW = new DisplayHW();
         DHW.HWDisplayName = "DEBUG";
@@ -83,6 +89,8 @@ public abstract class kk_DefaultConfig {
         PINS[5] = 11; //Bit4
         
         DP[PAGE_MAIN]=new DisplayPage();
+        DP[PAGE_MAIN].Features=new String[1];
+        DP[PAGE_MAIN].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_MAIN].HaveDynamicElements = true;
         DP[PAGE_MAIN].PageName = "MAIN";
         DP[PAGE_MAIN].HWDisplays = new String[1];
@@ -100,6 +108,8 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DETAIL]=new DisplayPage();
         DP[PAGE_DETAIL].HaveDynamicElements = false;
         DP[PAGE_DETAIL].PageName = "DETAIL";
+        DP[PAGE_DETAIL].Features=new String[1];
+        DP[PAGE_DETAIL].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DETAIL].HWDisplays = new String[1];
         DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DETAIL].UIFrameFiles=new String[1];
@@ -107,6 +117,8 @@ public abstract class kk_DefaultConfig {
         //
         DP[PAGE_WAIT]=new DisplayPage();
         DP[PAGE_WAIT].HaveDynamicElements = false;
+        DP[PAGE_WAIT].Features=new String[1];
+        DP[PAGE_WAIT].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_WAIT].PageName = "WAIT";
         DP[PAGE_WAIT].HWDisplays = new String[1];
         DP[PAGE_WAIT].HWDisplays[0] = DHW.HWDisplayName;
@@ -115,16 +127,59 @@ public abstract class kk_DefaultConfig {
         //
         DP[PAGE_ERROR]=new DisplayPage();
         DP[PAGE_ERROR].HaveDynamicElements = false;
+        DP[PAGE_ERROR].Features=new String[1];
+        DP[PAGE_ERROR].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_ERROR].PageName = "ERROR";
         DP[PAGE_ERROR].HWDisplays = new String[1];
         DP[PAGE_ERROR].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_ERROR].UIFrameFiles=new String[1];
         DP[PAGE_ERROR].UIFrameFiles[0]="kk_lcddisplay_uiframe_error_1.frame";
+         //
+        DP[PAGE_SYSMENU_P1]=new DisplayPage();
+        DP[PAGE_SYSMENU_P1].HaveDynamicElements = false;
+        DP[PAGE_SYSMENU_P1].Features=new String[1];
+        DP[PAGE_SYSMENU_P1].Features[0]=KK_BASE_FEATURES_SYSTEM_MENU_UID;
+        DP[PAGE_SYSMENU_P1].PageName = "SYSMENU_1";
+        DP[PAGE_SYSMENU_P1].HWDisplays = new String[1];
+        DP[PAGE_SYSMENU_P1].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_SYSMENU_P1].UIFrameFiles=new String[1];
+        DP[PAGE_SYSMENU_P1].UIFrameFiles[0]="kk_sysmenu_p1_uiframe_1.frame";
+         //
+        DP[PAGE_SYSMENU_P2]=new DisplayPage();
+        DP[PAGE_SYSMENU_P2].HaveDynamicElements = false;
+        DP[PAGE_SYSMENU_P2].Features=new String[1];
+        DP[PAGE_SYSMENU_P2].Features[0]=KK_BASE_FEATURES_SYSTEM_MENU_UID;
+        DP[PAGE_SYSMENU_P2].PageName = "SYSMENU_2";
+        DP[PAGE_SYSMENU_P2].HWDisplays = new String[1];
+        DP[PAGE_SYSMENU_P2].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_SYSMENU_P2].UIFrameFiles=new String[1];
+        DP[PAGE_SYSMENU_P2].UIFrameFiles[0]="kk_sysmenu_p2_uiframe_1.frame";
+          //
+        DP[PAGE_SYSMENU_VER]=new DisplayPage();
+        DP[PAGE_SYSMENU_VER].HaveDynamicElements = false;
+        DP[PAGE_SYSMENU_VER].Features=new String[1];
+        DP[PAGE_SYSMENU_VER].Features[0]=KK_BASE_FEATURES_SYSTEM_MENU_UID;
+        DP[PAGE_SYSMENU_VER].PageName = "SYSMENU_VI";
+        DP[PAGE_SYSMENU_VER].HWDisplays = new String[1];
+        DP[PAGE_SYSMENU_VER].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_SYSMENU_VER].UIFrameFiles=new String[1];
+        DP[PAGE_SYSMENU_VER].UIFrameFiles[0]="kk_sysmenu_vi_uiframe_1.frame";
+           //
+        DP[PAGE_SYSMENU_SETT]=new DisplayPage();
+        DP[PAGE_SYSMENU_SETT].HaveDynamicElements = false;
+        DP[PAGE_SYSMENU_SETT].Features=new String[1];
+        DP[PAGE_SYSMENU_SETT].Features[0]=KK_BASE_FEATURES_SYSTEM_MENU_UID;
+        DP[PAGE_SYSMENU_SETT].PageName = "SYSMENU_SETT";
+        DP[PAGE_SYSMENU_SETT].HWDisplays = new String[1];
+        DP[PAGE_SYSMENU_SETT].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_SYSMENU_SETT].UIFrameFiles=new String[1];
+        DP[PAGE_SYSMENU_SETT].UIFrameFiles[0]="kk_sysmenu_sett_uiframe_1.frame";
         //
         DefConf.ConfName="Default config";
         DefConf.DisplayPages = DP;
         DefConf.HWDisplays=new DisplayHW[1];
         DefConf.HWDisplays[0]=DHW;
+        DefConf.DefaultFeature=KK_BASE_FEATURES_SYSTEM_MENU_UID;
 
         return DefConf;
     }
@@ -197,23 +252,49 @@ public abstract class kk_DefaultConfig {
              ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_wait_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_p1_uiframe_1.frame");
             out = new BufferedWriter(fw);
-            out.write("[R1] Wait data..."); //16
+            out.write("[R1]*[SYSMENU_P1]*"); //16
+            out.newLine();
+            out.write("[R2] [SYSMENU_P2]"); //16
             out.flush();
             out.close();
             fw.close();
               ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_error_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_p2_uiframe_1.frame");
             out = new BufferedWriter(fw);
-            out.write("[R1]ODB Adapter Err"); //16
+            out.write("[R1] [SYSMENU_P1]"); //16
             out.newLine();
-            out.write("[R2][ADAPTER_ERROR]"); //16
+            out.write("[R2]*[SYSMENU_P2]*"); //16
             out.flush();
             out.close();
             fw.close();
+                 ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_vi_uiframe_1.frame");
+            out = new BufferedWriter(fw);
+            out.write(" KKSystem V.1.0 "); //16
+            out.newLine();
+            out.write("......BETA......"); //16
+            out.flush();
+            out.close();
+            fw.close();
+                             ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_sett_uiframe_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("Settings page"); //16
+            out.newLine();
+            out.write("......BETA......"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            
+            
             
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import kkdev.kksystem.base.classes.base.PinBaseCommand;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
@@ -32,15 +33,19 @@ import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
  */
 public abstract class LedDisplayManager {
     
+    static String CurrentFeature;
     static KKPlugin Connector;
     static String DefaultDisplay;
     static Map<String,KKDisplayView> Displays;
-    static Map<String, List<String>> Pages;
+    static Map<String,Map<String, List<String>>> Pages;
+    static Map<String,String> CurrentPage;
         
     public static void Init(KKPlugin Conn){
         Connector=Conn;
         
         SettingsManager.InitConfig();
+        //
+        CurrentFeature=SettingsManager.MainConfiguration.DefaultFeature;
         //
         ConfigAndHWInit();
     }
@@ -49,8 +54,8 @@ public abstract class LedDisplayManager {
     {
         Pages=new HashMap<>();
         Displays=new HashMap<>();
+
         
-        DefaultDisplay="MAIN";
         //Add HWDisplays and init
         for (DisplayHW DH:SettingsManager.MainConfiguration.HWDisplays)
         {
@@ -79,20 +84,27 @@ public abstract class LedDisplayManager {
         {
             List<String> LS=new ArrayList<>();
             LS.addAll(Arrays.asList(DP.HWDisplays));
-            
-            Pages.put(DP.PageName, LS);
+            //
+            for (String F:DP.Features)
+            {
+                if (!Pages.containsKey(F))
+                    Pages.put(F, new HashMap<>());
+                
+                Pages.get(F).put(DP.PageName, LS);
+            }
+            //
         }
     }
 
     
-    private static void SendTextLineToPage(String PageID, String Text)
+    private static void SendTextLineToPage(String FeatureID,String PageID, String Text)
     {
         //Redirect unknown pages to main
-        if (!Pages.containsKey(PageID))
+        if (!Pages.get(FeatureID).containsKey(PageID))
             PageID="MAIN";
         //
         List<String> DisplayToView;
-        DisplayToView=Pages.get(PageID);
+        DisplayToView=Pages.get(FeatureID).get(PageID);
         
         KKDisplayView DV;
         for (String D:DisplayToView)
@@ -103,19 +115,19 @@ public abstract class LedDisplayManager {
                     DV.SendText(Text);
         }
     }
-     private static void SendTextLineToPageArr(String PageID, String[] Text)
+     private static void SendTextLineToPageArr(String FeatureID,String PageID, String[] Text)
     {
         for (String TL:Text)
-            SendTextLineToPage(PageID,TL);
+            SendTextLineToPage(FeatureID,PageID,TL);
     }
-     private static void UpdateTextOnPage(String PageID,String[] Text, int[] PositionsCol, int[] PositionRow)
+     private static void UpdateTextOnPage(String FeatureID, String PageID,String[] Text, int[] PositionsCol, int[] PositionRow)
      {
           //Redirect unknown pages to main
-        if (!Pages.containsKey(PageID))
+        if (!Pages.get(FeatureID).containsKey(PageID))
             PageID="MAIN";
         //
         List<String> DisplayToView;
-        DisplayToView=Pages.get(PageID);
+        DisplayToView=Pages.get(FeatureID).get(PageID);
         
         for (int i=0;i<=Text.length;i++)
         {   
@@ -144,12 +156,17 @@ public abstract class LedDisplayManager {
                 DAT=(PinLedData)PinData;
                 ProcessData(DAT);
                 break;
+            case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
+                PinBaseCommand BaseCMD;
+                BaseCMD=(PinBaseCommand)PinData;
+                ProcessBaseCommand(BaseCMD);
         }
     }
     ///////////////////
     ///////////////////
     private  static void ProcessCommand(PinLedCommand Command)
     {
+        
         switch (Command.Command)
         {
             case DISPLAY_KKSYS_PAGE_INIT:
@@ -168,13 +185,24 @@ public abstract class LedDisplayManager {
         switch (Data.DataType)
         {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextLineToPageArr(Data.TargetPage,Data.Direct_DisplayText);
+                SendTextLineToPageArr(Data.FeatureUID, Data.TargetPage,Data.Direct_DisplayText);
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
                 
                 break;
              case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
                 
+                break;
+        }
+    }
+    private static void ProcessBaseCommand(PinBaseCommand Command)
+    {
+        switch (Command.BaseCommand)
+        {
+           case CHANGE_FEATURE:
+               CurrentFeature=Command.FeatureUID;
+                break;
+           case PLUGIN:
                 break;
         }
     }

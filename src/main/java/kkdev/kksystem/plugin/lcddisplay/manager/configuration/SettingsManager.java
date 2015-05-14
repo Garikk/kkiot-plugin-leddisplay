@@ -52,7 +52,7 @@ public abstract class SettingsManager {
        try {
            Gson gson=new Gson();
            BufferedReader br = new BufferedReader(  
-                 new FileReader(SystemConsts.KK_BASE_FORPLUGINS_CONFPATH + "/"+DISPLAY_CONF));  
+                 new FileReader(SystemConsts.KK_BASE_CONFPATH + "/"+DISPLAY_CONF));  
 
            MainConfiguration = (LcdDisplayConf)gson.fromJson(br, LcdDisplayConf.class);
            
