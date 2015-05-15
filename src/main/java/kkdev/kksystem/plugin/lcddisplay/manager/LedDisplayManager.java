@@ -200,6 +200,7 @@ public abstract class LedDisplayManager {
         switch (Command.BaseCommand)
         {
            case CHANGE_FEATURE:
+               System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.FeatureUID);
                CurrentFeature=Command.FeatureUID;
                 break;
            case PLUGIN:

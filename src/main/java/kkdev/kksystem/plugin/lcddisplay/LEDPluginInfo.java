@@ -19,9 +19,9 @@ public final class LEDPluginInfo  {
         PluginInfo Ret=new PluginInfo();
         
         Ret.PluginUUID="7fbac0f7-6939-4380-bcb0-0ef8b1580fbf";
-        Ret.PluginName="KKODB2Reader";
-        Ret.PluginDescription="Basic ELM327 ODB2 Reader plugin";
-        Ret.PluginType = KK_PLUGIN_TYPE.PLUGIN_INPUT;
+        Ret.PluginName="KKLCDDisplay";
+        Ret.PluginDescription="Basic LCDDisplay";
+        Ret.PluginType = KK_PLUGIN_TYPE.PLUGIN_OUTPUT;
         Ret.PluginVersion=1;
         Ret.Enabled=true;
         Ret.ReceivePins = GetMyReceivePinInfo();
