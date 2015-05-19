@@ -6,7 +6,7 @@
 package kkdev.kksystem.plugin.lcddisplay;
 
 import kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_TYPE;
-import kkdev.kksystem.base.classes.PluginInfo;
+import kkdev.kksystem.base.classes.plugins.PluginInfo;
 import kkdev.kksystem.base.constants.PluginConsts;
 
 /**

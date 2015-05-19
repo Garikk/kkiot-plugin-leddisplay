@@ -5,8 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
-import kkdev.kksystem.base.classes.PluginInfo;
-import kkdev.kksystem.base.classes.PluginMessage;
+import kkdev.kksystem.base.classes.plugins.PluginInfo;
+import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_LED_DATA;

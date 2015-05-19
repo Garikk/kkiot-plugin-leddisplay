@@ -15,6 +15,7 @@ public class KKDisplayView {
    public IDisplayConnectorHW Connector;
    public String DisplayID;
    public boolean Enabled;
+   public boolean Active;
    public boolean ErrorState;
    
    public KKDisplayView(IDisplayConnectorHW InitConn)
@@ -25,24 +26,40 @@ public class KKDisplayView {
        ((Thread)Connector).start();
 //       Connector.InitDisplayHW();
    }
+   
+   public void SetDisplayState(boolean State)
+   {
+       //Clear display if page set in hide
+       if (Active!=State & State==false)
+          Connector.ClearDisplay();
+       //
+       Active=State;
+       
+   }
+   
+   
    public void PowerOn()
    {
        Enabled=true;
-       Connector.SetPower(Enabled);
+       if (Active)
+        Connector.SetPower(Enabled);
                
    }
    public void PowerOff()
    {
        Enabled=false;
-       Connector.SetPower(Enabled);
+       if (Active)
+        Connector.SetPower(Enabled);
    }
    public void SendText(String Text)
    {
-       Connector.DisplayText(Text);
+       if (Active)
+        Connector.DisplayText(Text);
    }
    public void UpdateText(String Text, int Col, int Row)
    {
-       Connector.DisplayTextUpdate(Text, Col, Row);
+       if (Active)
+        Connector.DisplayTextUpdate(Text, Col, Row);
    }
    
 }

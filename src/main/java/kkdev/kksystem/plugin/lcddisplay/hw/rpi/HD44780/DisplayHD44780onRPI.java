@@ -17,7 +17,7 @@ import com.pi4j.io.gpio.RaspiPin;
  *
  * @author blinov_is
  */
-public class DisplayHD44780 extends Thread implements IDisplayConnectorHW {
+public class DisplayHD44780onRPI extends Thread implements IDisplayConnectorHW {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
@@ -106,6 +106,11 @@ public class DisplayHD44780 extends Thread implements IDisplayConnectorHW {
     public void InitDisplayHW() {
         lcd=new GpioLcdDisplay(LCD_ROWS,LCD_COLUMNS,RaspiPin.GPIO_15,RaspiPin.GPIO_16,RaspiPin.GPIO_05,RaspiPin.GPIO_06,RaspiPin.GPIO_10,RaspiPin.GPIO_11);
 
+    }
+
+    @Override
+    public void ClearDisplay() {
+       lcd.clear();
     }
 
 

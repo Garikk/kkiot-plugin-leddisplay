@@ -22,6 +22,9 @@ public interface IDisplayConnectorHW {
     void InitDisplayHW();
     void ShutDown();
     //
+    void ClearDisplay();
+    //
+    
     DisplayInfo GetDisplayInfo();
             
 }

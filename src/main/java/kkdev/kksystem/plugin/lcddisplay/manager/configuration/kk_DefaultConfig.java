@@ -35,21 +35,20 @@ import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsMan
 public abstract class kk_DefaultConfig {
 
     public static void MakeDefaultConfig() {
-       
+
         try {
-            LcdDisplayConf DefConf=GetDefaultconfig();
-            
-            Gson gson=new Gson();
-            
-            String Res=gson.toJson(DefConf);
-            
+            LcdDisplayConf DefConf = GetDefaultconfig();
+
+            Gson gson = new Gson();
+
+            String Res = gson.toJson(DefConf);
+
             FileWriter fw;
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/"+DISPLAY_CONF);
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/" + DISPLAY_CONF);
             fw.write(Res);
             fw.flush();
             fw.close();
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,7 +67,7 @@ public abstract class kk_DefaultConfig {
         final int PAGE_SYSMENU_P2 = 5;
         final int PAGE_SYSMENU_VER = 6;
         final int PAGE_SYSMENU_SETT = 7;
-        
+
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
         DisplayPage[] DP = new DisplayPage[8];
@@ -77,8 +76,8 @@ public abstract class kk_DefaultConfig {
         DHW.HWDisplayName = "DEBUG";
         //DHW.HWBoard = RaspberryPI_B;
         //DHW.HWDisplay = HD44780_4bit;
-        DHW.HWBoard=DisplayHW.HWHostTypes.DisplayDebug;
-        DHW.HWDisplay=DisplayHW.HWDisplayTypes.HostDebug;
+        DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
@@ -87,115 +86,122 @@ public abstract class kk_DefaultConfig {
         PINS[3] = 6;  //Bit2
         PINS[4] = 10; //Bit3
         PINS[5] = 11; //Bit4
-        
-        DP[PAGE_MAIN]=new DisplayPage();
-        DP[PAGE_MAIN].Features=new String[1];
-        DP[PAGE_MAIN].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
+
+        DP[PAGE_MAIN] = new DisplayPage();
+        DP[PAGE_MAIN].Features = new String[1];
+        DP[PAGE_MAIN].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_MAIN].HaveDynamicElements = true;
         DP[PAGE_MAIN].PageName = "MAIN";
         DP[PAGE_MAIN].HWDisplays = new String[1];
         DP[PAGE_MAIN].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_MAIN].UIFrameFiles=new String[7];
-        DP[PAGE_MAIN].UIFrameFiles[0]="kk_lcddisplay_uiframe_main_1.frame";
-        DP[PAGE_MAIN].UIFrameFiles[1]="kk_lcddisplay_uiframe_main_2.frame";
-        DP[PAGE_MAIN].UIFrameFiles[2]="kk_lcddisplay_uiframe_main_3.frame";
-        DP[PAGE_MAIN].UIFrameFiles[3]="kk_lcddisplay_uiframe_main_4.frame";
-        DP[PAGE_MAIN].UIFrameFiles[4]="kk_lcddisplay_uiframe_main_5.frame";
-        DP[PAGE_MAIN].UIFrameFiles[5]="kk_lcddisplay_uiframe_main_3.frame";
-        DP[PAGE_MAIN].UIFrameFiles[6]="kk_lcddisplay_uiframe_main_6.frame";
-        
+        DP[PAGE_MAIN].UIFrameFiles = new String[7];
+        DP[PAGE_MAIN].UIFrameFiles[0] = "kk_lcddisplay_uiframe_main_1.frame";
+        DP[PAGE_MAIN].UIFrameFiles[1] = "kk_lcddisplay_uiframe_main_2.frame";
+        DP[PAGE_MAIN].UIFrameFiles[2] = "kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_MAIN].UIFrameFiles[3] = "kk_lcddisplay_uiframe_main_4.frame";
+        DP[PAGE_MAIN].UIFrameFiles[4] = "kk_lcddisplay_uiframe_main_5.frame";
+        DP[PAGE_MAIN].UIFrameFiles[5] = "kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_MAIN].UIFrameFiles[6] = "kk_lcddisplay_uiframe_main_6.frame";
+        DP[PAGE_MAIN].IsDefaultPage = false;
 
-        DP[PAGE_DETAIL]=new DisplayPage();
+        DP[PAGE_DETAIL] = new DisplayPage();
         DP[PAGE_DETAIL].HaveDynamicElements = false;
         DP[PAGE_DETAIL].PageName = "DETAIL";
-        DP[PAGE_DETAIL].Features=new String[1];
-        DP[PAGE_DETAIL].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DETAIL].Features = new String[1];
+        DP[PAGE_DETAIL].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DETAIL].HWDisplays = new String[1];
         DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_DETAIL].UIFrameFiles=new String[1];
-        DP[PAGE_DETAIL].UIFrameFiles[0]="kk_lcddisplay_uiframe_detail_1.frame";
+        DP[PAGE_DETAIL].UIFrameFiles = new String[1];
+        DP[PAGE_DETAIL].UIFrameFiles[0] = "kk_lcddisplay_uiframe_detail_1.frame";
+        DP[PAGE_DETAIL].IsDefaultPage = false;
         //
-        DP[PAGE_WAIT]=new DisplayPage();
+        DP[PAGE_WAIT] = new DisplayPage();
         DP[PAGE_WAIT].HaveDynamicElements = false;
-        DP[PAGE_WAIT].Features=new String[1];
-        DP[PAGE_WAIT].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_WAIT].Features = new String[1];
+        DP[PAGE_WAIT].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_WAIT].PageName = "WAIT";
         DP[PAGE_WAIT].HWDisplays = new String[1];
         DP[PAGE_WAIT].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_WAIT].UIFrameFiles=new String[1];
-        DP[PAGE_WAIT].UIFrameFiles[0]="kk_lcddisplay_uiframe_wait_1.frame";
+        DP[PAGE_WAIT].UIFrameFiles = new String[1];
+        DP[PAGE_WAIT].UIFrameFiles[0] = "kk_lcddisplay_uiframe_wait_1.frame";
+        DP[PAGE_WAIT].IsDefaultPage = true;
         //
-        DP[PAGE_ERROR]=new DisplayPage();
+        DP[PAGE_ERROR] = new DisplayPage();
         DP[PAGE_ERROR].HaveDynamicElements = false;
-        DP[PAGE_ERROR].Features=new String[1];
-        DP[PAGE_ERROR].Features[0]=KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_ERROR].Features = new String[1];
+        DP[PAGE_ERROR].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_ERROR].PageName = "ERROR";
         DP[PAGE_ERROR].HWDisplays = new String[1];
         DP[PAGE_ERROR].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_ERROR].UIFrameFiles=new String[1];
-        DP[PAGE_ERROR].UIFrameFiles[0]="kk_lcddisplay_uiframe_error_1.frame";
-         //
-        DP[PAGE_SYSMENU_P1]=new DisplayPage();
+        DP[PAGE_ERROR].UIFrameFiles = new String[1];
+        DP[PAGE_ERROR].UIFrameFiles[0] = "kk_lcddisplay_uiframe_error_1.frame";
+        DP[PAGE_ERROR].IsDefaultPage = false;
+        //
+        DP[PAGE_SYSMENU_P1] = new DisplayPage();
         DP[PAGE_SYSMENU_P1].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU_P1].Features=new String[1];
-        DP[PAGE_SYSMENU_P1].Features[0]=KK_BASE_FEATURES_SYSTEM_UID;
+        DP[PAGE_SYSMENU_P1].Features = new String[1];
+        DP[PAGE_SYSMENU_P1].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU_P1].PageName = "SYSMENU_1";
         DP[PAGE_SYSMENU_P1].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_P1].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU_P1].UIFrameFiles=new String[1];
-        DP[PAGE_SYSMENU_P1].UIFrameFiles[0]="kk_sysmenu_p1_uiframe_1.frame";
-         //
-        DP[PAGE_SYSMENU_P2]=new DisplayPage();
+        DP[PAGE_SYSMENU_P1].UIFrameFiles = new String[1];
+        DP[PAGE_SYSMENU_P1].UIFrameFiles[0] = "kk_sysmenu_p1_uiframe_1.frame";
+        DP[PAGE_SYSMENU_P1].IsDefaultPage = true;
+        //
+        DP[PAGE_SYSMENU_P2] = new DisplayPage();
         DP[PAGE_SYSMENU_P2].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU_P2].Features=new String[1];
-        DP[PAGE_SYSMENU_P2].Features[0]=KK_BASE_FEATURES_SYSTEM_UID;
+        DP[PAGE_SYSMENU_P2].Features = new String[1];
+        DP[PAGE_SYSMENU_P2].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU_P2].PageName = "SYSMENU_2";
         DP[PAGE_SYSMENU_P2].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_P2].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU_P2].UIFrameFiles=new String[1];
-        DP[PAGE_SYSMENU_P2].UIFrameFiles[0]="kk_sysmenu_p2_uiframe_1.frame";
-          //
-        DP[PAGE_SYSMENU_VER]=new DisplayPage();
+        DP[PAGE_SYSMENU_P2].UIFrameFiles = new String[1];
+        DP[PAGE_SYSMENU_P2].UIFrameFiles[0] = "kk_sysmenu_p2_uiframe_1.frame";
+        DP[PAGE_SYSMENU_P2].IsDefaultPage = false;
+        //
+        DP[PAGE_SYSMENU_VER] = new DisplayPage();
         DP[PAGE_SYSMENU_VER].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU_VER].Features=new String[1];
-        DP[PAGE_SYSMENU_VER].Features[0]=KK_BASE_FEATURES_SYSTEM_UID;
+        DP[PAGE_SYSMENU_VER].Features = new String[1];
+        DP[PAGE_SYSMENU_VER].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU_VER].PageName = "SYSMENU_VI";
         DP[PAGE_SYSMENU_VER].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_VER].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU_VER].UIFrameFiles=new String[1];
-        DP[PAGE_SYSMENU_VER].UIFrameFiles[0]="kk_sysmenu_vi_uiframe_1.frame";
-           //
-        DP[PAGE_SYSMENU_SETT]=new DisplayPage();
+        DP[PAGE_SYSMENU_VER].UIFrameFiles = new String[1];
+        DP[PAGE_SYSMENU_VER].UIFrameFiles[0] = "kk_sysmenu_vi_uiframe_1.frame";
+        DP[PAGE_SYSMENU_VER].IsDefaultPage = false;
+        //
+        DP[PAGE_SYSMENU_SETT] = new DisplayPage();
         DP[PAGE_SYSMENU_SETT].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU_SETT].Features=new String[1];
-        DP[PAGE_SYSMENU_SETT].Features[0]=KK_BASE_FEATURES_SYSTEM_UID;
+        DP[PAGE_SYSMENU_SETT].Features = new String[1];
+        DP[PAGE_SYSMENU_SETT].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU_SETT].PageName = "SYSMENU_SETT";
         DP[PAGE_SYSMENU_SETT].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_SETT].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU_SETT].UIFrameFiles=new String[1];
-        DP[PAGE_SYSMENU_SETT].UIFrameFiles[0]="kk_sysmenu_sett_uiframe_1.frame";
+        DP[PAGE_SYSMENU_SETT].UIFrameFiles = new String[1];
+        DP[PAGE_SYSMENU_SETT].UIFrameFiles[0] = "kk_sysmenu_sett_uiframe_1.frame";
+        DP[PAGE_SYSMENU_SETT].IsDefaultPage = false;
         //
-        DefConf.ConfName="Default config";
+        DefConf.ConfName = "Default config";
         DefConf.DisplayPages = DP;
-        DefConf.HWDisplays=new DisplayHW[1];
-        DefConf.HWDisplays[0]=DHW;
-        DefConf.DefaultFeature=KK_BASE_FEATURES_SYSTEM_UID;
+        DefConf.HWDisplays = new DisplayHW[1];
+        DefConf.HWDisplays[0] = DHW;
+        DefConf.DefaultFeature = KK_BASE_FEATURES_SYSTEM_UID;
 
         return DefConf;
     }
-    
-    private static void CreateDefaultFrames()
-    {
-        File dir=new java.io.File(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR);
-        if (!dir.exists())
+
+    private static void CreateDefaultFrames() {
+        File dir = new java.io.File(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR);
+        if (!dir.exists()) {
             dir.mkdir();
-        else
+        } else {
             return;
-        
+        }
+
         FileWriter fw;
         BufferedWriter out;
         try {
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]SPD [SPD] TMP [TMP] "); //16
             out.newLine();
@@ -203,36 +209,36 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-            
-           fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_2.frame");
+
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_2.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
-            
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_3.frame");
+
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_3.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] -"); //16
             out.flush();
             out.close();
             fw.close();
-            
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_4.frame");
+
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_4.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME]  |"); //16
             out.flush();
             out.close();
             fw.close();
-            
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_5.frame");
+
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_5.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
-            
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_main_6.frame");
+
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_6.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] \\"); //16
             out.flush();
@@ -241,7 +247,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_lcddisplay_uiframe_detail_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_detail_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]T: [TMP] V:[VOLTAGE]"); //16
             out.newLine();
@@ -249,10 +255,10 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_p1_uiframe_1.frame");
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]*[SYSMENU_P1]*"); //16
             out.newLine();
@@ -260,10 +266,10 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-              ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_p2_uiframe_1.frame");
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p2_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1] [SYSMENU_P1]"); //16
             out.newLine();
@@ -271,10 +277,10 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-                 ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_vi_uiframe_1.frame");
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_vi_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write(" KKSystem V.1.0 "); //16
             out.newLine();
@@ -282,10 +288,10 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-                             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR+"kk_sysmenu_sett_uiframe_1.frame");
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_sett_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("Settings page"); //16
             out.newLine();
@@ -293,9 +299,7 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-            
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
