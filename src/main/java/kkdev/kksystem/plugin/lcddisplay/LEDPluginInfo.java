@@ -7,14 +7,16 @@ package kkdev.kksystem.plugin.lcddisplay;
 
 import kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_TYPE;
 import kkdev.kksystem.base.classes.plugins.PluginInfo;
+import kkdev.kksystem.base.classes.plugins.simple.IPluginInfoRequest;
 import kkdev.kksystem.base.constants.PluginConsts;
 
 /**
  *
  * @author blinov_is
  */
-public final class LEDPluginInfo  {
-    public static PluginInfo GetPluginInfo()
+public  class LEDPluginInfo implements IPluginInfoRequest  {
+    @Override
+    public  PluginInfo GetPluginInfo()
     {
         PluginInfo Ret=new PluginInfo();
         
@@ -30,7 +32,7 @@ public final class LEDPluginInfo  {
     }
     
     
-    private static String[] GetMyReceivePinInfo(){
+    private String[] GetMyReceivePinInfo(){
     
         String[] Ret=new String[4];
     
@@ -41,7 +43,7 @@ public final class LEDPluginInfo  {
         
         return Ret;
     }
-    private static String[] GetMyTransmitPinInfo(){
+    private String[] GetMyTransmitPinInfo(){
     
         String[] Ret=new String[2];
     

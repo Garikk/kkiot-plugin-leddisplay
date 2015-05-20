@@ -6,7 +6,6 @@
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
 import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW;
-import com.google.gson.Gson;
 import java.io.BufferedWriter;
 import java.io.File;
 import kkdev.kksystem.plugin.lcddisplay.manager.DisplayPage;
@@ -21,7 +20,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HD44780_4bit;
 import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HostDebug;
 import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes.RaspberryPI_B;
-import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager.DISPLAY_CONF;
+import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings.DISPLAY_CONF;
 
 /**
  *
@@ -34,31 +33,7 @@ import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsMan
  */
 public abstract class kk_DefaultConfig {
 
-    public static void MakeDefaultConfig() {
-
-        try {
-            LcdDisplayConf DefConf = GetDefaultconfig();
-
-            Gson gson = new Gson();
-
-            String Res = gson.toJson(DefConf);
-
-            FileWriter fw;
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + "/" + DISPLAY_CONF);
-            fw.write(Res);
-            fw.flush();
-            fw.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //
-        CreateDefaultFrames();
-        //
-
-    }
-
-    private static LcdDisplayConf GetDefaultconfig() {
+    public static LcdDisplayConf MakeDefaultConfig() {
         final int PAGE_MAIN = 0;
         final int PAGE_DETAIL = 1;
         final int PAGE_WAIT = 2;
@@ -191,7 +166,7 @@ public abstract class kk_DefaultConfig {
     }
 
     private static void CreateDefaultFrames() {
-        File dir = new java.io.File(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR);
+        File dir = new java.io.File(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR);
         if (!dir.exists()) {
             dir.mkdir();
         } else {
@@ -201,7 +176,7 @@ public abstract class kk_DefaultConfig {
         FileWriter fw;
         BufferedWriter out;
         try {
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]SPD [SPD] TMP [TMP] "); //16
             out.newLine();
@@ -210,35 +185,35 @@ public abstract class kk_DefaultConfig {
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_2.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_2.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_3.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_3.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] -"); //16
             out.flush();
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_4.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_4.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME]  |"); //16
             out.flush();
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_5.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_5.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_6.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_6.frame");
             out = new BufferedWriter(fw);
             out.write("[R2]TIME: [TIME] \\"); //16
             out.flush();
@@ -247,7 +222,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_detail_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_detail_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]T: [TMP] V:[VOLTAGE]"); //16
             out.newLine();
@@ -258,7 +233,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1]*[SYSMENU_P1]*"); //16
             out.newLine();
@@ -269,7 +244,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p2_uiframe_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p2_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("[R1] [SYSMENU_P1]"); //16
             out.newLine();
@@ -280,7 +255,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_vi_uiframe_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_vi_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write(" KKSystem V.1.0 "); //16
             out.newLine();
@@ -291,7 +266,7 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + SettingsManager.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_sett_uiframe_1.frame");
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_sett_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("Settings page"); //16
             out.newLine();

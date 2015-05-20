@@ -15,11 +15,14 @@ import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
+import kkdev.kksystem.base.classes.plugins.PluginMessage;
+import kkdev.kksystem.base.classes.plugins.simple.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
+import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_LED_DATA;
 import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.SettingsManager;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
 import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes;
 import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
@@ -31,32 +34,31 @@ import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
  * in now, create and manage only one page "Main", and only one hw display
  *
  */
-public abstract class LedDisplayManager {
+public class LedDisplayManager extends PluginManagerLCD {
 
     static String CurrentFeature;
-    static KKPlugin Connector;
     static String DefaultDisplay;
     static Map<String, KKDisplayView> Displays;
     static Map<String, Map<String, List<String>>> Pages;
     static Map<String, String> CurrentPage;              //Feature => PageName
 
-    public static void Init(KKPlugin Conn) {
+    public  void Init(KKPlugin Conn) {
         Connector = Conn;
 
-        SettingsManager.InitConfig();
+        PluginSettings.InitConfig();
         //
-        CurrentFeature = SettingsManager.MainConfiguration.DefaultFeature;
+        CurrentFeature = PluginSettings.MainConfiguration.DefaultFeature;
         //
         ConfigAndHWInit();
     }
 
-    private static void ConfigAndHWInit() {
+    private void ConfigAndHWInit() {
         Pages = new HashMap<>();
         Displays = new HashMap<>();
         CurrentPage=new HashMap<>();
 
         //Add HWDisplays and init
-        for (DisplayHW DH : SettingsManager.MainConfiguration.HWDisplays) {
+        for (DisplayHW DH : PluginSettings.MainConfiguration.HWDisplays) {
             //Init on RPi Host
             if (DH.HWBoard == HWHostTypes.RaspberryPI_B) {
                 if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
@@ -74,7 +76,7 @@ public abstract class LedDisplayManager {
 
         }
         //Add Pages
-        for (DisplayPage DP : SettingsManager.MainConfiguration.DisplayPages) {
+        for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
             List<String> LS = new ArrayList<>();
             LS.addAll(Arrays.asList(DP.HWDisplays));
             //
@@ -92,7 +94,7 @@ public abstract class LedDisplayManager {
         }
     }
 
-    public static void ReceivePin(String PinName, Object PinData) {
+    public void ReceivePin(String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
@@ -118,7 +120,7 @@ public abstract class LedDisplayManager {
     ///////////////////
     ///////////////////
 
-    private static void ProcessCommand(PinLedCommand Command) {
+    private void ProcessCommand(PinLedCommand Command) {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_INIT:
@@ -136,7 +138,7 @@ public abstract class LedDisplayManager {
         }
     }
 
-    private static void ProcessData(PinLedData Data) {
+    private void ProcessData(PinLedData Data) {
 
         switch (Data.DataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
@@ -151,7 +153,7 @@ public abstract class LedDisplayManager {
         }
     }
 
-    private static void ProcessBaseCommand(PinBaseCommand Command) {
+    private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
                 System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.FeatureUID);
@@ -165,7 +167,7 @@ public abstract class LedDisplayManager {
     //////////////////
     ///////////////////
 
-    private static void AnswerDisplayInfo() {
+    private void AnswerDisplayInfo() {
         PinLedData Ret;
         DisplayInfo[] DI = new DisplayInfo[Displays.values().size()];
         //
@@ -179,18 +181,29 @@ public abstract class LedDisplayManager {
         Ret = new PinLedData();
         Ret.DisplayState = DI;
         //
-        Connector.SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE, Ret);
+        LCD_SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE, Ret);
         //
+    }
+    
+    
+     public void LCD_SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA Command, PinLedData Data)
+    {
+        PluginMessage Msg=new PluginMessage();
+        Msg.PinName=KK_PLUGIN_BASE_LED_DATA;
+        //
+        Msg.PinData=Data;
+        //
+        Connector.TransmitPinMessage(Msg);
     }
     //////////////////
     ///////////////////
 
-    private static void SendTextToPage(String FeatureID, String PageID, String[] Text) {
+    private void SendTextToPage(String FeatureID, String PageID, String[] Text) {
         for (String TL : Text) {
             SendTextToPage(FeatureID, PageID, TL);
         }
     }
-    private static void SendTextToPage(String FeatureID, String PageID, String Text) {
+    private void SendTextToPage(String FeatureID, String PageID, String Text) {
         //Redirect unknown pages to main
         if (!Pages.get(FeatureID).containsKey(PageID)) {
             PageID = "MAIN";
@@ -211,7 +224,7 @@ public abstract class LedDisplayManager {
     }
 
 
-    private static void UpdateTextOnPage(String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
+    private void UpdateTextOnPage(String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
         //Redirect unknown pages to main
         if (!Pages.get(FeatureID).containsKey(PageID)) {
             PageID = "MAIN";
@@ -234,7 +247,7 @@ public abstract class LedDisplayManager {
 
     }
 
-    private static void SetPageToActive(String FeatureID, String PageID) {
+    private void SetPageToActive(String FeatureID, String PageID) {
          
         if (CurrentFeature.equals(FeatureID))
         {
@@ -249,14 +262,14 @@ public abstract class LedDisplayManager {
         }
     }
 
-    private static void SetPageToInactive(String FeatureID, String PageID) {
+    private void SetPageToInactive(String FeatureID, String PageID) {
         for (String DIS:Pages.get(FeatureID).get(PageID))
         {
             Displays.get(DIS).SetDisplayState(false);
         }
     }
 
-    private static void SelectFeature(String FeatureID) {
+    private void SelectFeature(String FeatureID) {
         if (CurrentFeature.equals(FeatureID)) {
             return;
         }
