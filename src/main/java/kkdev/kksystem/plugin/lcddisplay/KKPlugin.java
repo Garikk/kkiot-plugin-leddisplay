@@ -9,7 +9,7 @@ import kkdev.kksystem.base.classes.plugins.PluginInfo;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
-import kkdev.kksystem.plugin.lcddisplay.manager.LedDisplayManager;
+import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 
 
 /**     
@@ -22,7 +22,7 @@ public final class KKPlugin extends KKPluginBase   {
     public KKPlugin()
     {
         super(new LEDPluginInfo());
-        Global.PM=new LedDisplayManager();
+        Global.PM=new LcdDisplayManager();
         DisplayID=java.util.UUID.randomUUID().toString();
     }
 

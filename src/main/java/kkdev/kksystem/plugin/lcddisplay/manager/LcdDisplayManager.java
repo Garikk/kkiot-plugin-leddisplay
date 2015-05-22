@@ -34,7 +34,7 @@ import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
  * in now, create and manage only one page "Main", and only one hw display
  *
  */
-public class LedDisplayManager extends PluginManagerLCD {
+public class LcdDisplayManager extends PluginManagerLCD {
 
     static String CurrentFeature;
     static String DefaultDisplay;
@@ -100,7 +100,6 @@ public class LedDisplayManager extends PluginManagerLCD {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-
                 ProcessCommand(CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
@@ -180,21 +179,12 @@ public class LedDisplayManager extends PluginManagerLCD {
         //     
         Ret = new PinLedData();
         Ret.DisplayState = DI;
+        Ret.DataType=DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE;
         //
-        LCD_SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE, Ret);
+        DISPLAY_SendPluginMessageData(CurrentFeature, Ret);
         //
     }
     
-    
-     public void LCD_SendPluginMessageData(DisplayConstants.KK_DISPLAY_DATA Command, PinLedData Data)
-    {
-        PluginMessage Msg=new PluginMessage();
-        Msg.PinName=KK_PLUGIN_BASE_LED_DATA;
-        //
-        Msg.PinData=Data;
-        //
-        Connector.TransmitPinMessage(Msg);
-    }
     //////////////////
     ///////////////////
 

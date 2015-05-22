@@ -5,12 +5,12 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
-import kkdev.kksystem.plugin.lcddisplay.manager.LedDisplayManager;
+import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 
 /**
  *
  * @author blinov_is
  */
 public abstract class Global {
-    public static LedDisplayManager PM;
+    public static LcdDisplayManager PM;
 }
