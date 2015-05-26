@@ -94,13 +94,13 @@ public class LcdDisplayManager extends PluginManagerLCD {
         }
     }
 
-    public void ReceivePin(String PinName, Object PinData) {
+    public void ReceivePin(String FeatureID,String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand(CMD);
+                ProcessCommand(FeatureID,CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
@@ -119,7 +119,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     ///////////////////
     ///////////////////
 
-    private void ProcessCommand(PinLedCommand Command) {
+    private void ProcessCommand(String FeatureID,PinLedCommand Command) {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_INIT:
@@ -127,7 +127,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
                 break;
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
                 System.out.println("[LCDDisplay][CMD] Received CMD ACTIVATE");
-                SetPageToActive(Command.FeatureUID,Command.PageID);
+                SetPageToActive(FeatureID,Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
                 System.out.println("[LCDDisplay][CMD] Received CMD GETINFO");
@@ -155,7 +155,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-                System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.FeatureUID);
+                System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.ChangeFeatureID);
                 SelectFeature(CurrentFeature);
                 break;
             case PLUGIN:
