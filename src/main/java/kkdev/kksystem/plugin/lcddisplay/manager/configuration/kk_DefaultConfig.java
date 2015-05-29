@@ -125,18 +125,6 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_P1].UIFrameFiles[0] = "kk_sysmenu_p1_uiframe_1.frame";
         DP[PAGE_SYSMENU_P1].IsDefaultPage = true;
         //
-        DP[PAGE_SYSMENU_P2] = new DisplayPage();
-        DP[PAGE_SYSMENU_P2].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU_P2].Features = new String[2];
-        DP[PAGE_SYSMENU_P2].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
-        DP[PAGE_SYSMENU_P2].Features[1] = KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
-        DP[PAGE_SYSMENU_P2].PageName = "SYSMENU_2";
-        DP[PAGE_SYSMENU_P2].HWDisplays = new String[1];
-        DP[PAGE_SYSMENU_P2].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU_P2].UIFrameFiles = new String[1];
-        DP[PAGE_SYSMENU_P2].UIFrameFiles[0] = "kk_sysmenu_p2_uiframe_1.frame";
-        DP[PAGE_SYSMENU_P2].IsDefaultPage = false;
-        //
         DP[PAGE_SYSMENU_VER] = new DisplayPage();
         DP[PAGE_SYSMENU_VER].HaveDynamicElements = false;
         DP[PAGE_SYSMENU_VER].Features = new String[1];
@@ -238,20 +226,9 @@ public abstract class kk_DefaultConfig {
             ///
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
             out = new BufferedWriter(fw);
-            out.write("[R1]*[SYSMENU_P1]*"); //16
+            out.write("[L1][SEL1][SYSMENU_P1][SEL1]"); //16
             out.newLine();
-            out.write("[R2] [SYSMENU_P2]"); //16
-            out.flush();
-            out.close();
-            fw.close();
-            ///
-            ///
-            ///
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p2_uiframe_1.frame");
-            out = new BufferedWriter(fw);
-            out.write("[R1] [SYSMENU_P1]"); //16
-            out.newLine();
-            out.write("[R2]*[SYSMENU_P2]*"); //16
+            out.write("[L2][SEL2][SYSMENU_P2][SEL2]"); //16
             out.flush();
             out.close();
             fw.close();
