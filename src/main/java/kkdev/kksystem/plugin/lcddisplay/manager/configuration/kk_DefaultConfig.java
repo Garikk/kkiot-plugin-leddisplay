@@ -17,11 +17,6 @@ import kkdev.kksystem.base.constants.SystemConsts;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_UID;
-import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
-import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HD44780_4bit;
-import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes.HostDebug;
-import static kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes.RaspberryPI_B;
-import static kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings.DISPLAY_CONF;
 
 /**
  *
@@ -40,13 +35,12 @@ public abstract class kk_DefaultConfig {
         final int PAGE_WAIT = 2;
         final int PAGE_ERROR = 3;
         final int PAGE_SYSMENU_P1 = 4;
-        final int PAGE_SYSMENU_P2 = 5;
-        final int PAGE_SYSMENU_VER = 6;
-        final int PAGE_SYSMENU_SETT = 7;
+        final int PAGE_SYSMENU_VER = 5;
+        final int PAGE_SYSMENU_SETT = 6;
 
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[8];
+        DisplayPage[] DP = new DisplayPage[7];
         //
         DisplayHW DHW = new DisplayHW();
         DHW.HWDisplayName = "DEBUG";
@@ -117,7 +111,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_P1].HaveDynamicElements = false;
         DP[PAGE_SYSMENU_P1].Features = new String[2];
         DP[PAGE_SYSMENU_P1].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
-        DP[PAGE_SYSMENU_P2].Features[1] = KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
+        DP[PAGE_SYSMENU_P1].Features[1] = KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
         DP[PAGE_SYSMENU_P1].PageName = "SYSMENU_1";
         DP[PAGE_SYSMENU_P1].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_P1].HWDisplays[0] = DHW.HWDisplayName;
