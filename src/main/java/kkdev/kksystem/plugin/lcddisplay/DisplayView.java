@@ -11,14 +11,14 @@ import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
  *
  * @author blinov_is
  */
-public class KKDisplayView {
+public class DisplayView {
    public IDisplayConnectorHW Connector;
    public String DisplayID;
    public boolean Enabled;
    public boolean Active;
    public boolean ErrorState;
    
-   public KKDisplayView(IDisplayConnectorHW InitConn)
+   public DisplayView(IDisplayConnectorHW InitConn)
    {
        Connector=InitConn;
        //

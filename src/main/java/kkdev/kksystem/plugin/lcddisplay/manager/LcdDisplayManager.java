@@ -5,6 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import kkdev.kksystem.plugin.lcddisplay.DisplayHW;
+import kkdev.kksystem.plugin.lcddisplay.DisplayPage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,13 +19,13 @@ import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
-import kkdev.kksystem.plugin.lcddisplay.KKDisplayView;
+import kkdev.kksystem.plugin.lcddisplay.DisplayView;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
-import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWDisplayTypes;
-import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW.HWHostTypes;
+import kkdev.kksystem.plugin.lcddisplay.DisplayHW.HWDisplayTypes;
+import kkdev.kksystem.plugin.lcddisplay.DisplayHW.HWHostTypes;
 
 /**
  *
@@ -36,7 +38,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     static String CurrentFeature;
     static String DefaultDisplay;
-    static Map<String, KKDisplayView> Displays;
+    static Map<String, DisplayView> Displays;
     static Map<String, Map<String, List<String>>> Pages;
     static Map<String, String> CurrentPage;              //Feature => PageName
 
@@ -60,13 +62,13 @@ public class LcdDisplayManager extends PluginManagerLCD {
             //Init on RPi Host
             if (DH.HWBoard == HWHostTypes.RaspberryPI_B) {
                 if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
-                    Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayHD44780onRPI()));
+                    Displays.put(DH.HWDisplayName, new DisplayView(new DisplayHD44780onRPI()));
                 } else {
                     System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                 }
             } //Debug host
             else if (DH.HWBoard == HWHostTypes.DisplayDebug) {
-                Displays.put(DH.HWDisplayName, new KKDisplayView(new DisplayDebug()));
+                Displays.put(DH.HWDisplayName, new DisplayView(new DisplayDebug()));
             } //Config error
             else {
                 System.out.println("[LCDDisplay][CONFLOADER] Unknown HW board in config!! + " + DH.HWBoard);
@@ -170,7 +172,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         //
         int cnt = 0;
         //
-        for (KKDisplayView DV : Displays.values()) {
+        for (DisplayView DV : Displays.values()) {
             DI[cnt] = DV.Connector.GetDisplayInfo();
             cnt++;
         }
@@ -200,7 +202,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         List<String> DisplayToView;
         DisplayToView = Pages.get(FeatureID).get(PageID);
 
-        KKDisplayView DV;
+        DisplayView DV;
         for (String D : DisplayToView) {
             DV = Displays.get(D);
             if (DV != null) {
@@ -222,7 +224,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         DisplayToView = Pages.get(FeatureID).get(PageID);
 
         for (int i = 0; i <= Text.length; i++) {
-            KKDisplayView DV;
+            DisplayView DV;
             for (String D : DisplayToView) {
                 DV = Displays.get(D);
                 if (DV != null) {

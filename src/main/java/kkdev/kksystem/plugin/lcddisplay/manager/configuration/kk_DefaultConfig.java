@@ -5,10 +5,10 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
-import kkdev.kksystem.plugin.lcddisplay.manager.DisplayHW;
+import kkdev.kksystem.plugin.lcddisplay.DisplayHW;
 import java.io.BufferedWriter;
 import java.io.File;
-import kkdev.kksystem.plugin.lcddisplay.manager.DisplayPage;
+import kkdev.kksystem.plugin.lcddisplay.DisplayPage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
