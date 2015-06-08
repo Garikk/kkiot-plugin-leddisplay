@@ -5,13 +5,21 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
-import kkdev.kksystem.plugin.lcddisplay.DisplayHW;
-import kkdev.kksystem.plugin.lcddisplay.DisplayPage;
+import com.sun.xml.internal.fastinfoset.util.StringArray;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kkdev.kksystem.base.classes.base.PinBaseCommand;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
@@ -19,13 +27,13 @@ import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
-import kkdev.kksystem.plugin.lcddisplay.DisplayView;
+import kkdev.kksystem.base.constants.SystemConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
-import kkdev.kksystem.plugin.lcddisplay.DisplayHW.HWDisplayTypes;
-import kkdev.kksystem.plugin.lcddisplay.DisplayHW.HWHostTypes;
+import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes;
+import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes;
 
 /**
  *
@@ -91,16 +99,49 @@ public class LcdDisplayManager extends PluginManagerLCD {
                         CurrentPage.put(F, DP.PageName);
             }
             //
+            for (String DS:DP.HWDisplays)
+            {
+            loadFramesIntoPage(Displays.get(DS),DP.UIFrameFiles);
+            }
         }
+
     }
 
-    public void ReceivePin(String FeatureID,String PinName, Object PinData) {
+    private void loadFramesIntoPage(DisplayView DView, String[] FrameFiles)  {
+        
+        for (String FrameFile : FrameFiles) {
+            try {
+                FileReader fr;
+                fr = new FileReader(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "//"+FrameFile);
+                BufferedReader br=new BufferedReader(fr);
+                String line;
+                StringArray FramesToLoad=new StringArray();
+                while ((line = br.readLine()) != null)
+                {
+                    FramesToLoad.add(line);
+                }
+                br.close();
+                fr.close();
+                DView.UIFrames=FramesToLoad.getArray();
+                
+            } catch (FileNotFoundException ex) {
+                    Logger.getLogger(LcdDisplayManager.class.getName()).log(Level.SEVERE, null, ex);
+            
+            } catch (IOException ex){
+                    Logger.getLogger(LcdDisplayManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+
+    }
+
+    public void ReceivePin(String FeatureID, String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand(FeatureID,CMD);
+                ProcessCommand(FeatureID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
@@ -118,8 +159,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     ///////////////////
     ///////////////////
-
-    private void ProcessCommand(String FeatureID,PinLedCommand Command) {
+    private void ProcessCommand(String FeatureID, PinLedCommand Command) {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_INIT:
@@ -127,7 +167,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
                 break;
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
                 System.out.println("[LCDDisplay][CMD] Received CMD ACTIVATE");
-                SetPageToActive(FeatureID,Command.PageID);
+                SetPageToActive(FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
                 System.out.println("[LCDDisplay][CMD] Received CMD GETINFO");
@@ -147,7 +187,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-
+                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage, Data.OnFrame_DataKeys, Data.OnFrame_DataValues);
                 break;
         }
     }
@@ -156,7 +196,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
                 System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.ChangeFeatureID);
-                SelectFeature(CurrentFeature);
+                ChangeFeature(CurrentFeature);
                 break;
             case PLUGIN:
                 break;
@@ -212,8 +252,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
             }
         }
     }
-
-
     private void UpdateTextOnPage(String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
         //Redirect unknown pages to main
         if (!Pages.get(FeatureID).containsKey(PageID)) {
@@ -236,7 +274,11 @@ public class LcdDisplayManager extends PluginManagerLCD {
         }
 
     }
-
+    private void UpdatePageUIFrames(String FeatureID, String PageID, String[] Keys, String[] Values)
+    {
+    
+    
+    }
     private void SetPageToActive(String FeatureID, String PageID) {
          
         if (CurrentFeature.equals(FeatureID))
@@ -259,7 +301,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         }
     }
 
-    private void SelectFeature(String FeatureID) {
+    private void ChangeFeature(String FeatureID) {
         if (CurrentFeature.equals(FeatureID)) {
             return;
         }

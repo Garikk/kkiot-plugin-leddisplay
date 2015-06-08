@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.lcddisplay;
+package kkdev.kksystem.plugin.lcddisplay.manager;
 
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 
@@ -17,6 +17,7 @@ public class DisplayView {
    public boolean Enabled;
    public boolean Active;
    public boolean ErrorState;
+   String[] UIFrames;
    
    public DisplayView(IDisplayConnectorHW InitConn)
    {
@@ -24,7 +25,6 @@ public class DisplayView {
        //
        DisplayID=Connector.GetDisplayInfo().DisplayID;
        ((Thread)Connector).start();
-//       Connector.InitDisplayHW();
    }
    
    public void SetDisplayState(boolean State)
@@ -34,7 +34,6 @@ public class DisplayView {
           Connector.ClearDisplay();
        //
        Active=State;
-       
    }
    
    
@@ -61,5 +60,23 @@ public class DisplayView {
        if (Active)
         Connector.DisplayTextUpdate(Text, Col, Row);
    }
-   
+   public void UpdateFrameVariables(String[] Keys, String[] Values)
+   {
+       if (Keys.length!=Values.length)
+           return;
+       //
+       for (int i=0;i<Keys.length;i++)
+       {
+            for (String Frame:UIFrames)
+            {
+                 Frame=Frame.replace(Keys[i], Values[i]);
+            }
+       }
+       //
+       Connector.DisplayTextSetUIFrames(UIFrames);
+   }
+   public void SetUIFrames(String[] Frames)
+   {
+       UIFrames=Frames;
+   }
 }

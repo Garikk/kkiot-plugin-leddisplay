@@ -27,6 +27,9 @@ public class DisplayHD44780onRPI extends Thread implements IDisplayConnectorHW {
     GpioLcdDisplay lcd;
     final GpioController gpio = GpioFactory.getInstance();
     boolean CmdStopDisplay=false;
+    String[] UIFrames;
+    
+
 
     @Override
     public void run() {
@@ -112,6 +115,13 @@ public class DisplayHD44780onRPI extends Thread implements IDisplayConnectorHW {
     public void ClearDisplay() {
        lcd.clear();
     }
+
+    @Override
+    public void DisplayTextSetUIFrames(String[] Frames) {
+        UIFrames=Frames;
+    }
+
+    
 
 
 }

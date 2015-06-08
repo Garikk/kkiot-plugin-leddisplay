@@ -93,6 +93,11 @@ public class DisplayDebug extends Thread implements IDisplayConnectorHW {
               System.out.println("[LCDDisplay][DEBUG] Received CLEAR command");
     }
 
+    @Override
+    public void DisplayTextSetUIFrames(String[] Frames) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }
 
