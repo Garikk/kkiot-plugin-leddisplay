@@ -47,8 +47,9 @@ public class LcdDisplayManager extends PluginManagerLCD {
     static String CurrentFeature;
     static String DefaultDisplay;
     static Map<String, DisplayView> Displays;
-    static Map<String, Map<String, List<String>>> Pages;
+    static Map<String, Map<String, List<String>>> SPages;
     static Map<String, String> CurrentPage;              //Feature => PageName
+    static Map<String,DisplayPage> DPages;
 
     public  void Init(KKPlugin Conn) {
         Connector = Conn;
@@ -61,7 +62,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
 
     private void ConfigAndHWInit() {
-        Pages = new HashMap<>();
+        SPages = new HashMap<>();
         Displays = new HashMap<>();
         CurrentPage=new HashMap<>();
 
@@ -83,57 +84,29 @@ public class LcdDisplayManager extends PluginManagerLCD {
             }
 
         }
-        //Add Pages
+        //Add SPages
+        DPages=new HashMap<>();
         for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
+            DPages.put(DP.PageName, DP);
+            DP.InitUIFrames();
             List<String> LS = new ArrayList<>();
             LS.addAll(Arrays.asList(DP.HWDisplays));
             //
             for (String F : DP.Features) {
-                if (!Pages.containsKey(F)) {
-                    Pages.put(F, new HashMap<>());
+                if (!SPages.containsKey(F)) {
+                    SPages.put(F, new HashMap<>());
                 }
-                Pages.get(F).put(DP.PageName, LS);
+                SPages.get(F).put(DP.PageName, LS);
                 //
                 if (DP.IsDefaultPage)
                     if (!CurrentPage.containsKey(F))
                         CurrentPage.put(F, DP.PageName);
             }
             //
-            for (String DS:DP.HWDisplays)
-            {
-            loadFramesIntoPage(Displays.get(DS),DP.UIFrameFiles);
-            }
         }
 
     }
 
-    private void loadFramesIntoPage(DisplayView DView, String[] FrameFiles)  {
-        
-        for (String FrameFile : FrameFiles) {
-            try {
-                FileReader fr;
-                fr = new FileReader(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "//"+FrameFile);
-                BufferedReader br=new BufferedReader(fr);
-                String line;
-                StringArray FramesToLoad=new StringArray();
-                while ((line = br.readLine()) != null)
-                {
-                    FramesToLoad.add(line);
-                }
-                br.close();
-                fr.close();
-                DView.UIFrames=FramesToLoad.getArray();
-                
-            } catch (FileNotFoundException ex) {
-                    Logger.getLogger(LcdDisplayManager.class.getName()).log(Level.SEVERE, null, ex);
-            
-            } catch (IOException ex){
-                    Logger.getLogger(LcdDisplayManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-
-    }
 
     public void ReceivePin(String FeatureID, String PinName, Object PinData) {
 
@@ -235,12 +208,12 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
     private void SendTextToPage(String FeatureID, String PageID, String Text) {
         //Redirect unknown pages to main
-        if (!Pages.get(FeatureID).containsKey(PageID)) {
+        if (!SPages.get(FeatureID).containsKey(PageID)) {
             PageID = "MAIN";
         }
         //
         List<String> DisplayToView;
-        DisplayToView = Pages.get(FeatureID).get(PageID);
+        DisplayToView = SPages.get(FeatureID).get(PageID);
 
         DisplayView DV;
         for (String D : DisplayToView) {
@@ -254,12 +227,12 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
     private void UpdateTextOnPage(String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
         //Redirect unknown pages to main
-        if (!Pages.get(FeatureID).containsKey(PageID)) {
+        if (!SPages.get(FeatureID).containsKey(PageID)) {
             PageID = "MAIN";
         }
         //
         List<String> DisplayToView;
-        DisplayToView = Pages.get(FeatureID).get(PageID);
+        DisplayToView = SPages.get(FeatureID).get(PageID);
 
         for (int i = 0; i <= Text.length; i++) {
             DisplayView DV;
@@ -288,14 +261,17 @@ public class LcdDisplayManager extends PluginManagerLCD {
         //
         CurrentPage.put(FeatureID, PageID);
         //
-        for (String DIS:Pages.get(FeatureID).get(PageID))
+        DisplayView DV;
+        for (String DIS:SPages.get(FeatureID).get(PageID))
         {
+            DV=Displays.get(DIS);
+            DV.UIFrames=DPages.get(PageID).UIFramesData;
             Displays.get(DIS).SetDisplayState(true);
         }
     }
 
     private void SetPageToInactive(String FeatureID, String PageID) {
-        for (String DIS:Pages.get(FeatureID).get(PageID))
+        for (String DIS:SPages.get(FeatureID).get(PageID))
         {
             Displays.get(DIS).SetDisplayState(false);
         }
