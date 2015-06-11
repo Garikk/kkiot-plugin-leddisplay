@@ -95,7 +95,8 @@ public class DisplayDebug extends Thread implements IDisplayConnectorHW {
 
     @Override
     public void DisplayTextSetUIFrames(String[] Frames) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       System.out.println(Frames[0]);
+       System.out.println(Frames[1]);
     }
 
 

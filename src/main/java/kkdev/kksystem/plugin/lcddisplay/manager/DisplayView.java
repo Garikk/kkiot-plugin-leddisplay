@@ -5,6 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 
 /**
@@ -62,6 +64,12 @@ public class DisplayView {
    }
    public void UpdateFrameVariables(String[] Keys, String[] Values)
    {
+       if (UIFrames==null)
+       {
+            Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID +"]");
+            return;
+       }
+       
        if (Keys.length!=Values.length)
            return;
        //
@@ -69,7 +77,8 @@ public class DisplayView {
        {
             for (String Frame:UIFrames)
             {
-                 Frame=Frame.replace(Keys[i], Values[i]);
+                if (Frame!=null)
+                    Frame=Frame.replace(Keys[i], Values[i]);
             }
        }
        //

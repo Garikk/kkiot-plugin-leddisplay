@@ -59,7 +59,7 @@ public class DisplayPage {
             }
 
         }
-        UIFrameFiles = FramesToLoad.getArray();
+        UIFramesData = FramesToLoad.getArray();
     }
 }
 

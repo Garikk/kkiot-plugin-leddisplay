@@ -231,9 +231,9 @@ public abstract class kk_DefaultConfig {
             ///
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
             out = new BufferedWriter(fw);
-            out.write("[SEL1][SYSMENU_P1][SEL1]"); //16
+            out.write("[SEL_0][SYSMENU_1][SEL_0]"); //16
             out.newLine();
-            out.write("[SEL2][SYSMENU_P2][SEL2]"); //16
+            out.write("[SEL_1][SYSMENU_2][SEL_1]"); //16
             out.flush();
             out.close();
             fw.close();
@@ -259,7 +259,33 @@ public abstract class kk_DefaultConfig {
             out.flush();
             out.close();
             fw.close();
-
+            //
+            //
+            //
+            
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_error_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("Error"); //16
+            out.newLine();
+            out.write("......ERROR......"); //16
+            out.flush();
+            out.close();
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           //
+            //
+            //
+            try{
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_wait_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("Wait"); //16
+            out.newLine();
+            out.write("......WAIT......"); //16
+            out.flush();
+            out.close();
+            fw.close();
         } catch (IOException ex) {
             Logger.getLogger(kk_DefaultConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
