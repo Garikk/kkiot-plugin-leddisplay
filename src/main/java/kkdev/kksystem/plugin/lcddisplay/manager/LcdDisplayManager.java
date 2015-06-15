@@ -117,13 +117,12 @@ public class LcdDisplayManager extends PluginManagerLCD {
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
                 DAT = (PinLedData) PinData;
-                System.out.println("[LCDDisplay][CMD] Received DATA");
                 ProcessData(DAT);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
                 PinBaseCommand BaseCMD;
                 BaseCMD = (PinBaseCommand) PinData;
-                System.out.println("[LCDDisplay][CMD] Received BASE CMD");
+
                 ProcessBaseCommand(BaseCMD);
         }
     }
@@ -223,6 +222,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
 
     private void UpdatePageUIFrames(String FeatureID, String PageID, String[] Keys, String[] Values) {
+        
         for (DisplayView DV:DViews.get(FeatureID).get(PageID))
         {
             DV.UpdateFrameVariables(Keys, Values);

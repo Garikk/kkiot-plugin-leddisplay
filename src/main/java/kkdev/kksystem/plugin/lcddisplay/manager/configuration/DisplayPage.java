@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.constants.SystemConsts;
-import kkdev.kksystem.plugin.lcddisplay.manager.DisplayView;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 
 

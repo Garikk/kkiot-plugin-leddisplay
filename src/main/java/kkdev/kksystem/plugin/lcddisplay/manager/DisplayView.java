@@ -64,28 +64,30 @@ public class DisplayView {
    }
    public void UpdateFrameVariables(String[] Keys, String[] Values)
    {
+       String[] UIFramesToDisplay=UIFrames.clone();
+       
        if (UIFrames==null)
        {
-            Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID +"]");
+            Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
-       }
-       
-       if (Keys.length!=Values.length)
-           return;
-       //
-       for (int i=0;i<Keys.length;i++)
-       {
-            for (String Frame:UIFrames)
-            {
-                if (Frame!=null)
-                    Frame=Frame.replace(Keys[i], Values[i]);
+        }
+
+        if (Keys.length != Values.length) {
+            return;
+        }
+        //
+        for (int i=0;i<UIFramesToDisplay.length;i++) {
+            for (int ii = 0; ii < Keys.length; ii++) {
+                if (UIFramesToDisplay[i] != null) {
+                    UIFramesToDisplay[i] = UIFramesToDisplay[i].replace("["+Keys[ii]+"]", Values[ii]);
+                }
             }
-       }
-       //
-       Connector.DisplayTextSetUIFrames(UIFrames);
-   }
-   public void SetUIFrames(String[] Frames)
-   {
-       UIFrames=Frames;
-   }
+        }
+        //
+        Connector.DisplayTextSetUIFrames(UIFramesToDisplay);
+    }
+
+    public void SetUIFrames(String[] Frames) {
+        UIFrames = Frames;
+    }
 }
