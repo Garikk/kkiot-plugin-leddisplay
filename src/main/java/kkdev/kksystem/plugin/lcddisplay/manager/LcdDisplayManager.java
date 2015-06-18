@@ -34,7 +34,6 @@ import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes;
  */
 public class LcdDisplayManager extends PluginManagerLCD {
 
-    static String CurrentFeature;
     static String DefaultDisplay;
     static Map<String, DisplayView> Displays;
     static Map<String, String> CurrentPage;              //Feature => PageName
@@ -133,14 +132,11 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_INIT:
-                //System.out.println("[LCDDisplay][CMD] Received CMD INIT");
                 break;
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
-                //System.out.println("[LCDDisplay][CMD] Received CMD ACTIVATE");
                 SetPageToActive(FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
-                //System.out.println("[LCDDisplay][CMD] Received CMD GETINFO");
                 AnswerDisplayInfo();
                 break;
 
@@ -165,7 +161,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-                //System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + Command.ChangeFeatureID);
+
                 ChangeFeature(CurrentFeature);
                 break;
             case PLUGIN:
@@ -245,9 +241,9 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
 
     private void SetPageToInactive(String FeatureID, String PageID) {
-      for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
+        DViews.get(FeatureID).get(PageID).stream().forEach((DV) -> {
             DV.SetDisplayState(false);
-        }
+        });
     }
 
     private void ChangeFeature(String FeatureID) {
@@ -259,8 +255,10 @@ public class LcdDisplayManager extends PluginManagerLCD {
         // Set Current page of feature to Active
         SetPageToActive(FeatureID, CurrentPage.get(CurrentFeature));
          //
+        System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + FeatureID);
         //
         CurrentFeature = FeatureID;
         //
+
     }
 }
