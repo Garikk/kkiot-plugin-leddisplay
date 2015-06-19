@@ -15,7 +15,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
  *
  * @author blinov_is
  */
-public class DisplayDebug extends Thread implements IDisplayConnectorHW {
+public class DisplayDebug implements IDisplayConnectorHW {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
@@ -24,14 +24,6 @@ public class DisplayDebug extends Thread implements IDisplayConnectorHW {
 
     boolean CmdStopDisplay=false;
 
-    @Override
-    public void run() {
-        
-     //  
-        super.run(); //To change body of generated methods, choose Tools | Templates.
-    }   
-
-    
  
     @Override
     public void SetContrast(int Contrast) {

@@ -76,8 +76,8 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
         //Add SPages
         for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
-            DPages.put(DP.PageName, DP);
             DP.InitUIFrames();
+            DPages.put(DP.PageName, DP);
             List<DisplayView> LS = new ArrayList<>();
             for (String DV:DP.HWDisplays)
             {
@@ -97,11 +97,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
             }
             //
         }
-
-        
-        
-        
-      
     }
 
 
@@ -134,6 +129,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
             case DISPLAY_KKSYS_PAGE_INIT:
                 break;
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
+                System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
                 SetPageToActive(FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
@@ -153,7 +149,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage, Data.OnFrame_DataKeys, Data.OnFrame_DataValues);
+                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage,false, Data.OnFrame_DataKeys, Data.OnFrame_DataValues);
                 break;
         }
     }
@@ -161,8 +157,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-
-                ChangeFeature(CurrentFeature);
+                ChangeFeature(Command.ChangeFeatureID);
                 break;
             case PLUGIN:
                 break;
@@ -217,32 +212,51 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     }
 
-    private void UpdatePageUIFrames(String FeatureID, String PageID, String[] Keys, String[] Values) {
+    private void UpdatePageUIFrames(String FeatureID, String PageID, boolean SetUIFrames, String[] Keys, String[] Values) {
+
+        DisplayPage DP=DPages.get(PageID);
         
-        for (DisplayView DV:DViews.get(FeatureID).get(PageID))
+        if (Keys!=null)
         {
-            DV.UpdateFrameVariables(Keys, Values);
+            DP.UIFramesKeys = Keys;
+            DP.UIFramesData = Values;
         }
-    
+        //
+        if (!CurrentFeature.equals(FeatureID))
+            return;
+        //
+        
+        for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
+            //When change page, set new uiframes
+            if (SetUIFrames) {
+                DV.SetUIFrames(DP.UIFrames);
+            }
+            //Update values
+            DV.UpdateFrameVariables(DP.UIFramesKeys, DP.UIFramesData);
+        }
+
     }
+
     private void SetPageToActive(String FeatureID, String PageID) {
-         
-        SetPageToInactive(FeatureID,CurrentPage.get(FeatureID));
+        DisplayPage DP = DPages.get(PageID);
         //
         CurrentPage.put(FeatureID, PageID);
         //
         if (!CurrentFeature.equals(FeatureID))
             return;
         //
-        for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
-            DV.UIFrames = DPages.get(PageID).UIFramesData;
-            DV.SetDisplayState(true);
-        }
+       // SetPageToInactive(CurrentFeature,CurrentPage.get(CurrentFeature));
+        //
+        UpdatePageUIFrames(FeatureID, PageID, true, null, null);
     }
 
     private void SetPageToInactive(String FeatureID, String PageID) {
+        if (!FeatureID.equals(CurrentFeature)) {
+            return;
+        }
+
         DViews.get(FeatureID).get(PageID).stream().forEach((DV) -> {
-            DV.SetDisplayState(false);
+            DV.ClearDisplay();
         });
     }
 
@@ -250,14 +264,15 @@ public class LcdDisplayManager extends PluginManagerLCD {
         if (CurrentFeature.equals(FeatureID)) {
             return;
         }
-        // Set last selected feature displays to inactive
-        SetPageToInactive(FeatureID, CurrentPage.get(FeatureID));
         // Set Current page of feature to Active
-        SetPageToActive(FeatureID, CurrentPage.get(CurrentFeature));
-         //
-        System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + FeatureID);
-        //
+        SetPageToInactive(CurrentFeature,CurrentPage.get(CurrentFeature));
         CurrentFeature = FeatureID;
+        SetPageToActive(FeatureID, CurrentPage.get(FeatureID));
+
+        //
+       // System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + FeatureID);
+        //
+
         //
 
     }

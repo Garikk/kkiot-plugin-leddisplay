@@ -32,6 +32,8 @@ public class DisplayPage {
     //
     public String[] UIFrameFiles;       //UI Frame files list
     //
+    public transient String[] UIFrames;
+    public transient String[] UIFramesKeys;
     public transient String[] UIFramesData;
     
     public void InitUIFrames()
@@ -58,7 +60,7 @@ public class DisplayPage {
             }
 
         }
-        UIFramesData = FramesToLoad.getArray();
+        UIFrames = FramesToLoad.getArray();
     }
 }
 

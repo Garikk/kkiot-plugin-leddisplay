@@ -17,7 +17,7 @@ import com.pi4j.io.gpio.RaspiPin;
  *
  * @author blinov_is
  */
-public class DisplayHD44780onRPI extends Thread implements IDisplayConnectorHW {
+public class DisplayHD44780onRPI implements IDisplayConnectorHW {
         final int LCD_ROWS = 2;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
@@ -31,20 +31,12 @@ public class DisplayHD44780onRPI extends Thread implements IDisplayConnectorHW {
     
 
 
-    @Override
-    public void run() {
+   
+    public DisplayHD44780onRPI() {
         
        InitDisplayHW();
-       while (!CmdStopDisplay)
-       {
-           try {
-               Thread.sleep(5000);
-           } catch (InterruptedException ex) {
-               //Logger.getLogger(DisplayMIELTMT16S2H_4bb.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }
-      lcd.clear();
-        super.run(); //To change body of generated methods, choose Tools | Templates.
+          lcd.clear();
+      
     }   
 
     
