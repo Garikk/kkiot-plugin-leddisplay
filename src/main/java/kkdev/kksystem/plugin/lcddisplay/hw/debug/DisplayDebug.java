@@ -86,9 +86,9 @@ public class DisplayDebug implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames) {
-       System.out.println(Frames[0]);
-       System.out.println(Frames[1]);
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+       System.out.println(Frames[Offset]);
+       System.out.println(Frames[Offset+1]);
     }
 
 

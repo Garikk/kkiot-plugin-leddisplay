@@ -16,6 +16,8 @@ import kkdev.kksystem.base.constants.SystemConsts;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_UID;
+import static kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes.HD44780_4bit;
+import static kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes.RaspberryPI_B;
 
 /**
  *
@@ -42,11 +44,11 @@ public abstract class kk_DefaultConfig {
         DisplayPage[] DP = new DisplayPage[7];
         //
         DisplayHW DHW = new DisplayHW();
-        DHW.HWDisplayName = "DEBUG";
-        //DHW.HWBoard = RaspberryPI_B;
-        //DHW.HWDisplay = HD44780_4bit;
-        DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
-        DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
+        //DHW.HWDisplayName = "DEBUG";
+        DHW.HWBoard = RaspberryPI_B;
+        DHW.HWDisplay = HD44780_4bit;
+        //DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        //DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
@@ -166,7 +168,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME:  [TIME] |"); //16
+            out.write("TIME: [KK_PL_TIME] |"); //16
             out.flush();
             out.close();
             fw.close();
@@ -175,7 +177,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [TIME] /"); //16
+            out.write("TIME: [KK_PL_TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
@@ -184,7 +186,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [TIME] -"); //16
+            out.write("TIME: [KK_PL_TIME] -"); //16
             out.flush();
             out.close();
             fw.close();
@@ -193,7 +195,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [TIME]  |"); //16
+            out.write("TIME: [KK_PL_TIME]  L"); //16
             out.flush();
             out.close();
             fw.close();
@@ -202,7 +204,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [TIME] /"); //16
+            out.write("TIME: [KK_PL_TIME] /"); //16
             out.flush();
             out.close();
             fw.close();
@@ -211,7 +213,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [TIME] \\"); //16
+            out.write("TIME: [KK_PL_TIME] }"); //16
             out.flush();
             out.close();
             fw.close();

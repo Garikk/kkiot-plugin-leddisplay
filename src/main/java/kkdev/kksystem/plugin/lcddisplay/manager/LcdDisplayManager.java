@@ -229,7 +229,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             //When change page, set new uiframes
             if (SetUIFrames) {
-                DV.SetUIFrames(DP.UIFrames,false);
+                DV.SetUIFrames(DP.UIFrames,DP.HaveDynamicElements);
             }
             //Update values
             DV.UpdateFrameVariables(DP.UIFramesKeys, DP.UIFramesData);

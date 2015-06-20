@@ -5,6 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -26,6 +28,9 @@ public class DisplayView {
     String[] UIFrames;
     String[] DisplayedFrames;
     
+    String[] UIFValues;
+    String[] UIFKeys;
+    
     Timer DynamicTimer;
     int DynamicFramesCounter;
 
@@ -39,26 +44,39 @@ public class DisplayView {
 
     private void RunDynamicView()
     {
+        System.out.println("Start");
+        DynamicFramesCounter=0;
         DynamicTimer=new Timer();
         //
-        DynamicTimer.schedule(DynamicTask,1000,1000);
-        DynamicTimer.cancel();
+        DynamicTimer.scheduleAtFixedRate(DynamicTask,0,1000);
+        
+        
     
     }
     private void StopDynamicView()
     {
-        DynamicTimer.cancel();
+        System.out.println("Stop");
+        
+        if (DynamicTimer!=null)
+            DynamicTimer.cancel();
+        
+        DynamicTimer=null;
     }
     
     private TimerTask DynamicTask = new TimerTask(){
 
         @Override
         public void run() {
-           if (DynamicFramesCounter<UIFrames.length)
-               DynamicFramesCounter--;
+            System.out.println("Tick " + DynamicFramesCounter);
+            
+           if (DynamicFramesCounter<UIFrames.length-1)
+               DynamicFramesCounter+=2;
            else
                DynamicFramesCounter=0;
-               
+           
+            System.out.println("Tick " + DynamicFramesCounter);
+            //Connector.DisplayTextSetUIFrames(DisplayedFrames,DynamicFramesCounter);
+            UpdateFrameVariables(UIFKeys,UIFValues);
         }
     };
     
@@ -109,6 +127,9 @@ public class DisplayView {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
+         UIFKeys=Keys;
+         UIFValues=Values;
+         
         //not data
         if (Keys != null) {
             for (int i = 0; i < DisplayedFrames.length; i++) {
@@ -119,26 +140,33 @@ public class DisplayView {
                 }
             }
         }
+        DisplayedFrames=FillPluginFeaturedFields(DisplayedFrames);
         //
-        Connector.DisplayTextSetUIFrames(DisplayedFrames);
+        Connector.DisplayTextSetUIFrames(DisplayedFrames,DynamicFramesCounter);
     }
 
+    private String[] FillPluginFeaturedFields(String[] DisplayFrames)
+    {
+        String CurrTime;
+        CurrTime =(new SimpleDateFormat("HH:mm:ss")).format(new Date());
+        
+         for (int i = 0; i < DisplayedFrames.length; i++) {
+                     if (DisplayedFrames[i] != null) {
+                         
+                        DisplayedFrames[i] = DisplayedFrames[i].replace("[KK_PL_TIME]", CurrTime);
+                }
+            }
+        return DisplayFrames;
+    
+    }
     public void SetUIFrames(String[] Frames,boolean EnableDynamic) {
-        DynamicView=EnableDynamic;
         UIFrames = Frames;
+       
+        if (EnableDynamic & (DynamicView!=EnableDynamic))
+            RunDynamicView();
+        else if (!EnableDynamic & (DynamicView!=EnableDynamic))
+            StopDynamicView();
+        
+        DynamicView=EnableDynamic;
     }
-/*
-    public void RefreshDisplayUIFrames() {
-        if (!Enabled) {
-            return;
-        }
-
-        if (UIFrames == null | DisplayedFrames == null) {
-            return;
-        }
-        //
-          Connector.DisplayTextSetUIFrames(DisplayedFrames);
-
-    }
-    */
 }

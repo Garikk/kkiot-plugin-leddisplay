@@ -60,6 +60,12 @@ public class DisplayPage {
             }
 
         }
+        UIFrames=new String[FramesToLoad.getSize()];
+        for (int i=0;i<FramesToLoad.getSize();i++)
+        {
+            UIFrames[i]=FramesToLoad.get(i);
+        }
+        
         UIFrames = FramesToLoad.getArray();
     }
 }

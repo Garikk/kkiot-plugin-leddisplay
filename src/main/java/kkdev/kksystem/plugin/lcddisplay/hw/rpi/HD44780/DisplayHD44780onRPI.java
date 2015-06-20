@@ -13,6 +13,7 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
 
+
 /**
  *
  * @author blinov_is
@@ -30,8 +31,6 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
     String[] UIFrames;
     
 
-
-   
     public DisplayHD44780onRPI() {
         
        InitDisplayHW();
@@ -109,8 +108,9 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames) {
-        UIFrames=Frames;
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+       lcd.writeln(0, Frames[Offset]);
+       lcd.writeln(1, Frames[Offset+1]);
     }
 
     

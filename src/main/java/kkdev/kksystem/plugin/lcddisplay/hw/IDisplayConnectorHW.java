@@ -18,7 +18,7 @@ public interface IDisplayConnectorHW {
     //
     void DisplayText(String Text);
     void DisplayTextUpdate(String Text, int Column, int Line);
-    void DisplayTextSetUIFrames(String[] Frames);
+    void DisplayTextSetUIFrames(String[] Frames, int Offset);
     //    
     void InitDisplayHW();
     void ShutDown();
