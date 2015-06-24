@@ -109,8 +109,14 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
 
     @Override
     public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
-       lcd.writeln(0, Frames[Offset]);
-       lcd.writeln(1, Frames[Offset+1]);
+        String[] ShowFrame=Frames[Offset].split("\r\n");
+        int i=0;
+        for (String L:ShowFrame)
+        {
+        //    System.out.println(L);
+            lcd.writeln(i, Frames[Offset]);    
+            i++;
+        }
     }
 
     

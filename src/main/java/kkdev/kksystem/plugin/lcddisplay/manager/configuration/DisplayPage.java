@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.constants.SystemConsts;
@@ -32,23 +34,28 @@ public class DisplayPage {
     //
     public String[] UIFrameFiles;       //UI Frame files list
     //
-    public transient String[] UIFrames;
-    public transient String[] UIFramesKeys;
-    public transient String[] UIFramesData;
+    public  String[] UIFrames;
+    public  String[] UIFramesKeys;
+    public  String[] UIFramesData;
     
     public void InitUIFrames()
     {
-        StringArray FramesToLoad = new StringArray();
+        int i=0;
+       UIFrames=new String[UIFrameFiles.length];
         for (String FrameFile : UIFrameFiles) {
             try {
                 FileReader fr;
                 fr = new FileReader(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "//" + FrameFile);
                 BufferedReader br = new BufferedReader(fr);
                 String line;
-
+                String Frame="";
                 while ((line = br.readLine()) != null) {
-                    FramesToLoad.add(line);
+                    Frame=Frame+line+"\r\n";
                 }
+                Frame=Frame.substring(0, Frame.length()-2); // trim crlf
+                
+                UIFrames[i]=Frame;
+                i++;
                 br.close();
                 fr.close();
 
@@ -60,13 +67,8 @@ public class DisplayPage {
             }
 
         }
-        UIFrames=new String[FramesToLoad.getSize()];
-        for (int i=0;i<FramesToLoad.getSize();i++)
-        {
-            UIFrames[i]=FramesToLoad.get(i);
-        }
-        
-        UIFrames = FramesToLoad.getArray();
+      
+
     }
 }
 

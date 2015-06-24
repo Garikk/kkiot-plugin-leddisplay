@@ -45,10 +45,10 @@ public abstract class kk_DefaultConfig {
         //
         DisplayHW DHW = new DisplayHW();
         //DHW.HWDisplayName = "DEBUG";
-        DHW.HWBoard = RaspberryPI_B;
-        DHW.HWDisplay = HD44780_4bit;
-        //DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
-        //DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
+        //DHW.HWBoard = RaspberryPI_B;
+        //DHW.HWDisplay = HD44780_4bit;
+        DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
@@ -65,14 +65,16 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_MAIN].PageName = "MAIN";
         DP[PAGE_MAIN].HWDisplays = new String[1];
         DP[PAGE_MAIN].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_MAIN].UIFrameFiles = new String[7];
+        DP[PAGE_MAIN].UIFrameFiles = new String[8];
         DP[PAGE_MAIN].UIFrameFiles[0] = "kk_lcddisplay_uiframe_main_1.frame";
         DP[PAGE_MAIN].UIFrameFiles[1] = "kk_lcddisplay_uiframe_main_2.frame";
         DP[PAGE_MAIN].UIFrameFiles[2] = "kk_lcddisplay_uiframe_main_3.frame";
         DP[PAGE_MAIN].UIFrameFiles[3] = "kk_lcddisplay_uiframe_main_4.frame";
-        DP[PAGE_MAIN].UIFrameFiles[4] = "kk_lcddisplay_uiframe_main_5.frame";
-        DP[PAGE_MAIN].UIFrameFiles[5] = "kk_lcddisplay_uiframe_main_3.frame";
-        DP[PAGE_MAIN].UIFrameFiles[6] = "kk_lcddisplay_uiframe_main_6.frame";
+        DP[PAGE_MAIN].UIFrameFiles[4] = "kk_lcddisplay_uiframe_main_1.frame";
+        DP[PAGE_MAIN].UIFrameFiles[5] = "kk_lcddisplay_uiframe_main_5.frame";
+        DP[PAGE_MAIN].UIFrameFiles[6] = "kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_4.frame";
+        //DP[PAGE_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_6.frame";
         DP[PAGE_MAIN].IsDefaultPage = false;
 
         DP[PAGE_DETAIL] = new DisplayPage();
@@ -195,7 +197,7 @@ public abstract class kk_DefaultConfig {
             out = new BufferedWriter(fw);
             out.write("SPD [SPD] TMP [TMP] "); //16
             out.newLine();
-            out.write("TIME: [KK_PL_TIME]  L"); //16
+            out.write("TIME: [KK_PL_TIME] \\"); //16
             out.flush();
             out.close();
             fw.close();
@@ -209,14 +211,7 @@ public abstract class kk_DefaultConfig {
             out.close();
             fw.close();
 
-            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_main_6.frame");
-            out = new BufferedWriter(fw);
-            out.write("SPD [SPD] TMP [TMP] "); //16
-            out.newLine();
-            out.write("TIME: [KK_PL_TIME] }"); //16
-            out.flush();
-            out.close();
-            fw.close();
+          
             ///
             ///
             ///

@@ -67,14 +67,14 @@ public class DisplayView {
 
         @Override
         public void run() {
-            System.out.println("Tick " + DynamicFramesCounter);
+           // System.out.println("Tick " + DynamicFramesCounter);
             
            if (DynamicFramesCounter<UIFrames.length-1)
-               DynamicFramesCounter+=2;
+               DynamicFramesCounter++;
            else
                DynamicFramesCounter=0;
            
-            System.out.println("Tick " + DynamicFramesCounter);
+           // System.out.println("Tick " + DynamicFramesCounter);
             //Connector.DisplayTextSetUIFrames(DisplayedFrames,DynamicFramesCounter);
             UpdateFrameVariables(UIFKeys,UIFValues);
         }
