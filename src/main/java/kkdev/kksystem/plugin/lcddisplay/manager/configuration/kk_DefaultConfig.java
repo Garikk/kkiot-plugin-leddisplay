@@ -44,11 +44,13 @@ public abstract class kk_DefaultConfig {
         DisplayPage[] DP = new DisplayPage[7];
         //
         DisplayHW DHW = new DisplayHW();
+
+        DHW.HWBoard = RaspberryPI_B;
+        DHW.HWDisplay = HD44780_4bit;  
+        DHW.HWDisplayName = "RPIAdapter";
         //DHW.HWDisplayName = "DEBUG";
-        //DHW.HWBoard = RaspberryPI_B;
-        //DHW.HWDisplay = HD44780_4bit;
-        DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
-        DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
+        //DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        //DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
