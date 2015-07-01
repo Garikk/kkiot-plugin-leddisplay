@@ -31,26 +31,27 @@ import static kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes.Raspberr
 public abstract class kk_DefaultConfig {
 
     public static LcdDisplayConf MakeDefaultConfig() {
-        final int PAGE_MAIN = 0;
-        final int PAGE_DETAIL = 1;
-        final int PAGE_WAIT = 2;
-        final int PAGE_ERROR = 3;
+        final int PAGE_DDISPLAY_MAIN = 0;
+        final int PAGE_DDISPLAY_DETAIL = 1;
+        final int PAGE_DDISPLAY_WAIT = 2;
+        final int PAGE_DDISPLAY_ERROR = 3;
         final int PAGE_SYSMENU_P1 = 4;
         final int PAGE_SYSMENU_VER = 5;
         final int PAGE_SYSMENU_SETT = 6;
+        final int PAGE_DDISPLAY_CE_LIST = 7;
 
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[7];
+        DisplayPage[] DP = new DisplayPage[8];
         //
         DisplayHW DHW = new DisplayHW();
 
-        DHW.HWBoard = RaspberryPI_B;
-        DHW.HWDisplay = HD44780_4bit;  
-        DHW.HWDisplayName = "RPIAdapter";
-        //DHW.HWDisplayName = "DEBUG";
-        //DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
-        //DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
+        //DHW.HWBoard = RaspberryPI_B;
+        //DHW.HWDisplay = HD44780_4bit;  
+        //DHW.HWDisplayName = "RPIAdapter";
+        DHW.HWDisplayName = "DEBUG";
+        DHW.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        DHW.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //DHW.;
         int PINS[] = new int[6];
         PINS[0] = 15; //RS
@@ -60,57 +61,57 @@ public abstract class kk_DefaultConfig {
         PINS[4] = 10; //Bit3
         PINS[5] = 11; //Bit4
 
-        DP[PAGE_MAIN] = new DisplayPage();
-        DP[PAGE_MAIN].Features = new String[1];
-        DP[PAGE_MAIN].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
-        DP[PAGE_MAIN].HaveDynamicElements = true;
-        DP[PAGE_MAIN].PageName = "MAIN";
-        DP[PAGE_MAIN].HWDisplays = new String[1];
-        DP[PAGE_MAIN].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_MAIN].UIFrameFiles = new String[8];
-        DP[PAGE_MAIN].UIFrameFiles[0] = "kk_lcddisplay_uiframe_main_1.frame";
-        DP[PAGE_MAIN].UIFrameFiles[1] = "kk_lcddisplay_uiframe_main_2.frame";
-        DP[PAGE_MAIN].UIFrameFiles[2] = "kk_lcddisplay_uiframe_main_3.frame";
-        DP[PAGE_MAIN].UIFrameFiles[3] = "kk_lcddisplay_uiframe_main_4.frame";
-        DP[PAGE_MAIN].UIFrameFiles[4] = "kk_lcddisplay_uiframe_main_1.frame";
-        DP[PAGE_MAIN].UIFrameFiles[5] = "kk_lcddisplay_uiframe_main_5.frame";
-        DP[PAGE_MAIN].UIFrameFiles[6] = "kk_lcddisplay_uiframe_main_3.frame";
-        DP[PAGE_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_4.frame";
-        //DP[PAGE_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_6.frame";
-        DP[PAGE_MAIN].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_MAIN] = new DisplayPage();
+        DP[PAGE_DDISPLAY_MAIN].Features = new String[1];
+        DP[PAGE_DDISPLAY_MAIN].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DDISPLAY_MAIN].HaveDynamicElements = true;
+        DP[PAGE_DDISPLAY_MAIN].PageName = "MAIN";
+        DP[PAGE_DDISPLAY_MAIN].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_MAIN].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles = new String[8];
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[0] = "kk_lcddisplay_uiframe_main_1.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[1] = "kk_lcddisplay_uiframe_main_2.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[2] = "kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[3] = "kk_lcddisplay_uiframe_main_4.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[4] = "kk_lcddisplay_uiframe_main_1.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[5] = "kk_lcddisplay_uiframe_main_5.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[6] = "kk_lcddisplay_uiframe_main_3.frame";
+        DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_4.frame";
+        //DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_6.frame";
+        DP[PAGE_DDISPLAY_MAIN].IsDefaultPage = false;
 
-        DP[PAGE_DETAIL] = new DisplayPage();
-        DP[PAGE_DETAIL].HaveDynamicElements = false;
-        DP[PAGE_DETAIL].PageName = "DETAIL";
-        DP[PAGE_DETAIL].Features = new String[1];
-        DP[PAGE_DETAIL].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
-        DP[PAGE_DETAIL].HWDisplays = new String[1];
-        DP[PAGE_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_DETAIL].UIFrameFiles = new String[1];
-        DP[PAGE_DETAIL].UIFrameFiles[0] = "kk_lcddisplay_uiframe_detail_1.frame";
-        DP[PAGE_DETAIL].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_DETAIL] = new DisplayPage();
+        DP[PAGE_DDISPLAY_DETAIL].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_DETAIL].PageName = "DETAIL";
+        DP[PAGE_DDISPLAY_DETAIL].Features = new String[1];
+        DP[PAGE_DDISPLAY_DETAIL].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DDISPLAY_DETAIL].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DDISPLAY_DETAIL].UIFrameFiles = new String[1];
+        DP[PAGE_DDISPLAY_DETAIL].UIFrameFiles[0] = "kk_lcddisplay_uiframe_detail_1.frame";
+        DP[PAGE_DDISPLAY_DETAIL].IsDefaultPage = false;
         //
-        DP[PAGE_WAIT] = new DisplayPage();
-        DP[PAGE_WAIT].HaveDynamicElements = false;
-        DP[PAGE_WAIT].Features = new String[1];
-        DP[PAGE_WAIT].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
-        DP[PAGE_WAIT].PageName = "WAIT";
-        DP[PAGE_WAIT].HWDisplays = new String[1];
-        DP[PAGE_WAIT].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_WAIT].UIFrameFiles = new String[1];
-        DP[PAGE_WAIT].UIFrameFiles[0] = "kk_lcddisplay_uiframe_wait_1.frame";
-        DP[PAGE_WAIT].IsDefaultPage = true;
+        DP[PAGE_DDISPLAY_WAIT] = new DisplayPage();
+        DP[PAGE_DDISPLAY_WAIT].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_WAIT].Features = new String[1];
+        DP[PAGE_DDISPLAY_WAIT].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DDISPLAY_WAIT].PageName = "WAIT";
+        DP[PAGE_DDISPLAY_WAIT].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_WAIT].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DDISPLAY_WAIT].UIFrameFiles = new String[1];
+        DP[PAGE_DDISPLAY_WAIT].UIFrameFiles[0] = "kk_lcddisplay_uiframe_wait_1.frame";
+        DP[PAGE_DDISPLAY_WAIT].IsDefaultPage = true;
         //
-        DP[PAGE_ERROR] = new DisplayPage();
-        DP[PAGE_ERROR].HaveDynamicElements = false;
-        DP[PAGE_ERROR].Features = new String[1];
-        DP[PAGE_ERROR].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
-        DP[PAGE_ERROR].PageName = "ERROR";
-        DP[PAGE_ERROR].HWDisplays = new String[1];
-        DP[PAGE_ERROR].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_ERROR].UIFrameFiles = new String[1];
-        DP[PAGE_ERROR].UIFrameFiles[0] = "kk_lcddisplay_uiframe_error_1.frame";
-        DP[PAGE_ERROR].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_ERROR] = new DisplayPage();
+        DP[PAGE_DDISPLAY_ERROR].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_ERROR].Features = new String[1];
+        DP[PAGE_DDISPLAY_ERROR].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DDISPLAY_ERROR].PageName = "ERROR";
+        DP[PAGE_DDISPLAY_ERROR].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_ERROR].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DDISPLAY_ERROR].UIFrameFiles = new String[1];
+        DP[PAGE_DDISPLAY_ERROR].UIFrameFiles[0] = "kk_lcddisplay_uiframe_error_1.frame";
+        DP[PAGE_DDISPLAY_ERROR].IsDefaultPage = false;
         //
         DP[PAGE_SYSMENU_P1] = new DisplayPage();
         DP[PAGE_SYSMENU_P1].HaveDynamicElements = false;
@@ -145,6 +146,17 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_SETT].UIFrameFiles = new String[1];
         DP[PAGE_SYSMENU_SETT].UIFrameFiles[0] = "kk_sysmenu_sett_uiframe_1.frame";
         DP[PAGE_SYSMENU_SETT].IsDefaultPage = false;
+         //
+        DP[PAGE_DDISPLAY_CE_LIST] = new DisplayPage();
+        DP[PAGE_DDISPLAY_CE_LIST].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_CE_LIST].Features = new String[1];
+        DP[PAGE_DDISPLAY_CE_LIST].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DP[PAGE_DDISPLAY_CE_LIST].PageName = "CE_READER";
+        DP[PAGE_DDISPLAY_CE_LIST].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_CE_LIST].HWDisplays[0] = DHW.HWDisplayName;
+        DP[PAGE_DDISPLAY_CE_LIST].UIFrameFiles = new String[1];
+        DP[PAGE_DDISPLAY_CE_LIST].UIFrameFiles[0] = "kk_ddisplay_cereader_uiframe_1.frame";
+        DP[PAGE_DDISPLAY_CE_LIST].IsDefaultPage = false;
         //
         DefConf.ConfName = "Default config";
         DefConf.DisplayPages = DP;
@@ -229,6 +241,17 @@ public abstract class kk_DefaultConfig {
             ///
             ///
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_sysmenu_p1_uiframe_1.frame");
+            out = new BufferedWriter(fw);
+            out.write("[SEL_0][SYSMENU_0][SEL_0]"); //16
+            out.newLine();
+            out.write("[SEL_1][SYSMENU_1][SEL_1]"); //16
+            out.flush();
+            out.close();
+            fw.close();
+            ///
+            ///
+            ///
+            fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_ddisplay_cereader_uiframe_1.frame");
             out = new BufferedWriter(fw);
             out.write("[SEL_0][SYSMENU_0][SEL_0]"); //16
             out.newLine();
