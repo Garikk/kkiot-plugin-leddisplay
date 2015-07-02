@@ -16,6 +16,7 @@ import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
+import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
@@ -126,8 +127,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
     private void ProcessCommand(String FeatureID, PinLedCommand Command) {
 
         switch (Command.Command) {
-            case DISPLAY_KKSYS_PAGE_INIT:
-                break;
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
                 System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
                 SetPageToActive(FeatureID, Command.PageID);
@@ -149,7 +148,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage,false, Data.OnFrame_DataKeys, Data.OnFrame_DataValues);
+                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage,false, Data.UIFrames);
                 break;
         }
     }
@@ -212,14 +211,13 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     }
 
-    private void UpdatePageUIFrames(String FeatureID, String PageID, boolean SetUIFrames, String[] Keys, String[] Values) {
+    private void UpdatePageUIFrames(String FeatureID, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
 
         DisplayPage DP=DPages.get(PageID);
         
-        if (Keys!=null)
+        if (UIFrames!=null)
         {
-            DP.UIFramesKeys = Keys;
-            DP.UIFramesData = Values;
+            DP.UIFramesValues=UIFrames;
         }
         //
         if (!CurrentFeature.equals(FeatureID))
@@ -232,7 +230,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
                 DV.SetUIFrames(DP.UIFrames,DP.HaveDynamicElements);
             }
             //Update values
-            DV.UpdateFrameVariables(DP.UIFramesKeys, DP.UIFramesData);
+            DV.UpdateFrameVariables(DP.UIFramesValues);
         }
 
     }
@@ -247,7 +245,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
         //
        // SetPageToInactive(CurrentFeature,CurrentPage.get(CurrentFeature));
         //
-        UpdatePageUIFrames(FeatureID, PageID, true, null, null);
+        UpdatePageUIFrames(FeatureID, PageID, true,null);
     }
 
     private void SetPageToInactive(String FeatureID, String PageID) {
@@ -268,10 +266,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
         SetPageToInactive(CurrentFeature,CurrentPage.get(CurrentFeature));
         CurrentFeature = FeatureID;
         SetPageToActive(FeatureID, CurrentPage.get(FeatureID));
-
-        //
-       // System.out.println("[LCDDisplay][MANAGER] Feature changed >> " + CurrentFeature + " >> " + FeatureID);
-        //
 
         //
 

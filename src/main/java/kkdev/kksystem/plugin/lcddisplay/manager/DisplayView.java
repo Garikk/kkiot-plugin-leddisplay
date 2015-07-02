@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 
 /**
@@ -28,8 +29,7 @@ public class DisplayView {
     String[] UIFrames;
     String[] DisplayedFrames;
     
-    String[] UIFValues;
-    String[] UIFKeys;
+    UIFramesKeySet StoredUIFrameValues;
     
     Timer DynamicTimer;
     int DynamicFramesCounter;
@@ -67,16 +67,13 @@ public class DisplayView {
 
         @Override
         public void run() {
-           // System.out.println("Tick " + DynamicFramesCounter);
             
            if (DynamicFramesCounter<UIFrames.length-1)
                DynamicFramesCounter++;
            else
                DynamicFramesCounter=0;
            
-           // System.out.println("Tick " + DynamicFramesCounter);
-            //Connector.DisplayTextSetUIFrames(DisplayedFrames,DynamicFramesCounter);
-            UpdateFrameVariables(UIFKeys,UIFValues);
+            UpdateFrameVariables(StoredUIFrameValues);
         }
     };
     
@@ -113,7 +110,7 @@ public class DisplayView {
         Connector.DisplayTextUpdate(Text, Col, Row);
     }
 
-    public void UpdateFrameVariables(String[] Keys, String[] Values) {
+    public void UpdateFrameVariables(UIFramesKeySet UIFramesValues) {
         if (!Enabled) {
             return;
         }
@@ -127,15 +124,15 @@ public class DisplayView {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
-         UIFKeys=Keys;
-         UIFValues=Values;
+         
+         StoredUIFrameValues=UIFramesValues;
          
         //not data
-        if (Keys != null) {
+        if (StoredUIFrameValues != null) {
             for (int i = 0; i < DisplayedFrames.length; i++) {
-                for (int ii = 0; ii < Keys.length; ii++) {
+                for (int ii = 0; ii < StoredUIFrameValues.Keys.length; ii++) {
                     if (DisplayedFrames[i] != null) {
-                        DisplayedFrames[i] = DisplayedFrames[i].replace("[" + Keys[ii] + "]", Values[ii]);
+                        DisplayedFrames[i] = DisplayedFrames[i].replace("[" + StoredUIFrameValues.Keys[ii] + "]", StoredUIFrameValues.Values[ii]);
                     }
                 }
             }

@@ -5,7 +5,6 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
-import com.sun.xml.internal.fastinfoset.util.StringArray;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.base.constants.SystemConsts;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 
@@ -35,8 +35,7 @@ public class DisplayPage {
     public String[] UIFrameFiles;       //UI Frame files list
     //
     public  String[] UIFrames;
-    public  String[] UIFramesKeys;
-    public  String[] UIFramesData;
+    public  UIFramesKeySet UIFramesValues;
     
     public void InitUIFrames()
     {
