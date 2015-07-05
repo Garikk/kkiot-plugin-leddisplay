@@ -287,9 +287,9 @@ public abstract class kk_DefaultConfig {
             
             fw = new FileWriter(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR + "kk_lcddisplay_uiframe_error_1.frame");
             out = new BufferedWriter(fw);
-            out.write("Error"); //16
+            out.write("Err: [ODB_ADAPTER_STATE]"); //16
             out.newLine();
-            out.write("......ERROR......"); //16
+            out.write("[ODB_ADAPTER_ERROR]"); //16
             out.flush();
             out.close();
             fw.close();
