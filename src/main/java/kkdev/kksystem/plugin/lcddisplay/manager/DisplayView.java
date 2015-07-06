@@ -130,11 +130,10 @@ public class DisplayView {
         //not data
         if (StoredUIFrameValues != null) {
             for (int i = 0; i < DisplayedFrames.length; i++) {
-                for (int ii = 0; ii < StoredUIFrameValues.Keys.length; ii++) {
+                for (String ii:StoredUIFrameValues.FrameValues.keySet())
                     if (DisplayedFrames[i] != null) {
-                        DisplayedFrames[i] = DisplayedFrames[i].replace("[" + StoredUIFrameValues.Keys[ii] + "]", StoredUIFrameValues.Values[ii]);
+                        DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
                     }
-                }
             }
         }
         DisplayedFrames=FillPluginFeaturedFields(DisplayedFrames);

@@ -82,7 +82,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
 
     @Override
     public void ClearDisplay() {
-              System.out.println("[LCDDisplay][DEBUG] Received CLEAR command");
+              
     }
 
     @Override
