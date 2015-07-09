@@ -243,8 +243,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
         if (!CurrentFeature.equals(FeatureID))
             return;
         //
-       // SetPageToInactive(CurrentFeature,CurrentPage.get(CurrentFeature));
-        //
         UpdatePageUIFrames(FeatureID, PageID, true,null);
     }
 

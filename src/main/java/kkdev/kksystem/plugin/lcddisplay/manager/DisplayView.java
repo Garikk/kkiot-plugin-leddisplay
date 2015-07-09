@@ -48,34 +48,34 @@ public class DisplayView {
         DynamicFramesCounter=0;
         DynamicTimer=new Timer();
         //
-        DynamicTimer.scheduleAtFixedRate(DynamicTask,0,1000);
-        
-        
-    
+        DynamicTimer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+
+                if (DynamicFramesCounter < UIFrames.length - 1) {
+                    DynamicFramesCounter++;
+                } else {
+                    DynamicFramesCounter = 0;
+                }
+
+                UpdateFrameVariables(StoredUIFrameValues);
+            }
+        }, 0, 1000);
+
     }
-    private void StopDynamicView()
-    {
+
+    private void StopDynamicView() {
         System.out.println("Stop");
         
         if (DynamicTimer!=null)
             DynamicTimer.cancel();
         
+        DynamicFramesCounter=0;
         DynamicTimer=null;
+
     }
     
-    private TimerTask DynamicTask = new TimerTask(){
-
-        @Override
-        public void run() {
-            
-           if (DynamicFramesCounter<UIFrames.length-1)
-               DynamicFramesCounter++;
-           else
-               DynamicFramesCounter=0;
-           
-            UpdateFrameVariables(StoredUIFrameValues);
-        }
-    };
     
     
     public void ClearDisplay() {
