@@ -58,8 +58,7 @@ public class DisplayView {
                 } else {
                     DynamicFramesCounter = 0;
                 }
-
-                UpdateFrameVariables(StoredUIFrameValues);
+                      UpdateFrameVariables(StoredUIFrameValues);
             }
         }, 0, 1000);
 
@@ -115,7 +114,6 @@ public class DisplayView {
             return;
         }
         DisplayedFrames = UIFrames.clone();
-
         if (UIFrames == null) {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;

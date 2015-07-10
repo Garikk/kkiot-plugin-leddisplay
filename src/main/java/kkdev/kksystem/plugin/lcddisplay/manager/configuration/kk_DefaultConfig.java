@@ -140,7 +140,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_SETT].HaveDynamicElements = false;
         DP[PAGE_SYSMENU_SETT].Features = new String[1];
         DP[PAGE_SYSMENU_SETT].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
-        DP[PAGE_SYSMENU_SETT].PageName = "SYSMENU_SETT";
+        DP[PAGE_SYSMENU_SETT].PageName = "CE_READER";
         DP[PAGE_SYSMENU_SETT].HWDisplays = new String[1];
         DP[PAGE_SYSMENU_SETT].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_SYSMENU_SETT].UIFrameFiles = new String[1];
