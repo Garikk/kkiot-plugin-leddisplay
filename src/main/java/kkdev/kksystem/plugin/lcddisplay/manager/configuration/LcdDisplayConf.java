@@ -5,13 +5,14 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
+import kkdev.kksystem.base.classes.plugins.ExternalConfiguration;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 
 /**
  *
  * @author blinov_is
  */
-public class LcdDisplayConf  {
+public class LcdDisplayConf  extends ExternalConfiguration {
     public String ConfName;
     public DisplayPage[] DisplayPages;
     public DisplayHW[] HWDisplays;
