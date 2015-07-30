@@ -15,13 +15,15 @@ import kkdev.kksystem.base.classes.plugins.simple.SettingsManager;
 public abstract class PluginSettings {
    
    private static SettingsManager Settings;
-   public static final String DISPLAY_CONF="kk_plugin_lcddisplay.json";
+   public static String DISPLAY_CONF;
    public static final String DISPLAY_CONF_FRAMES_DIR="//kk_plugin_lcddisplay_frames//";
     
     public static LcdDisplayConf MainConfiguration;
     
-    public static void InitConfig()
+    public static void InitConfig(String GlobalConfigUID, String MyUID)
     {
+        DISPLAY_CONF=GlobalConfigUID+"_"+MyUID + ".json";
+        
         Settings=new SettingsManager(DISPLAY_CONF,LcdDisplayConf.class);
         
         System.out.println("[LCDDisplay][CONFIG] Load configuration");

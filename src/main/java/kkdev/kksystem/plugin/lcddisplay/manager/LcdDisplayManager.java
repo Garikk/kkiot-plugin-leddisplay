@@ -44,7 +44,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     public  void Init(KKPlugin Conn) {
         Connector = Conn;
 
-        PluginSettings.InitConfig();
+        PluginSettings.InitConfig(Conn.GlobalConfID,Conn.PluginInfo.GetPluginInfo().PluginUUID);
         //
         CurrentFeature = PluginSettings.MainConfiguration.DefaultFeature;
         //

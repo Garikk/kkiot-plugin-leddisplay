@@ -27,9 +27,9 @@ public final class KKPlugin extends KKPluginBase   {
     }
 
     @Override
-    public void PluginInit(IPluginBaseInterface BaseConnector) {
-       super.PluginInit(BaseConnector);
-       Global.PM.Init(this);
+    public void PluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
+        super.PluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
+        Global.PM.Init(this);
     }
 
     @Override
