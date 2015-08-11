@@ -174,7 +174,7 @@ public abstract class kk_DefaultConfig {
         if (!dir.exists()) {
             dir.mkdir();
         } else {
-            return;
+           // return;
         }
 
         FileWriter fw;

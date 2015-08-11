@@ -16,7 +16,7 @@ public abstract class PluginSettings {
    
    private static SettingsManager Settings;
    public static String DISPLAY_CONF;
-   public static final String DISPLAY_CONF_FRAMES_DIR="//kk_plugin_lcddisplay_frames//";
+   public static final String DISPLAY_CONF_FRAMES_DIR="//";
     
     public static LcdDisplayConf MainConfiguration;
     
