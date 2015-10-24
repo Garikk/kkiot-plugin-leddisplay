@@ -5,7 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
-import kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_TYPE;
+
 import kkdev.kksystem.base.classes.plugins.PluginInfo;
 import kkdev.kksystem.base.classes.plugins.simple.IPluginInfoRequest;
 import kkdev.kksystem.base.constants.PluginConsts;
@@ -23,7 +23,6 @@ public  class LEDPluginInfo implements IPluginInfoRequest  {
         Ret.PluginUUID="7fbac0f7-6939-4380-bcb0-0ef8b1580fbf";
         Ret.PluginName="KKLCDDisplay";
         Ret.PluginDescription="Basic LCDDisplay";
-        Ret.PluginType = KK_PLUGIN_TYPE.PLUGIN_OUTPUT;
         Ret.PluginVersion=1;
         Ret.Enabled=true;
         Ret.ReceivePins = GetMyReceivePinInfo();
