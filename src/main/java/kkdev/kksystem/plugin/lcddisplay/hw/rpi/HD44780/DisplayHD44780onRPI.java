@@ -13,33 +13,35 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
 
-
 /**
  *
  * @author blinov_is
  */
 public class DisplayHD44780onRPI implements IDisplayConnectorHW {
-        final int LCD_ROWS = 2;
-        final int LCD_ROW_1 = 0;
-        final int LCD_ROW_2 = 1;
-        final int LCD_COLUMNS = 16;
-        final int LCD_BITS = 4;
+
+    boolean NotWork;
+    boolean NotWork2;
+
+    final int LCD_ROWS = 2;
+    final int LCD_ROW_1 = 0;
+    final int LCD_ROW_2 = 1;
+    final int LCD_COLUMNS = 16;
+    final int LCD_BITS = 4;
 
     GpioLcdDisplay lcd;
     final GpioController gpio = GpioFactory.getInstance();
-    boolean CmdStopDisplay=false;
+    boolean CmdStopDisplay = false;
     String[] UIFrames;
-    
+    private static String OS = System.getProperty("os.name").toLowerCase();
+    private static String ARCH = System.getProperty("os.arch").toLowerCase();
 
     public DisplayHD44780onRPI() {
-        
-       InitDisplayHW();
-          lcd.clear();
-      
-    }   
 
-    
- 
+        InitDisplayHW();
+        lcd.clear();
+
+    }
+
     @Override
     public void SetContrast(int Contrast) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -57,20 +59,24 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
 
     @Override
     public void ShutDown() {
-        CmdStopDisplay=true;
+        CmdStopDisplay = true;
     }
 
     @Override
     public void DisplayText(String Text) {
-        String L1="";
-        String L2="";
+        if (lcd==null)
+            return;
         
-        L1=Text.substring(0, LCD_COLUMNS);
-        if (Text.length()>LCD_COLUMNS)
-            L2=Text.substring(LCD_COLUMNS,Text.length()-LCD_COLUMNS);
-        
-      lcd.writeln(0, L1);
-      lcd.writeln(0, L2);
+        String L1 = "";
+        String L2 = "";
+
+        L1 = Text.substring(0, LCD_COLUMNS);
+        if (Text.length() > LCD_COLUMNS) {
+            L2 = Text.substring(LCD_COLUMNS, Text.length() - LCD_COLUMNS);
+        }
+
+        lcd.writeln(0, L1);
+        lcd.writeln(0, L2);
     }
 
     @Override
@@ -98,34 +104,38 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
 
     @Override
     public void InitDisplayHW() {
-        lcd=new GpioLcdDisplay(LCD_ROWS,LCD_COLUMNS,RaspiPin.GPIO_15,RaspiPin.GPIO_16,RaspiPin.GPIO_05,RaspiPin.GPIO_06,RaspiPin.GPIO_10,RaspiPin.GPIO_11);
+        NotWork = (OS.contains("win"));
+        NotWork2 = (!ARCH.contains("ARM"));
+
+        if (NotWork || NotWork2) {
+            return;
+        }
+
+        lcd = new GpioLcdDisplay(LCD_ROWS, LCD_COLUMNS, RaspiPin.GPIO_15, RaspiPin.GPIO_16, RaspiPin.GPIO_05, RaspiPin.GPIO_06, RaspiPin.GPIO_10, RaspiPin.GPIO_11);
 
     }
 
     @Override
     public void ClearDisplay() {
-       lcd.clear();
+        lcd.clear();
     }
 
     @Override
     public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+        if (lcd==null)
+            return;
         
-        String[] ShowFrame=Frames[Offset].split("\r\n");
-        int i=0;
-        for (String L:ShowFrame)
-        {
+
+        String[] ShowFrame = Frames[Offset].split("\r\n");
+        int i = 0;
+        for (String L : ShowFrame) {
             //System.out.println(L);
-            if (i<=LCD_ROWS)
-            {
+            if (i <= LCD_ROWS) {
                 //System.out.println(L);
-                lcd.writeln(i, L);    
+                lcd.writeln(i, L);
                 i++;
             }
         }
     }
 
-    
-
-
 }
-
