@@ -142,13 +142,13 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
         switch (Data.DataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextToPage(Data.FeatureUID, Data.TargetPage, Data.Direct_DisplayText);
+                SendTextToPage(Data.FeatureID, Data.TargetPage, Data.Direct_DisplayText);
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(Data.FeatureUID, Data.TargetPage,false, Data.UIFrames);
+                UpdatePageUIFrames(Data.FeatureID, Data.TargetPage,false, Data.UIFrames);
                 break;
         }
     }
