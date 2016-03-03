@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kkdev.kksystem.base.classes.display.UIFramePack;
+import kkdev.kksystem.base.classes.display.UIFramePack.UIFrameData;
 import kkdev.kksystem.base.constants.SystemConsts;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
@@ -40,6 +42,8 @@ public abstract class kk_DefaultConfig {
         final int PAGE_SYSMENU_SETT = 6;
         final int PAGE_DDISPLAY_CE_LIST = 7;
 
+        UIFramePack[] FPack=GetFramePack();
+        
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
         DisplayPage[] DP = new DisplayPage[8];
@@ -79,6 +83,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_4.frame";
         //DP[PAGE_DDISPLAY_MAIN].UIFrameFiles[7] = "kk_lcddisplay_uiframe_main_6.frame";
         DP[PAGE_DDISPLAY_MAIN].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_MAIN].UIFramesPack = FPack[0];
 
         DP[PAGE_DDISPLAY_DETAIL] = new DisplayPage();
         DP[PAGE_DDISPLAY_DETAIL].HaveDynamicElements = false;
@@ -90,6 +95,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_DETAIL].UIFrameFiles = new String[1];
         DP[PAGE_DDISPLAY_DETAIL].UIFrameFiles[0] = "kk_lcddisplay_uiframe_detail_1.frame";
         DP[PAGE_DDISPLAY_DETAIL].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_DETAIL].UIFramesPack = FPack[1];
         //
         DP[PAGE_DDISPLAY_WAIT] = new DisplayPage();
         DP[PAGE_DDISPLAY_WAIT].HaveDynamicElements = false;
@@ -101,6 +107,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_WAIT].UIFrameFiles = new String[1];
         DP[PAGE_DDISPLAY_WAIT].UIFrameFiles[0] = "kk_lcddisplay_uiframe_wait_1.frame";
         DP[PAGE_DDISPLAY_WAIT].IsDefaultPage = true;
+        DP[PAGE_DDISPLAY_WAIT].UIFramesPack = FPack[3];
         //
         DP[PAGE_DDISPLAY_ERROR] = new DisplayPage();
         DP[PAGE_DDISPLAY_ERROR].HaveDynamicElements = false;
@@ -112,6 +119,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_ERROR].UIFrameFiles = new String[1];
         DP[PAGE_DDISPLAY_ERROR].UIFrameFiles[0] = "kk_lcddisplay_uiframe_error_1.frame";
         DP[PAGE_DDISPLAY_ERROR].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_ERROR].UIFramesPack = FPack[4];
         //
         DP[PAGE_SYSMENU_P1] = new DisplayPage();
         DP[PAGE_SYSMENU_P1].HaveDynamicElements = false;
@@ -124,6 +132,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_P1].UIFrameFiles = new String[1];
         DP[PAGE_SYSMENU_P1].UIFrameFiles[0] = "kk_sysmenu_p1_uiframe_1.frame";
         DP[PAGE_SYSMENU_P1].IsDefaultPage = true;
+        DP[PAGE_SYSMENU_P1].UIFramesPack = FPack[2];
         //
         DP[PAGE_SYSMENU_VER] = new DisplayPage();
         DP[PAGE_SYSMENU_VER].HaveDynamicElements = false;
@@ -135,6 +144,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_VER].UIFrameFiles = new String[1];
         DP[PAGE_SYSMENU_VER].UIFrameFiles[0] = "kk_sysmenu_vi_uiframe_1.frame";
         DP[PAGE_SYSMENU_VER].IsDefaultPage = false;
+                DP[PAGE_SYSMENU_VER].UIFramesPack = FPack[2];
         //
         DP[PAGE_SYSMENU_SETT] = new DisplayPage();
         DP[PAGE_SYSMENU_SETT].HaveDynamicElements = false;
@@ -146,6 +156,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU_SETT].UIFrameFiles = new String[1];
         DP[PAGE_SYSMENU_SETT].UIFrameFiles[0] = "kk_sysmenu_sett_uiframe_1.frame";
         DP[PAGE_SYSMENU_SETT].IsDefaultPage = false;
+        DP[PAGE_SYSMENU_SETT].UIFramesPack = FPack[2];
          //
         DP[PAGE_DDISPLAY_CE_LIST] = new DisplayPage();
         DP[PAGE_DDISPLAY_CE_LIST].HaveDynamicElements = false;
@@ -157,6 +168,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_CE_LIST].UIFrameFiles = new String[1];
         DP[PAGE_DDISPLAY_CE_LIST].UIFrameFiles[0] = "kk_ddisplay_cereader_uiframe_1.frame";
         DP[PAGE_DDISPLAY_CE_LIST].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_CE_LIST].UIFramesPack = FPack[2];
         //
         DefConf.ConfName = "Default config";
         DefConf.DisplayPages = DP;
@@ -169,7 +181,47 @@ public abstract class kk_DefaultConfig {
         return DefConf;
     }
 
+    private static UIFramePack[] GetFramePack()
+    {
+        UIFramePack[] Ret = new UIFramePack[4];
+        Ret[0] = new UIFramePack();
+        Ret[0].Name="Default Diag Display 2x8 MAIN PAGE";
+        Ret[0].PackID="";
+        Ret[0].Data=new UIFrameData[4];
+        Ret[0].Data[0].FrameData="SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] |";
+        Ret[0].Data[1].FrameData="SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] /";
+        Ret[0].Data[2].FrameData="SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] -";
+        Ret[0].Data[3].FrameData="SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] \\";
+        //
+        Ret[1] = new UIFramePack();
+        Ret[1].Name="Default Diag Display 2x8 DETAILS PAGE";
+        Ret[1].PackID="";
+        Ret[1].Data=new UIFrameData[1];
+        Ret[1].Data[0].FrameData="T: [TMP] V:[VOLTAGE]\r\nS: [SPD] R: [RPM]";
+        //
+        Ret[2] = new UIFramePack();
+        Ret[2].Name="Default Diag Display 2x8 SYSTEM MENU";
+        Ret[2].PackID="";
+        Ret[2].Data=new UIFrameData[1];
+        Ret[2].Data[0].FrameData="[SEL_1][SYSMENU_1][SEL_1]\r\n[SEL_1][SYSMENU_1][SEL_1]";
+        //
+        Ret[3] = new UIFramePack();
+        Ret[3].Name="Default Diag Display 2x8 WAIT";
+        Ret[3].PackID="";
+        Ret[3].Data=new UIFrameData[1];
+        Ret[3].Data[0].FrameData="......WAIT......\r\n......WAIT......";
+         //
+        Ret[4] = new UIFramePack();
+        Ret[4].Name="Default Diag Display 2x8 CEREADER";
+        Ret[4].PackID="";
+        Ret[4].Data=new UIFrameData[1];
+        Ret[4].Data[0].FrameData="Err: [ODB_ADAPTER_STATE]\r\n[ODB_ADAPTER_ERROR]";
+        return Ret;
+               
+    }
+    
     private static void CreateDefaultFrames() {
+        
         File dir = new java.io.File(SystemConsts.KK_BASE_CONFPATH + PluginSettings.DISPLAY_CONF_FRAMES_DIR);
         if (!dir.exists()) {
             dir.mkdir();

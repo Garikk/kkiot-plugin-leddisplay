@@ -44,7 +44,6 @@ public class DisplayView {
 
     private void RunDynamicView()
     {
-        System.out.println("Start");
         DynamicFramesCounter=0;
         DynamicTimer=new Timer();
         //
@@ -65,7 +64,6 @@ public class DisplayView {
     }
 
     private void StopDynamicView() {
-        System.out.println("Stop");
         
         if (DynamicTimer!=null)
             DynamicTimer.cancel();
@@ -115,11 +113,11 @@ public class DisplayView {
         }
         DisplayedFrames = UIFrames.clone();
         if (UIFrames == null) {
-            Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
+            Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
          if (UIFrames == null) {
-            Logger.getLogger("lcddisplay").log(Level.WARNING, "[KKCar][PLUGIN][LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
+            Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
          

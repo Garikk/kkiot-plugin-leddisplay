@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kkdev.kksystem.base.classes.display.UIFramePack;
 import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.base.constants.SystemConsts;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
@@ -33,6 +34,7 @@ public class DisplayPage {
     public String[] HWDisplays;         //links to HWDisplays
     //
     public String[] UIFrameFiles;       //UI Frame files list
+    public UIFramePack UIFramesPack;
     //
     public  String[] UIFrames;
     public  UIFramesKeySet UIFramesValues;
