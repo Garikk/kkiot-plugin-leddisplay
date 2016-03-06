@@ -5,6 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import static java.lang.System.out;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -25,12 +26,12 @@ public class DisplayView {
     public boolean Enabled;
     public boolean ErrorState;
     public boolean DynamicView;
-    
+
     String[] UIFrames;
     String[] DisplayedFrames;
-    
+
     UIFramesKeySet StoredUIFrameValues;
-    
+
     Timer DynamicTimer;
     int DynamicFramesCounter;
 
@@ -39,13 +40,12 @@ public class DisplayView {
         //
         DisplayID = Connector.GetDisplayInfo().DisplayID;
         //
-        Enabled=true; //Change this!
+        Enabled = true; //Change this!
     }
 
-    private void RunDynamicView()
-    {
-        DynamicFramesCounter=0;
-        DynamicTimer=new Timer();
+    private void RunDynamicView() {
+        DynamicFramesCounter = 0;
+        DynamicTimer = new Timer();
         //
         DynamicTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -57,24 +57,23 @@ public class DisplayView {
                 } else {
                     DynamicFramesCounter = 0;
                 }
-                      UpdateFrameVariables(StoredUIFrameValues);
+                UpdateFrameVariables(StoredUIFrameValues);
             }
         }, 0, 1000);
 
     }
 
     private void StopDynamicView() {
-        
-        if (DynamicTimer!=null)
+
+        if (DynamicTimer != null) {
             DynamicTimer.cancel();
-        
-        DynamicFramesCounter=0;
-        DynamicTimer=null;
+        }
+
+        DynamicFramesCounter = 0;
+        DynamicTimer = null;
 
     }
-    
-    
-    
+
     public void ClearDisplay() {
         if (!Enabled) {
             return;
@@ -116,49 +115,52 @@ public class DisplayView {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
-         if (UIFrames == null) {
+        if (UIFrames == null) {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
-         
-         StoredUIFrameValues=UIFramesValues;
-         
+
+        StoredUIFrameValues = UIFramesValues;
+
         //not data
         if (StoredUIFrameValues != null) {
             for (int i = 0; i < DisplayedFrames.length; i++) {
-                for (String ii:StoredUIFrameValues.FrameValues.keySet())
+                for (String ii : StoredUIFrameValues.FrameValues.keySet()) {
                     if (DisplayedFrames[i] != null) {
                         DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
                     }
-            }
-        }
-        DisplayedFrames=FillPluginFeaturedFields(DisplayedFrames);
-        //
-        Connector.DisplayTextSetUIFrames(DisplayedFrames,DynamicFramesCounter);
-    }
-
-    private String[] FillPluginFeaturedFields(String[] DisplayFrames)
-    {
-        String CurrTime;
-        CurrTime =(new SimpleDateFormat("HH:mm:ss")).format(new Date());
-        
-         for (int i = 0; i < DisplayedFrames.length; i++) {
-                     if (DisplayedFrames[i] != null) {
-                         
-                        DisplayedFrames[i] = DisplayedFrames[i].replace("[KK_PL_TIME]", CurrTime);
                 }
             }
-        return DisplayFrames;
-    
+        }
+        DisplayedFrames = FillPluginFeaturedFields(DisplayedFrames);
+        //
+        Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter);
     }
-    public void SetUIFrames(String[] Frames,boolean EnableDynamic) {
-        UIFrames = Frames;
+
+    private String[] FillPluginFeaturedFields(String[] DisplayFrames) {
+        String CurrTime;
+        CurrTime = (new SimpleDateFormat("HH:mm:ss")).format(new Date());
+
+        for (int i = 0; i < DisplayedFrames.length; i++) {
+            if (DisplayedFrames[i] != null) {
+
+                DisplayedFrames[i] = DisplayedFrames[i].replace("[KK_PL_TIME]", CurrTime);
+            }
+        }
+        return DisplayFrames;
+
+    }
+
+    public void SetUIFrames(String[] Frames, boolean EnableDynamic) {
+   
        
-        if (EnableDynamic & (DynamicView!=EnableDynamic))
+        UIFrames = Frames;
+        if (EnableDynamic & (DynamicView != EnableDynamic)) {
             RunDynamicView();
-        else if (!EnableDynamic & (DynamicView!=EnableDynamic))
+        } else if (!EnableDynamic & (DynamicView != EnableDynamic)) {
             StopDynamicView();
-        
-        DynamicView=EnableDynamic;
+        }
+
+        DynamicView = EnableDynamic;
     }
 }
