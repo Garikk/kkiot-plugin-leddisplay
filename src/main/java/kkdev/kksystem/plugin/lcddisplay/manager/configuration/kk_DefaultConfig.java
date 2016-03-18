@@ -8,6 +8,7 @@ package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 import kkdev.kksystem.base.classes.display.UIFrameData;
 import kkdev.kksystem.base.classes.display.UIFramePack;
+import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_BLUETOOTH_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_UID;
@@ -96,9 +97,10 @@ public abstract class kk_DefaultConfig {
         //
         DP[PAGE_SYSMENU] = new DisplayPage();
         DP[PAGE_SYSMENU].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU].Features = new String[2];
+        DP[PAGE_SYSMENU].Features = new String[3];
         DP[PAGE_SYSMENU].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU].Features[1] = KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
+        DP[PAGE_SYSMENU].Features[2] = KK_BASE_FEATURES_BLUETOOTH_UID;
         DP[PAGE_SYSMENU].PageName = "SYSMENU_1";
         DP[PAGE_SYSMENU].HWDisplays = new String[1];
         DP[PAGE_SYSMENU].HWDisplays[0] = DHW.HWDisplayName;

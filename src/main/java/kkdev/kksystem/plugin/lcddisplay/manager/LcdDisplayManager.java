@@ -128,7 +128,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
-                System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
+           //     System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
                 SetPageToActive(FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:

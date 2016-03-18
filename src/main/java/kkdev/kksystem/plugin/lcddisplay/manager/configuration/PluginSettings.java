@@ -26,7 +26,7 @@ public abstract class PluginSettings {
         
         Settings=new SettingsManager(DISPLAY_CONF,LcdDisplayConf.class);
         
-        System.out.println("[LCDDisplay][CONFIG] Load configuration");
+     //   System.out.println("[LCDDisplay][CONFIG] Load configuration");
         MainConfiguration=(LcdDisplayConf)Settings.LoadConfig();
         
         if (MainConfiguration==null)
