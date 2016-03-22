@@ -8,10 +8,8 @@ package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 import kkdev.kksystem.base.classes.display.UIFrameData;
 import kkdev.kksystem.base.classes.display.UIFramePack;
-import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_BLUETOOTH_UID;
-import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_ODB_DIAG_UID;
-import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
-import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_FEATURES_SYSTEM_UID;
+import static kkdev.kksystem.base.constants.SystemConsts.*;
+
 
 /**
  *
@@ -63,6 +61,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_MAIN].HWDisplays = new String[1];
         DP[PAGE_DDISPLAY_MAIN].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DDISPLAY_MAIN].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_MAIN].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_MAIN].UIFramesPack = FPack[0];
 
         DP[PAGE_DDISPLAY_DETAIL] = new DisplayPage();
@@ -73,6 +72,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_DETAIL].HWDisplays = new String[1];
         DP[PAGE_DDISPLAY_DETAIL].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DDISPLAY_DETAIL].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_DETAIL].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_DETAIL].UIFramesPack = FPack[1];
         //
         DP[PAGE_DDISPLAY_WAIT] = new DisplayPage();
@@ -83,6 +83,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_WAIT].HWDisplays = new String[1];
         DP[PAGE_DDISPLAY_WAIT].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DDISPLAY_WAIT].IsDefaultPage = true;
+        DP[PAGE_DDISPLAY_WAIT].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_WAIT].UIFramesPack = FPack[3];
         //
         DP[PAGE_DDISPLAY_ERROR] = new DisplayPage();
@@ -93,18 +94,18 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_ERROR].HWDisplays = new String[1];
         DP[PAGE_DDISPLAY_ERROR].HWDisplays[0] = DHW.HWDisplayName;
         DP[PAGE_DDISPLAY_ERROR].IsDefaultPage = false;
+        DP[PAGE_DDISPLAY_ERROR].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_ERROR].UIFramesPack = FPack[4];
         //
         DP[PAGE_SYSMENU] = new DisplayPage();
         DP[PAGE_SYSMENU].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU].Features = new String[3];
+        DP[PAGE_SYSMENU].Features = new String[1];
         DP[PAGE_SYSMENU].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
-        DP[PAGE_SYSMENU].Features[1] = KK_BASE_FEATURES_SYSTEM_MENUMAKER_UID;
-        DP[PAGE_SYSMENU].Features[2] = KK_BASE_FEATURES_BLUETOOTH_UID;
         DP[PAGE_SYSMENU].PageName = "SYSMENU_1";
         DP[PAGE_SYSMENU].HWDisplays = new String[1];
         DP[PAGE_SYSMENU].HWDisplays[0] = DHW.HWDisplayName;
-        DP[PAGE_SYSMENU].IsDefaultPage = true;
+        DP[PAGE_SYSMENU].IsDefaultPage = false;
+        DP[PAGE_SYSMENU].IsMultifeaturePage = true;
         DP[PAGE_SYSMENU].UIFramesPack = FPack[2];
         //
         DP[PAGE_DDISPLAY_CE_LIST] = new DisplayPage();
@@ -122,6 +123,11 @@ public abstract class kk_DefaultConfig {
         DefConf.HWDisplays = new DisplayHW[1];
         DefConf.HWDisplays[0] = DHW;
         DefConf.DefaultFeature = KK_BASE_FEATURES_SYSTEM_UID;
+        DefConf.Features = new String[3];
+        DefConf.Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
+        DefConf.Features[1] = KK_BASE_FEATURES_ODB_DIAG_UID;
+        DefConf.Features[2] = KK_BASE_FEATURES_BLUETOOTH_UID;
+        
 
         return DefConf;
     }

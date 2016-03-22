@@ -22,6 +22,7 @@ public class DisplayPage {
     public String PageName;             //ID
     public boolean HaveDynamicElements; //want to exec anmimation by thread
     public boolean IsDefaultPage;
+    public boolean IsMultifeaturePage;  //Page available in all features
     //
     public String[] Features;
     //

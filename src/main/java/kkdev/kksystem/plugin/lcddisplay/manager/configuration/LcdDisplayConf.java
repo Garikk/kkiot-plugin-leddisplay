@@ -18,4 +18,5 @@ public class LcdDisplayConf  extends ExternalConfiguration {
     public DisplayHW[] HWDisplays;
     
     public String DefaultFeature;
+    public String[] Features;
 }

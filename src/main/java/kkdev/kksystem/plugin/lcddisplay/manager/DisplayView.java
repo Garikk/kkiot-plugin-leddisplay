@@ -134,6 +134,7 @@ public class DisplayView {
         }
         DisplayedFrames = FillPluginFeaturedFields(DisplayedFrames);
         //
+        //
         Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter);
     }
 
