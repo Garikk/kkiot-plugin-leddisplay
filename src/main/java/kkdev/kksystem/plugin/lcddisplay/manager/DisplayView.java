@@ -8,12 +8,15 @@ package kkdev.kksystem.plugin.lcddisplay.manager;
 import static java.lang.System.out;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 
 /**
  *
@@ -26,6 +29,7 @@ public class DisplayView {
     public boolean Enabled;
     public boolean ErrorState;
     public boolean DynamicView;
+    Map<String,DisplayPage> Pages;
 
     String[] UIFrames;
     String[] DisplayedFrames;

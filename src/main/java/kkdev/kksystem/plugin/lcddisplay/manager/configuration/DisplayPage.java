@@ -33,6 +33,23 @@ public class DisplayPage {
     public  String[] UIFrames;
     public  UIFramesKeySet UIFramesValues;
     
+    public DisplayPage GetInstance()
+    {
+        DisplayPage Ret;
+        Ret=new DisplayPage();
+        Ret.Features=this.Features;
+        Ret.HWDisplays=this.HWDisplays;
+        Ret.UIFramesPack=this.UIFramesPack;
+        Ret.UIFrames=this.UIFrames;
+        Ret.UIFramesValues=this.UIFramesValues;
+        Ret.PageName=this.PageName;
+        Ret.HaveDynamicElements=this.HaveDynamicElements;
+        Ret.IsDefaultPage=this.IsDefaultPage;
+        Ret.IsMultifeaturePage=this.IsMultifeaturePage;
+        
+        return Ret;
+    }
+    
      public void InitUIFrames() {
         int i=0;
         UIFrames = new String[UIFramesPack.Data.length];
