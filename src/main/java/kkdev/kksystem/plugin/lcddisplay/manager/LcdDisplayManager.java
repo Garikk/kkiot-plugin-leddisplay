@@ -25,6 +25,7 @@ import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes;
+import kkdev.kksystem.plugin.lcddisplay.hw.i2c.oled.DisplayOLEDOnI2C;
 
 /**
  *
@@ -69,6 +70,12 @@ public class LcdDisplayManager extends PluginManagerLCD {
             } //Debug host
             else if (DH.HWBoard == HWHostTypes.DisplayDebug) {
                 Displays.put(DH.HWDisplayName, new DisplayView(new DisplayDebug()));
+            } else if (DH.HWBoard == HWHostTypes.I2C_Over_Arduino) {
+                if (DH.HWDisplay == HWDisplayTypes.OLED_I2C_128x64) {
+                    Displays.put(DH.HWDisplayName, new DisplayView(new DisplayOLEDOnI2C()));
+                } else {
+                    System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
+                }
             } //Config error
             else {
                 System.out.println("[LCDDisplay][CONFLOADER] Unknown HW board in config!! + " + DH.HWBoard);
@@ -142,18 +149,18 @@ public class LcdDisplayManager extends PluginManagerLCD {
         }
     }
 
-    public void ReceivePin(String FeatureID, String PinName, Object PinData) {
+    public void ReceivePin(String UIContext,String FeatureID, String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand(FeatureID, CMD);
+                ProcessCommand(UIContext,FeatureID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
                 DAT = (PinLedData) PinData;
-                ProcessData(DAT);
+                ProcessData(UIContext,DAT);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
                 PinBaseCommand BaseCMD;
@@ -165,12 +172,12 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     ///////////////////
     ///////////////////
-    private void ProcessCommand(String FeatureID, PinLedCommand Command) {
+    private void ProcessCommand(String UIContext,String FeatureID, PinLedCommand Command) {
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
                 //     System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
-                SetPageToActive(FeatureID, Command.PageID);
+                SetPageToActive(UIContext,FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
                 AnswerDisplayInfo();
@@ -179,17 +186,17 @@ public class LcdDisplayManager extends PluginManagerLCD {
         }
     }
 
-    private void ProcessData(PinLedData Data) {
+    private void ProcessData(String UIContext,PinLedData Data) {
 
         switch (Data.LedDataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextToPage(Data.FeatureID, Data.TargetPage, Data.Direct_DisplayText);
+                SendTextToPage(UIContext,Data.FeatureID, Data.TargetPage, Data.Direct_DisplayText);
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(Data.FeatureID, Data.TargetPage, false, Data.UIFrames);
+                UpdatePageUIFrames(UIContext,Data.FeatureID, Data.TargetPage, false, Data.UIFrames);
                 break;
         }
     }
@@ -197,7 +204,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-                ChangeFeature(Command.ChangeFeatureID);
+                ChangeFeature(Command.UIContextID,Command.ChangeFeatureID);
                 break;
             case PLUGIN:
                 break;
@@ -227,20 +234,20 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     //////////////////
     ///////////////////
-    private void SendTextToPage(String FeatureID, String PageID, String[] Text) {
+    private void SendTextToPage(String UIContext,String FeatureID, String PageID, String[] Text) {
         for (String TL : Text) {
-            SendTextToPage(FeatureID, PageID, TL);
+            SendTextToPage(UIContext,FeatureID, PageID, TL);
         }
     }
 
-    private void SendTextToPage(String FeatureID, String PageID, String Text) {
+    private void SendTextToPage(String UIContext,String FeatureID, String PageID, String Text) {
         //
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             DV.SendText(Text);
         }
     }
 
-    private void UpdateTextOnPage(String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
+    private void UpdateTextOnPage(String UIContext,String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
 
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             for (int i = 0; i <= Text.length; i++) {
@@ -250,7 +257,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     }
 
-    private void UpdatePageUIFrames(String FeatureID, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
+    private void UpdatePageUIFrames(String UIContext,String FeatureID, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
 
         DisplayPage DP = DPages.get(FeatureID).get(PageID);
 
@@ -273,7 +280,7 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
     }
 
-    private void SetPageToActive(String FeatureID, String PageID) {
+    private void SetPageToActive(String UIContext,String FeatureID, String PageID) {
        // DisplayPage DP = DPages.get(PageID);
         //
         CurrentPage.put(FeatureID, PageID);
@@ -282,10 +289,10 @@ public class LcdDisplayManager extends PluginManagerLCD {
             return;
         }
         //
-        UpdatePageUIFrames(FeatureID, PageID, true, null);
+        UpdatePageUIFrames(UIContext,FeatureID, PageID, true, null);
     }
 
-    private void SetPageToInactive(String FeatureID, String PageID) {
+    private void SetPageToInactive(String UIContext,String FeatureID, String PageID) {
         if (!FeatureID.equals(CurrentFeature)) {
             return;
         }
@@ -295,15 +302,15 @@ public class LcdDisplayManager extends PluginManagerLCD {
         });
     }
 
-    private void ChangeFeature(String FeatureID) {
+    private void ChangeFeature(String UIContext,String FeatureID) {
         if (CurrentFeature.equals(FeatureID)) {
             return;
         }
 
         // Set Current page of feature to Active
-        SetPageToInactive(CurrentFeature, CurrentPage.get(CurrentFeature));
+        SetPageToInactive(UIContext,CurrentFeature, CurrentPage.get(CurrentFeature));
         CurrentFeature = FeatureID;
-        SetPageToActive(FeatureID, CurrentPage.get(FeatureID));
+        SetPageToActive(UIContext,FeatureID, CurrentPage.get(FeatureID));
 
         //
     }
