@@ -43,21 +43,21 @@ public abstract class kk_DefaultConfig {
         DisplayHW DHW3 = new DisplayHW();
         DisplayHW DHW4 = new DisplayHW();
        
-        DHW1.HWDisplayName = "DEBUG";
+        DHW1.HWDisplayName = KK_BASE_UICONTEXT_DEFAULT_DEBUG;
         DHW1.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
         DHW1.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //
         DHW2.HWBoard = DisplayHW.HWHostTypes.RaspberryPI_B;
         DHW2.HWDisplay = HD44780_4bit;  
-        DHW2.HWDisplayName = "TextDisplay";
+        DHW2.HWDisplayName = KK_BASE_UICONTEXT_DEFAULT;
         //
         DHW3.HWBoard = DisplayHW.HWHostTypes.I2C_Over_Arduino;
         DHW3.HWDisplay =  DisplayHW.HWDisplayTypes.OLED_I2C_128x64;  
-        DHW3.HWDisplayName = "GFX_Display_Left";
+        DHW3.HWDisplayName = KK_BASE_UICONTEXT_GFX1;
         //
         DHW4.HWBoard =  DisplayHW.HWHostTypes.I2C_Over_Arduino;
         DHW4.HWDisplay = DisplayHW.HWDisplayTypes.OLED_I2C_128x64;  
-        DHW4.HWDisplayName = "GFX_Display_Right";
+        DHW4.HWDisplayName = KK_BASE_UICONTEXT_GFX2;
 
 
         //DHW.;

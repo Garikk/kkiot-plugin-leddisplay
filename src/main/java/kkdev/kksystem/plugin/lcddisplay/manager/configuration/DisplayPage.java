@@ -57,7 +57,11 @@ public class DisplayPage {
            UIFrames[i]=FrameData.FrameData;
            i++;
         }
-
     }
+     
+     public String[] GetUIContexts()
+     {
+         return HWDisplays;
+     }
 }
 
