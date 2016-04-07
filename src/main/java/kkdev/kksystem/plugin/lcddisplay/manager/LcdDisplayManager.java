@@ -19,6 +19,7 @@ import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.classes.display.UIFramesKeySet;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
+import kkdev.kksystem.base.constants.SystemConsts;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
@@ -47,7 +48,10 @@ public class LcdDisplayManager extends PluginManagerLCD {
 
         PluginSettings.InitConfig(Conn.GlobalConfID, Conn.PluginInfo.GetPluginInfo().PluginUUID);
         //
-        CurrentFeature = PluginSettings.MainConfiguration.DefaultFeature;
+        for (DisplayHW HD:PluginSettings.MainConfiguration.HWDisplays)
+        {
+            CurrentFeature.put(HD.HWDisplay_UIContext,PluginSettings.MainConfiguration.DefaultFeature);
+        }
         //
         ConfigAndHWInit();
     }
@@ -65,17 +69,17 @@ public class LcdDisplayManager extends PluginManagerLCD {
                 switch (DH.HWBoard) {
                     case RaspberryPI_B:
                         if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
-                            Displays.put(DH.HWDisplayName, new DisplayView(new DisplayHD44780onRPI()));
+                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
                         break;
                     case DisplayDebug:
-                        Displays.put(DH.HWDisplayName, new DisplayView(new DisplayDebug()));
+                        Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
                         break;
                     case I2C_Over_Arduino:
                         if (DH.HWDisplay == HWDisplayTypes.OLED_I2C_128x64) {
-                            Displays.put(DH.HWDisplayName, new DisplayView(new DisplayOLEDOnI2C()));
+                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnI2C()));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -166,18 +170,18 @@ public class LcdDisplayManager extends PluginManagerLCD {
     }
 }
 
-public void ReceivePin(String UIContext, String FeatureID, String PinName, Object PinData) {
+public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand(UIContext, FeatureID, CMD);
+                ProcessCommand(CMD.ChangeUIContextID, FeatureID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
                 DAT = (PinLedData) PinData;
-                ProcessData(UIContext, DAT);
+                ProcessData(DAT.UIContextID, DAT);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
                 PinBaseCommand BaseCMD;
@@ -193,7 +197,6 @@ public void ReceivePin(String UIContext, String FeatureID, String PinName, Objec
 
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
-                //     System.out.println("[LCDDisplay][MANAGER] Acti " + FeatureID + " " + Command.PageID);
                 SetPageToActive(UIContext, FeatureID, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
@@ -221,7 +224,7 @@ public void ReceivePin(String UIContext, String FeatureID, String PinName, Objec
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-                ChangeFeature(Command.UIContextID, Command.ChangeFeatureID);
+                ChangeFeature(Command.ChangeUIContextID, Command.ChangeFeatureID);
                 break;
             case PLUGIN:
                 break;
@@ -245,7 +248,7 @@ public void ReceivePin(String UIContext, String FeatureID, String PinName, Objec
         Ret.DisplayState = DI;
         Ret.LedDataType = DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE;
         //
-        DISPLAY_SendPluginMessageData(CurrentFeature, Ret);
+        DISPLAY_SendPluginMessageData(CurrentFeature.get(SystemConsts.KK_BASE_UICONTEXT_DEFAULT), Ret);
         //
     }
 
@@ -325,9 +328,9 @@ public void ReceivePin(String UIContext, String FeatureID, String PinName, Objec
         }
 
         // Set Current page of feature to Active
-        SetPageToInactive(UIContext, CurrentFeature, CurrentPage.get(UIContext).get(CurrentFeature));
-        CurrentFeature = FeatureID;
-        SetPageToActive(UIContext, FeatureID, CurrentPage.get(UIContext).get(FeatureID));
+        SetPageToInactive(CurrentFeature.get(UIContext),UIContext, CurrentPage.get(UIContext).get(CurrentFeature));
+        CurrentFeature.put(UIContext, FeatureID);
+        SetPageToActive(FeatureID,UIContext,CurrentPage.get(UIContext).get(FeatureID));
 
         //
     }

@@ -43,21 +43,21 @@ public abstract class kk_DefaultConfig {
         DisplayHW DHW3 = new DisplayHW();
         DisplayHW DHW4 = new DisplayHW();
        
-        DHW1.HWDisplayName = KK_BASE_UICONTEXT_DEFAULT_DEBUG;
+        DHW1.HWDisplay_UIContext = KK_BASE_UICONTEXT_DEFAULT_DEBUG;
         DHW1.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
         DHW1.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //
         DHW2.HWBoard = DisplayHW.HWHostTypes.RaspberryPI_B;
         DHW2.HWDisplay = HD44780_4bit;  
-        DHW2.HWDisplayName = KK_BASE_UICONTEXT_DEFAULT;
+        DHW2.HWDisplay_UIContext = KK_BASE_UICONTEXT_DEFAULT;
         //
         DHW3.HWBoard = DisplayHW.HWHostTypes.I2C_Over_Arduino;
         DHW3.HWDisplay =  DisplayHW.HWDisplayTypes.OLED_I2C_128x64;  
-        DHW3.HWDisplayName = KK_BASE_UICONTEXT_GFX1;
+        DHW3.HWDisplay_UIContext = KK_BASE_UICONTEXT_GFX1;
         //
         DHW4.HWBoard =  DisplayHW.HWHostTypes.I2C_Over_Arduino;
         DHW4.HWDisplay = DisplayHW.HWDisplayTypes.OLED_I2C_128x64;  
-        DHW4.HWDisplayName = KK_BASE_UICONTEXT_GFX2;
+        DHW4.HWDisplay_UIContext = KK_BASE_UICONTEXT_GFX2;
 
 
         //DHW.;
@@ -75,7 +75,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_MAIN].HaveDynamicElements = true;
         DP[PAGE_DDISPLAY_MAIN].PageName = "MAIN";
         DP[PAGE_DDISPLAY_MAIN].HWDisplays = new String[1];
-        DP[PAGE_DDISPLAY_MAIN].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_DDISPLAY_MAIN].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_DDISPLAY_MAIN].IsDefaultPage = false;
         DP[PAGE_DDISPLAY_MAIN].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_MAIN].UIFramesPack = FPack[0];
@@ -86,7 +86,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_DETAIL].Features = new String[1];
         DP[PAGE_DDISPLAY_DETAIL].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_DETAIL].HWDisplays = new String[1];
-        DP[PAGE_DDISPLAY_DETAIL].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_DDISPLAY_DETAIL].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_DDISPLAY_DETAIL].IsDefaultPage = false;
         DP[PAGE_DDISPLAY_DETAIL].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_DETAIL].UIFramesPack = FPack[1];
@@ -97,7 +97,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_WAIT].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_WAIT].PageName = "WAIT";
         DP[PAGE_DDISPLAY_WAIT].HWDisplays = new String[1];
-        DP[PAGE_DDISPLAY_WAIT].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_DDISPLAY_WAIT].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_DDISPLAY_WAIT].IsDefaultPage = true;
         DP[PAGE_DDISPLAY_WAIT].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_WAIT].UIFramesPack = FPack[3];
@@ -108,7 +108,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_ERROR].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_ERROR].PageName = "ERROR";
         DP[PAGE_DDISPLAY_ERROR].HWDisplays = new String[1];
-        DP[PAGE_DDISPLAY_ERROR].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_DDISPLAY_ERROR].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_DDISPLAY_ERROR].IsDefaultPage = false;
         DP[PAGE_DDISPLAY_ERROR].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_ERROR].UIFramesPack = FPack[4];
@@ -119,7 +119,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU].PageName = "SYSMENU_1";
         DP[PAGE_SYSMENU].HWDisplays = new String[1];
-        DP[PAGE_SYSMENU].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_SYSMENU].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_SYSMENU].IsDefaultPage = false;
         DP[PAGE_SYSMENU].IsMultifeaturePage = true;
         DP[PAGE_SYSMENU].UIFramesPack = FPack[2];
@@ -130,7 +130,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_CE_LIST].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_CE_LIST].PageName = "CE_READER";
         DP[PAGE_DDISPLAY_CE_LIST].HWDisplays = new String[1];
-        DP[PAGE_DDISPLAY_CE_LIST].HWDisplays[0] = DHW1.HWDisplayName;
+        DP[PAGE_DDISPLAY_CE_LIST].HWDisplays[0] = DHW1.HWDisplay_UIContext;
         DP[PAGE_DDISPLAY_CE_LIST].IsDefaultPage = false;
         DP[PAGE_DDISPLAY_CE_LIST].UIFramesPack = FPack[2];
         //
