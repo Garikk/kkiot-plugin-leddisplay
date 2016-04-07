@@ -176,7 +176,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand(CMD.ChangeUIContextID, FeatureID, CMD);
+                ProcessCommand( FeatureID,CMD.ChangeUIContextID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
@@ -193,11 +193,12 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     ///////////////////
     ///////////////////
-    private void ProcessCommand(String UIContext, String FeatureID, PinLedCommand Command) {
+    private void ProcessCommand(String FeatureID,String UIContext,  PinLedCommand Command) {
 
+        System.out.println("[LCD][DBG] FTR " + FeatureID + " CTX " + UIContext);
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
-                SetPageToActive(UIContext, FeatureID, Command.PageID);
+                SetPageToActive(FeatureID,UIContext, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
                 AnswerDisplayInfo();
@@ -210,13 +211,13 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
         switch (Data.LedDataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextToPage(UIContext, Data.FeatureID, Data.TargetPage, Data.Direct_DisplayText);
+                SendTextToPage( Data.FeatureID,UIContext, Data.TargetPage, Data.Direct_DisplayText);
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(UIContext, Data.FeatureID, Data.TargetPage, false, Data.UIFrames);
+                UpdatePageUIFrames( Data.FeatureID,UIContext, Data.TargetPage, false, Data.UIFrames);
                 break;
         }
     }
@@ -224,7 +225,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     private void ProcessBaseCommand(PinBaseCommand Command) {
         switch (Command.BaseCommand) {
             case CHANGE_FEATURE:
-                ChangeFeature(Command.ChangeUIContextID, Command.ChangeFeatureID);
+                ChangeFeature( Command.ChangeFeatureID,Command.ChangeUIContextID);
                 break;
             case PLUGIN:
                 break;
@@ -254,20 +255,20 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     //////////////////
     ///////////////////
-    private void SendTextToPage(String UIContext, String FeatureID, String PageID, String[] Text) {
+    private void SendTextToPage(String FeatureID,String UIContext, String PageID, String[] Text) {
         for (String TL : Text) {
-            SendTextToPage(UIContext, FeatureID, PageID, TL);
+            SendTextToPage( FeatureID,UIContext, PageID, TL);
         }
     }
 
-    private void SendTextToPage(String UIContext, String FeatureID, String PageID, String Text) {
+    private void SendTextToPage(String FeatureID,String UIContext, String PageID, String Text) {
         //
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             DV.SendText(Text);
         }
     }
 
-    private void UpdateTextOnPage(String UIContext, String FeatureID, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
+    private void UpdateTextOnPage(String FeatureID,String UIContext, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
 
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             for (int i = 0; i <= Text.length; i++) {
@@ -277,7 +278,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     }
 
-    private void UpdatePageUIFrames(String UIContext, String FeatureID, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
+    private void UpdatePageUIFrames(String FeatureID,String UIContext, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
 
         DisplayPage DP = DPages.get(FeatureID).get(UIContext).get(PageID);
 
@@ -300,20 +301,20 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     }
 
-    private void SetPageToActive(String UIContext, String FeatureID, String PageID) {
+    private void SetPageToActive(String FeatureID,String UIContext, String PageID) {
         // DisplayPage DP = DPages.get(PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
-        if (!CurrentFeature.equals(FeatureID)) {
+        if (!CurrentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }
         //
-        UpdatePageUIFrames(UIContext, FeatureID, PageID, true, null);
+        UpdatePageUIFrames( FeatureID,UIContext, PageID, true, null);
     }
 
-    private void SetPageToInactive(String UIContext, String FeatureID, String PageID) {
-        if (!FeatureID.equals(CurrentFeature)) {
+    private void SetPageToInactive(String FeatureID,String UIContext, String PageID) {
+        if (!FeatureID.equals(CurrentFeature.get(UIContext))) {
             return;
         }
 
@@ -322,11 +323,10 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         });
     }
 
-    private void ChangeFeature(String UIContext, String FeatureID) {
-        if (CurrentFeature.equals(FeatureID)) {
+    private void ChangeFeature( String FeatureID,String UIContext) {
+        if (CurrentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }
-
         // Set Current page of feature to Active
         SetPageToInactive(CurrentFeature.get(UIContext),UIContext, CurrentPage.get(UIContext).get(CurrentFeature));
         CurrentFeature.put(UIContext, FeatureID);

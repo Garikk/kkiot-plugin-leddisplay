@@ -27,6 +27,7 @@ public class DisplayHW  {
     }
     
     public String HWDisplay_UIContext;
+    public String HWDisplay_UIContext_MirrorOf;
     public HWHostTypes HWBoard;
     public HWDisplayTypes HWDisplay;
     public int[] HWBoardPins;

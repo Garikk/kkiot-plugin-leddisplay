@@ -29,15 +29,20 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
     final int LCD_BITS = 4;
 
     GpioLcdDisplay lcd;
-    final GpioController gpio = GpioFactory.getInstance();
+    GpioController gpio;
     boolean CmdStopDisplay = false;
     String[] UIFrames;
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static String ARCH = System.getProperty("os.arch").toLowerCase();
 
     public DisplayHD44780onRPI() {
-
+        //
         InitDisplayHW();
+        //
+         if (NotWork || NotWork2) {
+            return;
+        }
+        
         lcd.clear();
 
     }
@@ -110,7 +115,8 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
         if (NotWork || NotWork2) {
             return;
         }
-
+        
+        gpio= GpioFactory.getInstance();
         lcd = new GpioLcdDisplay(LCD_ROWS, LCD_COLUMNS, RaspiPin.GPIO_15, RaspiPin.GPIO_16, RaspiPin.GPIO_05, RaspiPin.GPIO_06, RaspiPin.GPIO_10, RaspiPin.GPIO_11);
 
     }

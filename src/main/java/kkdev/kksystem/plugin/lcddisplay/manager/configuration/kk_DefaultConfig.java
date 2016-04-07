@@ -44,11 +44,14 @@ public abstract class kk_DefaultConfig {
         DisplayHW DHW4 = new DisplayHW();
        
         DHW1.HWDisplay_UIContext = KK_BASE_UICONTEXT_DEFAULT_DEBUG;
+        DHW1.HWDisplay_UIContext_MirrorOf = KK_BASE_UICONTEXT_DEFAULT;
         DHW1.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
         DHW1.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
         //
-        DHW2.HWBoard = DisplayHW.HWHostTypes.RaspberryPI_B;
-        DHW2.HWDisplay = HD44780_4bit;  
+        DHW2.HWBoard = DisplayHW.HWHostTypes.DisplayDebug;
+        DHW2.HWDisplay = DisplayHW.HWDisplayTypes.HostDebug;
+        //DHW2.HWBoard = DisplayHW.HWHostTypes.RaspberryPI_B;
+        //DHW2.HWDisplay = HD44780_4bit;  
         DHW2.HWDisplay_UIContext = KK_BASE_UICONTEXT_DEFAULT;
         //
         DHW3.HWBoard = DisplayHW.HWHostTypes.I2C_Over_Arduino;
