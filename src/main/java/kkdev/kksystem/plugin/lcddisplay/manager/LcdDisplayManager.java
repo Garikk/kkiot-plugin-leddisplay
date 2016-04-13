@@ -248,6 +248,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         Ret = new PinLedData();
         Ret.DisplayState = DI;
         Ret.LedDataType = DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE;
+        Ret.UIContextID=SystemConsts.KK_BASE_UICONTEXT_DEFAULT;
         //
         DISPLAY_SendPluginMessageData(CurrentFeature.get(SystemConsts.KK_BASE_UICONTEXT_DEFAULT), Ret);
         //
