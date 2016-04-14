@@ -5,6 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
+import static java.lang.System.out;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 import java.util.ArrayList;
@@ -176,7 +177,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinLedCommand CMD;
                 CMD = (PinLedCommand) PinData;
-                ProcessCommand( FeatureID,CMD.ChangeUIContextID, CMD);
+                 ProcessCommand( FeatureID,CMD.ChangeUIContextID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinLedData DAT;
@@ -195,9 +196,10 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     ///////////////////
     private void ProcessCommand(String FeatureID,String UIContext,  PinLedCommand Command) {
 
-        System.out.println("[LCD][DBG] FTR " + FeatureID + " CTX " + UIContext);
+
         switch (Command.Command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
+
                 SetPageToActive(FeatureID,UIContext, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
@@ -304,7 +306,6 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     private void SetPageToActive(String FeatureID,String UIContext, String PageID) {
         // DisplayPage DP = DPages.get(PageID);
-        //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
         if (!CurrentFeature.get(UIContext).equals(FeatureID)) {
