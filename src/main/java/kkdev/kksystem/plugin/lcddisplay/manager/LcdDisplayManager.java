@@ -96,20 +96,17 @@ public class LcdDisplayManager extends PluginManagerLCD {
         //
         List<DisplayPage> MultiFeatureDisplayPages;
         MultiFeatureDisplayPages = new ArrayList<>();
-        for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
-            if (DP.IsMultifeaturePage) {
-                MultiFeatureDisplayPages.add(DP);
-            }
-        }
         //
         for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
             DP.InitUIFrames();
+            if (DP.IsMultifeaturePage) {
+                MultiFeatureDisplayPages.add(DP.GetInstance());
+            }
             //
             List<DisplayView> LS = new ArrayList<>();
             for (String DV : DP.HWDisplays) {
                 LS.add(Displays.get(DV));
             }
-
             //
             for (String F : DP.Features) {
                 if (!DPages.containsKey(F)) {
@@ -120,7 +117,6 @@ public class LcdDisplayManager extends PluginManagerLCD {
                     if (!DPages.get(F).containsKey(UICtx)) {
                         DPages.get(F).put(UICtx, new HashMap<>());
                     }
-
                     DPages.get(F).get(UICtx).put(DP.PageName, DP.GetInstance());
                     //
                     if (!DViews.containsKey(F)) {
@@ -145,27 +141,27 @@ public class LcdDisplayManager extends PluginManagerLCD {
     //
     for (String FTR : PluginSettings.MainConfiguration.Features) {
             for (DisplayPage MDP : MultiFeatureDisplayPages) {
-            for (String UICtx : MDP.GetUIContexts()) {
-                if (!DViews.containsKey(FTR)) {
-                    DViews.put(FTR, new HashMap<>());
-                }
-                //
-                if (!DViews.get(FTR).containsKey(MDP.PageName)) {
-                    List<DisplayView> MF_LS = new ArrayList<>();
-                    for (String DV : MDP.HWDisplays) {
-                        MF_LS.add(Displays.get(DV));
+                for (String UICtx : MDP.GetUIContexts()) {
+                    if (!DViews.containsKey(FTR)) {
+                        DViews.put(FTR, new HashMap<>());
                     }
-                    DViews.get(FTR).put(MDP.PageName, MF_LS);
-                }
-                //
-                if (!DPages.containsKey(FTR)) {
-                    DPages.put(FTR, new HashMap<>());
-                    DPages.get(FTR).put(UICtx, new HashMap<>());
-                }
-               //
-                if (!DPages.get(FTR).get(UICtx).containsKey(MDP.PageName)) {
-                    DPages.get(FTR).get(UICtx).put(MDP.PageName, MDP.GetInstance());
-                }
+                    //
+                    if (!DViews.get(FTR).containsKey(MDP.PageName)) {
+                        List<DisplayView> MF_LS = new ArrayList<>();
+                        for (String DV : MDP.HWDisplays) {
+                            MF_LS.add(Displays.get(DV));
+                        }
+                        DViews.get(FTR).put(MDP.PageName, MF_LS);
+                    }
+                    //
+                    if (!DPages.containsKey(FTR)) {
+                        DPages.put(FTR, new HashMap<>());
+                        DPages.get(FTR).put(UICtx, new HashMap<>());
+                    }
+                   //
+                    if (!DPages.get(FTR).get(UICtx).containsKey(MDP.PageName)) {
+                        DPages.get(FTR).get(UICtx).put(MDP.PageName, MDP.GetInstance());
+                    }
                 }
         }
     }
@@ -289,7 +285,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             DP.UIFramesValues = UIFrames;
         }
         //
-        if (!CurrentFeature.equals(FeatureID)) {
+        if (!CurrentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }
         //
@@ -305,7 +301,9 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     }
 
     private void SetPageToActive(String FeatureID,String UIContext, String PageID) {
-        // DisplayPage DP = DPages.get(PageID);
+        if (!CurrentPage.containsKey(UIContext))
+            CurrentPage.put(UIContext, new HashMap<>());
+        
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
         if (!CurrentFeature.get(UIContext).equals(FeatureID)) {
