@@ -16,7 +16,7 @@ public interface IDisplayConnectorHW {
     void SetLight(int Light);
     void SetPower(boolean Power);
     //
-    void DisplayText(String Text);
+    void DisplayText(boolean ClearDisplay,String Text);
     void DisplayTextUpdate(String Text, int Column, int Line);
     void DisplayTextSetUIFrames(String[] Frames, int Offset);
     //    

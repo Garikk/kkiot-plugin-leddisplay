@@ -13,11 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import kkdev.kksystem.base.classes.base.PinBaseCommand;
+import kkdev.kksystem.base.classes.base.PinBaseData;
+import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
 import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.classes.display.UIFramesKeySet;
+import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.base.constants.SystemConsts;
@@ -28,6 +31,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes;
 import kkdev.kksystem.plugin.lcddisplay.hw.i2c.oled.DisplayOLEDOnI2C;
+import kkdev.kksystem.plugin.lcddisplay.hw.smarthead.DisplayOLEDOnSmarthead;
 
 /**
  *
@@ -36,7 +40,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.i2c.oled.DisplayOLEDOnI2C;
  * in now, create and manage only one page "Main", and only one hw display
  *
  */
-public class LcdDisplayManager extends PluginManagerLCD {
+public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProcessing {
 
     static String DefaultDisplay;
     static Map<String, DisplayView> Displays;                         //UIContext - DView
@@ -78,9 +82,9 @@ public class LcdDisplayManager extends PluginManagerLCD {
                     case DisplayDebug:
                         Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
                         break;
-                    case I2C_Over_Arduino:
-                        if (DH.HWDisplay == HWDisplayTypes.OLED_I2C_128x64) {
-                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnI2C()));
+                    case Smarthead_Arduino:
+                        if (DH.HWDisplay == HWDisplayTypes.OLED_VIRTUAL_128x64) {
+                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this,DH.HWBoardPins[0])));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -156,9 +160,13 @@ public class LcdDisplayManager extends PluginManagerLCD {
                     //
                     if (!DPages.containsKey(FTR)) {
                         DPages.put(FTR, new HashMap<>());
-                        DPages.get(FTR).put(UICtx, new HashMap<>());
                     }
+                    //
+                      if (!DPages.get(FTR).containsKey(UICtx)) {
+                          DPages.get(FTR).put(UICtx, new HashMap<>());
+                   }
                    //
+                 
                     if (!DPages.get(FTR).get(UICtx).containsKey(MDP.PageName)) {
                         DPages.get(FTR).get(UICtx).put(MDP.PageName, MDP.GetInstance());
                     }
@@ -334,4 +342,16 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
         //
     }
+
+    @Override
+    public void SendPIN_ObjPin(String Tag, Object Data) {
+        PinBaseDataTaggedObj ObjDat;
+        ObjDat = new PinBaseDataTaggedObj();
+        ObjDat.DataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
+        ObjDat.Tag = Tag;
+        ObjDat.Value = Data;
+
+        this.BASE_SendPluginMessage(this.CurrentFeature.get(SystemConsts.KK_BASE_UICONTEXT_DEFAULT), PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+    }
+
 }

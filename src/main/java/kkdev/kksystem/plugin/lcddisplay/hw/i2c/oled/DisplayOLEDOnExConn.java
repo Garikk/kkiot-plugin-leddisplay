@@ -48,7 +48,7 @@ public class DisplayOLEDOnExConn implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayText(String Text) {
+    public void DisplayText(boolean ClearDisplay,String Text) {
      
     }
 

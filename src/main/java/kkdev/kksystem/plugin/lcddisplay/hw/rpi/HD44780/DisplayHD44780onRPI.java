@@ -68,7 +68,7 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayText(String Text) {
+    public void DisplayText(boolean ClearDisplay,String Text) {
         if (lcd==null)
             return;
         

@@ -100,7 +100,7 @@ public class DisplayView {
         if (!Enabled) {
             return;
         }
-        Connector.DisplayText(Text);
+        Connector.DisplayText(false,Text);
     }
 
     public void UpdateText(String Text, int Col, int Row) {

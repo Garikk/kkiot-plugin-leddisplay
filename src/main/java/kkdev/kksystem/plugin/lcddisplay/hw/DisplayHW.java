@@ -16,13 +16,13 @@ public class DisplayHW  {
     {
         RaspberryPI_B,
         I2C,
-        I2C_Over_Arduino,
+        Smarthead_Arduino,
         DisplayDebug
     }
     public static enum HWDisplayTypes
     {
         HD44780_4bit,
-        OLED_I2C_128x64,
+        OLED_VIRTUAL_128x64,
         HostDebug
     }
     

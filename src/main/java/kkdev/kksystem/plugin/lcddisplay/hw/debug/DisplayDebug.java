@@ -46,7 +46,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayText(String Text) {
+    public void DisplayText(boolean ClearDisplay, String Text) {
        System.out.println("[LCDDisplay][DEBUG] " + Text);
     }
 
@@ -93,6 +93,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
             System.out.println(L);
         }
     }
+
 
 
 }
