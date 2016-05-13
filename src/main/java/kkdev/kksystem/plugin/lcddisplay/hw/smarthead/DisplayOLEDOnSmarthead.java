@@ -64,14 +64,14 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
 
     @Override
     public void DisplayText(boolean ClearDisplay,String Text) {
-      DisplayText_Internal(ClearDisplay,false,2,0,0,Text);
+      DisplayText_Internal(ClearDisplay,true,false,2,0,0,Text);
     }
 
     @Override
     public void DisplayTextUpdate(String Text, int Column, int Line) {
         int LineUpd=Line*ROW_Pix_Size;
-         DisplayText_Internal(false,false,2, Column, LineUpd," ");  
-         DisplayText_Internal(false,false,2, Column, LineUpd,Text);  
+         DisplayText_Internal(false,false,false,2, Column, LineUpd," ");  
+         DisplayText_Internal(false,true,false,2, Column, LineUpd,Text);  
     }
 
     @Override
@@ -79,9 +79,9 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
         return GetMyInfo();
     }   
 
-    private void DisplayText_Internal(boolean ClearFlag,boolean InvertFlag,int Font, int PosX,int PosY,String Text)
+    private void DisplayText_Internal(boolean ClearFlag,boolean RefreshFlag,boolean InvertFlag,int Font, int PosX,int PosY,String Text)
     {
-      SendSmartheadPin(SmardheadBuilderDisplay.BuildSmartheadDisplayString(MyDisplayID, ClearFlag,InvertFlag,Font, PosX, PosY, Text));
+      SendSmartheadPin(SmardheadBuilderDisplay.BuildSmartheadDisplayString(MyDisplayID, RefreshFlag,ClearFlag,InvertFlag,Font, PosX, PosY, Text));
     }
     
     private DisplayInfo GetMyInfo() {
@@ -109,20 +109,24 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
 
     @Override
     public void ClearDisplay() {
-      DisplayText_Internal(true,false,1, 0, 0,"");  
+      DisplayText_Internal(true,true,false,1, 0, 0,"");  
     }
 
     @Override
     public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
          String[] ShowFrame = Frames[Offset].split("\r\n");
         int i = 0;
+        int ii = 0;
         int RowStep=1;
         boolean FirstClear=true;
+        boolean NeedRefresh=false;
         for (String L : ShowFrame) {
             if (i <= ROWS) {
-                DisplayText_Internal(FirstClear,false,2, 0, RowStep,L);
+                NeedRefresh=(i==ROWS);
+                DisplayText_Internal(FirstClear,(ShowFrame.length-1)==ii,false,2, 0, RowStep,L);
                 FirstClear=false;
                 i++;
+                ii++;
                 RowStep+=ROW_Pix_Size;
             }
         }
