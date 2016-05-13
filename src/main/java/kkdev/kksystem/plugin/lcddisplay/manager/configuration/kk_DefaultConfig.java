@@ -133,7 +133,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU].HWDisplays[2] = DHW4.HWDisplay_UIContext;
         DP[PAGE_SYSMENU].IsDefaultPage = false;
         DP[PAGE_SYSMENU].IsMultifeaturePage = true;
-        DP[PAGE_SYSMENU].UIFramesPack = FPack[2];
+        DP[PAGE_SYSMENU].UIFramesPack = FPack[5];
         //
         DP[PAGE_DDISPLAY_CE_LIST] = new DisplayPage();
         DP[PAGE_DDISPLAY_CE_LIST].HaveDynamicElements = false;
@@ -165,7 +165,7 @@ public abstract class kk_DefaultConfig {
     }
 
     private static UIFramePack[] GetFramePack() {
-        UIFramePack[] Ret = new UIFramePack[5];
+        UIFramePack[] Ret = new UIFramePack[6];
         Ret[0] = new UIFramePack();
         Ret[0].Name = "Default Diag Display 2x8 MAIN PAGE";
         Ret[0].PackID = "";
@@ -206,6 +206,13 @@ public abstract class kk_DefaultConfig {
         Ret[4].Data = new UIFrameData[1];
         Ret[4].Data[0] = new UIFrameData();
         Ret[4].Data[0].FrameData = "Err: [ODB_ADAPTER_STATE]\r\n[ODB_ADAPTER_ERROR]";
+         //
+        Ret[5] = new UIFramePack();
+        Ret[5].Name = "Default Diag Display 5x8 SYSTEM MENU";
+        Ret[5].PackID = "";
+        Ret[5].Data = new UIFrameData[1];
+        Ret[5].Data[0] = new UIFrameData();
+        Ret[5].Data[0].FrameData = "[SEL_0][SYSMENU_0][SEL_0]\r\n[SEL_1][SYSMENU_1][SEL_1]\r\n[SEL_2][SYSMENU_2][SEL_2]\r\n[SEL_3][SYSMENU_3][SEL_3]\r\n[SEL_4][SYSMENU_4][SEL_4]";
         return Ret;
 
     }

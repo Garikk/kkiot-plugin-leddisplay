@@ -311,7 +311,9 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     private void SetPageToActive(String FeatureID,String UIContext, String PageID) {
         if (!CurrentPage.containsKey(UIContext))
             CurrentPage.put(UIContext, new HashMap<>());
-        
+        //
+        System.out.println(UIContext+ " " + FeatureID + " " + PageID);
+        //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
         if (!CurrentFeature.get(UIContext).equals(FeatureID)) {
@@ -325,7 +327,10 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         if (!FeatureID.equals(CurrentFeature.get(UIContext))) {
             return;
         }
-
+        //
+        if (PageID==null) // CHECK THIS!!!
+            return; 
+        //
         DViews.get(FeatureID).get(PageID).stream().forEach((DV) -> {
             DV.ClearDisplay();
         });
@@ -350,8 +355,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         ObjDat.DataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
         ObjDat.Tag = Tag;
         ObjDat.Value = Data;
-
-        this.BASE_SendPluginMessage(this.CurrentFeature.get(SystemConsts.KK_BASE_UICONTEXT_DEFAULT), PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
 
 }

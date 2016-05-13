@@ -70,8 +70,8 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     @Override
     public void DisplayTextUpdate(String Text, int Column, int Line) {
         int LineUpd=Line*ROW_Pix_Size;
-         DisplayText_Internal(true,false,1, Column, LineUpd," ");  
-         DisplayText_Internal(true,false,1, Column, LineUpd,Text);  
+         DisplayText_Internal(false,false,2, Column, LineUpd," ");  
+         DisplayText_Internal(false,false,2, Column, LineUpd,Text);  
     }
 
     @Override
@@ -120,7 +120,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
         boolean FirstClear=true;
         for (String L : ShowFrame) {
             if (i <= ROWS) {
-                DisplayText_Internal(FirstClear,false,1, RowStep, 0,L);
+                DisplayText_Internal(FirstClear,false,2, 0, RowStep,L);
                 FirstClear=false;
                 i++;
                 RowStep+=ROW_Pix_Size;
@@ -131,7 +131,6 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     private void SendSmartheadPin(String SmartHeadData)
     {
         PinBaseDataTaggedObj Dat;
-        //
         //
         ConnManager.SendPIN_ObjPin(SmartHeadDisplay_PFX, SmartHeadData);
     }

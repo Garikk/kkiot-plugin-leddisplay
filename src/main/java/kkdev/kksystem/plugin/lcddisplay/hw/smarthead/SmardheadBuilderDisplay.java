@@ -14,13 +14,22 @@ package kkdev.kksystem.plugin.lcddisplay.hw.smarthead;
  */
  
 public class SmardheadBuilderDisplay {
-    final static String SH_Display_PFX="$E_";
+    final static String SH_Display_Text1_PFX="$E_1";
     
     public static String BuildSmartheadDisplayString(int DisplayID,boolean ClearFlag,boolean InvertFlag, int FontNum, int PosX, int PosY, String Text)
     {
          String Ret;
+        byte FlClear=0;
+        byte FlInver=0;
         
-        Ret=SH_Display_PFX+DisplayID+";"+ClearFlag + ";" + InvertFlag+";"+FontNum+";"+PosX+";"+PosY+";"+Text;
+        if (ClearFlag)
+            FlClear=1;
+        
+        if (InvertFlag)
+            FlInver=1;
+         
+         
+        Ret=SH_Display_Text1_PFX+";"+DisplayID+";"+FlClear + ";" + FlInver+";"+FontNum+";"+PosX+";"+PosY+";"+Text+";";
         
         return Ret;
     
