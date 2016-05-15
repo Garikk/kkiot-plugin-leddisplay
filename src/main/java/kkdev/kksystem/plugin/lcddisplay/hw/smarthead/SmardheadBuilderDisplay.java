@@ -32,6 +32,9 @@ public class SmardheadBuilderDisplay {
         if (RefreshFlag)
             FlRefr=1;
          
+        if (DisplayID==2) // TEMPORARY!!
+            FontNum=3;    // TEMPORARY!!
+        
          
         Ret=SH_Display_Text1_PFX+";"+DisplayID+";"+FlRefr+";"+FlClear + ";" + FlInver+";"+FontNum+";"+PosX+";"+PosY+";"+Text+";";
         

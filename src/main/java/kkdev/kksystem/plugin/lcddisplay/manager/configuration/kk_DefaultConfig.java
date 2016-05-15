@@ -29,12 +29,13 @@ public abstract class kk_DefaultConfig {
         final int PAGE_DDISPLAY_ERROR = 3;
         final int PAGE_SYSMENU = 4;
         final int PAGE_DDISPLAY_CE_LIST = 5;
+        final int PAGE_DDISPLAY_CLOCK = 6;
 
         UIFramePack[] FPack = GetFramePack();
 
         LcdDisplayConf DefConf = new LcdDisplayConf();
 
-        DisplayPage[] DP = new DisplayPage[6];
+        DisplayPage[] DP = new DisplayPage[7];
         //
         DisplayHW DHW1 = new DisplayHW();
         DisplayHW DHW2 = new DisplayHW();
@@ -110,6 +111,17 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_WAIT].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_WAIT].UIFramesPack = FPack[3];
         //
+        DP[PAGE_DDISPLAY_CLOCK] = new DisplayPage();
+        DP[PAGE_DDISPLAY_CLOCK].HaveDynamicElements = true;
+        DP[PAGE_DDISPLAY_CLOCK].Features = new String[1];
+        DP[PAGE_DDISPLAY_CLOCK].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
+        DP[PAGE_DDISPLAY_CLOCK].PageName = "CLOCK";
+        DP[PAGE_DDISPLAY_CLOCK].HWDisplays = new String[1];
+        DP[PAGE_DDISPLAY_CLOCK].HWDisplays[0] = DHW4.HWDisplay_UIContext;
+        DP[PAGE_DDISPLAY_CLOCK].IsDefaultPage = true;
+        DP[PAGE_DDISPLAY_CLOCK].IsMultifeaturePage = false;
+        DP[PAGE_DDISPLAY_CLOCK].UIFramesPack = FPack[6];
+        //
         DP[PAGE_DDISPLAY_ERROR] = new DisplayPage();
         DP[PAGE_DDISPLAY_ERROR].HaveDynamicElements = false;
         DP[PAGE_DDISPLAY_ERROR].Features = new String[1];
@@ -127,10 +139,10 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_SYSMENU].Features = new String[1];
         DP[PAGE_SYSMENU].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_SYSMENU].PageName = "SYSMENU_1";
-        DP[PAGE_SYSMENU].HWDisplays = new String[3];
+        DP[PAGE_SYSMENU].HWDisplays = new String[2];
         DP[PAGE_SYSMENU].HWDisplays[0] = DHW2.HWDisplay_UIContext;
         DP[PAGE_SYSMENU].HWDisplays[1] = DHW3.HWDisplay_UIContext;
-        DP[PAGE_SYSMENU].HWDisplays[2] = DHW4.HWDisplay_UIContext;
+       // DP[PAGE_SYSMENU].HWDisplays[2] = DHW4.HWDisplay_UIContext;
         DP[PAGE_SYSMENU].IsDefaultPage = false;
         DP[PAGE_SYSMENU].IsMultifeaturePage = true;
         DP[PAGE_SYSMENU].UIFramesPack = FPack[5];
@@ -165,7 +177,7 @@ public abstract class kk_DefaultConfig {
     }
 
     private static UIFramePack[] GetFramePack() {
-        UIFramePack[] Ret = new UIFramePack[6];
+        UIFramePack[] Ret = new UIFramePack[7];
         Ret[0] = new UIFramePack();
         Ret[0].Name = "Default Diag Display 2x8 MAIN PAGE";
         Ret[0].PackID = "";
@@ -174,17 +186,24 @@ public abstract class kk_DefaultConfig {
         Ret[0].Data[1] = new UIFrameData();
         Ret[0].Data[2] = new UIFrameData();
         Ret[0].Data[3] = new UIFrameData();
-        Ret[0].Data[0].FrameData = "SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] |";
-        Ret[0].Data[1].FrameData = "SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] /";
-        Ret[0].Data[2].FrameData = "SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] -";
-        Ret[0].Data[3].FrameData = "SPD [SPD] TMP [TMP]\r\nTIME: [KK_PL_TIME] \\";
+        
+        Ret[0].Data[0].FrameData = "Speed [SPD]\r\nTemp [TMP]\r\nTIME: [KK_PL_TIME] |";
+        Ret[0].Data[0].FontSize = 2;
+        Ret[0].Data[1].FrameData = "Speed [SPD]\r\nTemp [TMP]\r\nTIME: [KK_PL_TIME] /";
+        Ret[0].Data[1].FontSize = 2;
+        Ret[0].Data[2].FrameData = "Speed [SPD]\r\nTemp [TMP]\r\nTIME: [KK_PL_TIME] -";
+        Ret[0].Data[2].FontSize = 2;
+        Ret[0].Data[3].FrameData = "Speed [SPD]\r\nTemp [TMP]\r\nTIME: [KK_PL_TIME] \\";
+        Ret[0].Data[3].FontSize = 2;
         //
         Ret[1] = new UIFramePack();
         Ret[1].Name = "Default Diag Display 2x8 DETAILS PAGE";
         Ret[1].PackID = "";
         Ret[1].Data = new UIFrameData[1];
         Ret[1].Data[0] = new UIFrameData();
-        Ret[1].Data[0].FrameData = "T: [TMP] V:[VOLTAGE]\r\nS: [SPD] R: [RPM]";
+        Ret[1].Data[0].FrameData = "Temp: [TMP]\r\nVoltage:[VOLTAGE]\r\nSpeed: [SPD]\r\nRPM: [RPM]";
+        Ret[1].Data[0].FontSize = 2;
+        
         //
         Ret[2] = new UIFramePack();
         Ret[2].Name = "Default Diag Display 2x8 SYSTEM MENU";
@@ -192,6 +211,7 @@ public abstract class kk_DefaultConfig {
         Ret[2].Data = new UIFrameData[1];
         Ret[2].Data[0] = new UIFrameData();
         Ret[2].Data[0].FrameData = "[SEL_0][SYSMENU_0][SEL_0]\r\n[SEL_1][SYSMENU_1][SEL_1]";
+        Ret[2].Data[0].FontSize = 2;
         //
         Ret[3] = new UIFramePack();
         Ret[3].Name = "Default Diag Display 2x8 WAIT";
@@ -199,6 +219,7 @@ public abstract class kk_DefaultConfig {
         Ret[3].Data = new UIFrameData[1];
         Ret[3].Data[0] = new UIFrameData();
         Ret[3].Data[0].FrameData = "......WAIT......\r\n......WAIT......";
+        Ret[3].Data[0].FontSize = 2;
         //
         Ret[4] = new UIFramePack();
         Ret[4].Name = "Default Diag Display 2x8 CEREADER";
@@ -206,6 +227,7 @@ public abstract class kk_DefaultConfig {
         Ret[4].Data = new UIFrameData[1];
         Ret[4].Data[0] = new UIFrameData();
         Ret[4].Data[0].FrameData = "Err: [ODB_ADAPTER_STATE]\r\n[ODB_ADAPTER_ERROR]";
+        Ret[4].Data[0].FontSize = 2;
          //
         Ret[5] = new UIFramePack();
         Ret[5].Name = "Default Diag Display 5x8 SYSTEM MENU";
@@ -213,6 +235,15 @@ public abstract class kk_DefaultConfig {
         Ret[5].Data = new UIFrameData[1];
         Ret[5].Data[0] = new UIFrameData();
         Ret[5].Data[0].FrameData = "[SEL_0][SYSMENU_0][SEL_0]\r\n[SEL_1][SYSMENU_1][SEL_1]\r\n[SEL_2][SYSMENU_2][SEL_2]\r\n[SEL_3][SYSMENU_3][SEL_3]\r\n[SEL_4][SYSMENU_4][SEL_4]";
+        Ret[5].Data[0].FontSize = 2;
+        
+        Ret[6] = new UIFramePack();
+        Ret[6].Name = "Default Clock";
+        Ret[6].PackID = "";
+        Ret[6].Data = new UIFrameData[1];
+        Ret[6].Data[0] = new UIFrameData();
+        Ret[6].Data[0].FrameData = "           \r\n           \r\n [KK_PL_TIME] \r\n           \r\n           ";
+        Ret[6].Data[0].FontSize = 3;
         return Ret;
 
     }

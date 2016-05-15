@@ -15,6 +15,7 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kkdev.kksystem.base.classes.display.UIFramesKeySet;
+import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_UICONTEXT_GFX2;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
 
@@ -138,8 +139,11 @@ public class DisplayView {
         }
         DisplayedFrames = FillPluginFeaturedFields(DisplayedFrames);
         //
-        //
-        Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter);
+        //TODO TEMPORARY!!!!
+        if (DisplayID==KK_BASE_UICONTEXT_GFX2)
+            Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter, 3);
+        else
+            Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter, 2);
     }
 
     private String[] FillPluginFeaturedFields(String[] DisplayFrames) {

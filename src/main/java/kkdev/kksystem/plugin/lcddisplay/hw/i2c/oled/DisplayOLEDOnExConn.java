@@ -91,7 +91,7 @@ public class DisplayOLEDOnExConn implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset, int Font) {
       
     }
 

@@ -127,7 +127,7 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset, int Font) {
         if (lcd==null)
             return;
         

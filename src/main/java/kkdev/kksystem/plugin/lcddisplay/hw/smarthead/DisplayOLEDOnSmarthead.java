@@ -113,7 +113,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset, int Font) {
          String[] ShowFrame = Frames[Offset].split("\r\n");
         int i = 0;
         int ii = 0;
@@ -123,7 +123,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
         for (String L : ShowFrame) {
             if (i <= ROWS) {
                 NeedRefresh=(i==ROWS);
-                DisplayText_Internal(FirstClear,(ShowFrame.length-1)==ii,false,2, 0, RowStep,L);
+                DisplayText_Internal(FirstClear,(ShowFrame.length-1)==ii,false,Font, 0, RowStep,L);
                 FirstClear=false;
                 i++;
                 ii++;

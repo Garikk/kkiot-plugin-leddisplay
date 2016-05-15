@@ -86,7 +86,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
     }
 
     @Override
-    public void DisplayTextSetUIFrames(String[] Frames, int Offset) {
+    public void DisplayTextSetUIFrames(String[] Frames, int Offset, int Font) {
         String[] ShowFrame=Frames[Offset].split("\r\n");
         for (String L:ShowFrame)
         {
