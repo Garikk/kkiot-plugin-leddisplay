@@ -7,7 +7,7 @@ package kkdev.kksystem.plugin.lcddisplay.manager;
 
 import static java.lang.System.out;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
+import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ import kkdev.kksystem.base.classes.display.DisplayConstants;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
-import kkdev.kksystem.base.classes.display.UIFramesKeySet;
+import kkdev.kksystem.base.classes.display.pages.UIFramesKeySet;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
@@ -300,7 +300,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
             //When change page, set new uiframes
             if (SetUIFrames) {
-                DV.SetUIFrames(DP.UIFrames, DP.HaveDynamicElements);
+                DV.SetUIFrames(DP.UIFrames, DP.DynamicElements);
             }
             //Update values
             DV.UpdateFrameVariables(DP.UIFramesValues);

@@ -14,10 +14,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kkdev.kksystem.base.classes.display.UIFramesKeySet;
+import kkdev.kksystem.base.classes.display.pages.UIFramesKeySet;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_UICONTEXT_GFX2;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
-import kkdev.kksystem.plugin.lcddisplay.manager.configuration.DisplayPage;
+import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 
 /**
  *

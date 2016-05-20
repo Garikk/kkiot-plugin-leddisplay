@@ -5,9 +5,10 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
+import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
-import kkdev.kksystem.base.classes.display.UIFrameData;
-import kkdev.kksystem.base.classes.display.UIFramePack;
+import kkdev.kksystem.base.classes.display.pages.UIFrameData;
+import kkdev.kksystem.base.classes.display.pages.UIFramePack;
 import static kkdev.kksystem.base.constants.SystemConsts.*;
 
 
@@ -78,7 +79,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_MAIN] = new DisplayPage();
         DP[PAGE_DDISPLAY_MAIN].Features = new String[1];
         DP[PAGE_DDISPLAY_MAIN].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
-        DP[PAGE_DDISPLAY_MAIN].HaveDynamicElements = true;
+        DP[PAGE_DDISPLAY_MAIN].DynamicElements = true;
         DP[PAGE_DDISPLAY_MAIN].PageName = "MAIN";
         DP[PAGE_DDISPLAY_MAIN].HWDisplays = new String[2];
         DP[PAGE_DDISPLAY_MAIN].HWDisplays[0] = DHW2.HWDisplay_UIContext;
@@ -88,7 +89,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_MAIN].UIFramesPack = FPack[0];
 
         DP[PAGE_DDISPLAY_DETAIL] = new DisplayPage();
-        DP[PAGE_DDISPLAY_DETAIL].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_DETAIL].DynamicElements = false;
         DP[PAGE_DDISPLAY_DETAIL].PageName = "DETAIL";
         DP[PAGE_DDISPLAY_DETAIL].Features = new String[1];
         DP[PAGE_DDISPLAY_DETAIL].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
@@ -100,7 +101,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_DETAIL].UIFramesPack = FPack[1];
         //
         DP[PAGE_DDISPLAY_WAIT] = new DisplayPage();
-        DP[PAGE_DDISPLAY_WAIT].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_WAIT].DynamicElements = false;
         DP[PAGE_DDISPLAY_WAIT].Features = new String[1];
         DP[PAGE_DDISPLAY_WAIT].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_WAIT].PageName = "WAIT";
@@ -112,7 +113,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_WAIT].UIFramesPack = FPack[3];
         //
         DP[PAGE_DDISPLAY_CLOCK] = new DisplayPage();
-        DP[PAGE_DDISPLAY_CLOCK].HaveDynamicElements = true;
+        DP[PAGE_DDISPLAY_CLOCK].DynamicElements = true;
         DP[PAGE_DDISPLAY_CLOCK].Features = new String[1];
         DP[PAGE_DDISPLAY_CLOCK].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
         DP[PAGE_DDISPLAY_CLOCK].PageName = "CLOCK";
@@ -123,7 +124,7 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_CLOCK].UIFramesPack = FPack[6];
         //
         DP[PAGE_DDISPLAY_ERROR] = new DisplayPage();
-        DP[PAGE_DDISPLAY_ERROR].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_ERROR].DynamicElements = false;
         DP[PAGE_DDISPLAY_ERROR].Features = new String[1];
         DP[PAGE_DDISPLAY_ERROR].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_ERROR].PageName = "ERROR";
@@ -134,21 +135,10 @@ public abstract class kk_DefaultConfig {
         DP[PAGE_DDISPLAY_ERROR].IsMultifeaturePage = false;
         DP[PAGE_DDISPLAY_ERROR].UIFramesPack = FPack[4];
         //
-        DP[PAGE_SYSMENU] = new DisplayPage();
-        DP[PAGE_SYSMENU].HaveDynamicElements = false;
-        DP[PAGE_SYSMENU].Features = new String[1];
-        DP[PAGE_SYSMENU].Features[0] = KK_BASE_FEATURES_SYSTEM_UID;
-        DP[PAGE_SYSMENU].PageName = "SYSMENU_1";
-        DP[PAGE_SYSMENU].HWDisplays = new String[2];
-        DP[PAGE_SYSMENU].HWDisplays[0] = DHW2.HWDisplay_UIContext;
-        DP[PAGE_SYSMENU].HWDisplays[1] = DHW3.HWDisplay_UIContext;
-       // DP[PAGE_SYSMENU].HWDisplays[2] = DHW4.HWDisplay_UIContext;
-        DP[PAGE_SYSMENU].IsDefaultPage = false;
-        DP[PAGE_SYSMENU].IsMultifeaturePage = true;
-        DP[PAGE_SYSMENU].UIFramesPack = FPack[5];
+
         //
         DP[PAGE_DDISPLAY_CE_LIST] = new DisplayPage();
-        DP[PAGE_DDISPLAY_CE_LIST].HaveDynamicElements = false;
+        DP[PAGE_DDISPLAY_CE_LIST].DynamicElements = false;
         DP[PAGE_DDISPLAY_CE_LIST].Features = new String[1];
         DP[PAGE_DDISPLAY_CE_LIST].Features[0] = KK_BASE_FEATURES_ODB_DIAG_UID;
         DP[PAGE_DDISPLAY_CE_LIST].PageName = "CE_READER";
