@@ -5,7 +5,6 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
-import static java.lang.System.out;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 import java.util.ArrayList;
@@ -15,22 +14,18 @@ import java.util.Map;
 import kkdev.kksystem.base.classes.base.PinBaseCommand;
 import kkdev.kksystem.base.classes.base.PinBaseData;
 import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
-import kkdev.kksystem.base.classes.display.DisplayConstants;
-import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.PinLedCommand;
 import kkdev.kksystem.base.classes.display.PinLedData;
 import kkdev.kksystem.base.classes.display.pages.UIFramesKeySet;
-import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.base.constants.SystemConsts;
+import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes;
-import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWHostTypes;
-import kkdev.kksystem.plugin.lcddisplay.hw.i2c.oled.DisplayOLEDOnI2C;
 import kkdev.kksystem.plugin.lcddisplay.hw.smarthead.DisplayOLEDOnSmarthead;
 
 /**
@@ -42,27 +37,48 @@ import kkdev.kksystem.plugin.lcddisplay.hw.smarthead.DisplayOLEDOnSmarthead;
  */
 public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProcessing {
 
+    static IKKControllerUtils Utils;
     static String DefaultDisplay;
-    static Map<String, DisplayView> Displays;                         //UIContext - DView
+    static Map<String, List<DisplayView>> Displays;                         //UIContext - DView
     static Map<String, Map<String, Map<String, DisplayPage>>> DPages;              //Feature => UIContext => Page=>DisplayPage
     static Map<String, Map<String, String>> CurrentPage;              //Feature => UIContext =>PageName
-    static Map<String, Map<String, List<DisplayView>>> DViews;         //Feature => UIContext =>DView
 
     public void Init(KKPlugin Conn) {
         Connector = Conn;
+        Utils=Conn.GetUtils();
 
         PluginSettings.InitConfig(Conn.GlobalConfID, Conn.PluginInfo.GetPluginInfo().PluginUUID);
         //
         for (DisplayHW HD:PluginSettings.MainConfiguration.HWDisplays)
         {
-            CurrentFeature.put(HD.HWDisplay_UIContext,PluginSettings.MainConfiguration.DefaultFeature);
+            for (String UIC:HD.HWDisplay_UIContext)
+            {
+                if (!CurrentFeature.containsKey(UIC))
+                {
+                    System.out.println("[LCD] Reg CTX " + UIC + " " + PluginSettings.MainConfiguration.DefaultFeature);
+                    CurrentFeature.put(UIC,PluginSettings.MainConfiguration.DefaultFeature);
+                }
+            }
         }
         //
         ConfigAndHWInit();
     }
 
+    private void InitDisplayView(String[] UIContext, DisplayView DW)
+    {
+        for (String CTX:UIContext)
+        {
+            if (!Displays.containsKey(CTX))
+                Displays.put(CTX, new ArrayList<>());
+            //
+            Displays.get(CTX).add(DW);
+            
+        }            
+                
+    }
+    
     private void ConfigAndHWInit() {
-        DViews = new HashMap<>();
+        //DViews = new HashMap<>();
         Displays = new HashMap<>();
         CurrentPage = new HashMap<>();
         DPages = new HashMap<>();
@@ -74,17 +90,17 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                 switch (DH.HWBoard) {
                     case RaspberryPI_B:
                         if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
-                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
+                           InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
                         break;
                     case DisplayDebug:
-                        Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
+                        InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
                         break;
                     case Smarthead_Arduino:
                         if (DH.HWDisplay == HWDisplayTypes.OLED_VIRTUAL_128x64) {
-                            Displays.put(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this,DH.HWBoardPins[0])));
+                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this,DH.HWBoardPins[0])));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -92,87 +108,9 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                     default:
                         System.out.println("[LCDDisplay][CONFLOADER] Unknown HW board in config!! + " + DH.HWBoard);
                         break;
-
                 }
             }
         }
-
-        //
-        List<DisplayPage> MultiFeatureDisplayPages;
-        MultiFeatureDisplayPages = new ArrayList<>();
-        //
-        for (DisplayPage DP : PluginSettings.MainConfiguration.DisplayPages) {
-            DP.InitUIFrames();
-            if (DP.IsMultifeaturePage) {
-                MultiFeatureDisplayPages.add(DP.GetInstance());
-            }
-            //
-            List<DisplayView> LS = new ArrayList<>();
-            for (String DV : DP.HWDisplays) {
-                LS.add(Displays.get(DV));
-            }
-            //
-            for (String F : DP.Features) {
-                if (!DPages.containsKey(F)) {
-                    DPages.put(F, new HashMap<>());
-                }
-                //
-                for (String UICtx : DP.GetUIContexts()) {
-                    if (!DPages.get(F).containsKey(UICtx)) {
-                        DPages.get(F).put(UICtx, new HashMap<>());
-                    }
-                    DPages.get(F).get(UICtx).put(DP.PageName, DP.GetInstance());
-                    //
-                    if (!DViews.containsKey(F)) {
-                        DViews.put(F, new HashMap<>());
-                    }
-                    //
-                    //
-                    DViews.get(F).put(DP.PageName, LS);
-                    //
-                    if (DP.IsDefaultPage) {
-                        if (!CurrentPage.containsKey(F)) {
-                            CurrentPage.put(F, new HashMap<>());
-                        }
-                        CurrentPage.get(F).put(UICtx, DP.PageName);
-
-                    }
-                }
-            }
-        }
-        //
-    
-    //
-    for (String FTR : PluginSettings.MainConfiguration.Features) {
-            for (DisplayPage MDP : MultiFeatureDisplayPages) {
-                for (String UICtx : MDP.GetUIContexts()) {
-                    if (!DViews.containsKey(FTR)) {
-                        DViews.put(FTR, new HashMap<>());
-                    }
-                    //
-                    if (!DViews.get(FTR).containsKey(MDP.PageName)) {
-                        List<DisplayView> MF_LS = new ArrayList<>();
-                        for (String DV : MDP.HWDisplays) {
-                            MF_LS.add(Displays.get(DV));
-                        }
-                        DViews.get(FTR).put(MDP.PageName, MF_LS);
-                    }
-                    //
-                    if (!DPages.containsKey(FTR)) {
-                        DPages.put(FTR, new HashMap<>());
-                    }
-                    //
-                      if (!DPages.get(FTR).containsKey(UICtx)) {
-                          DPages.get(FTR).put(UICtx, new HashMap<>());
-                   }
-                   //
-                 
-                    if (!DPages.get(FTR).get(UICtx).containsKey(MDP.PageName)) {
-                        DPages.get(FTR).get(UICtx).put(MDP.PageName, MDP.GetInstance());
-                    }
-                }
-        }
-    }
 }
 
 public void ReceivePin( String FeatureID, String PinName, Object PinData) {
@@ -207,7 +145,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
                 SetPageToActive(FeatureID,UIContext, Command.PageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
-                AnswerDisplayInfo();
+              //  AnswerDisplayInfo();
                 break;
 
         }
@@ -238,28 +176,39 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         }
     }
 
-    //////////////////
-    ///////////////////
-    private void AnswerDisplayInfo() {
-        PinLedData Ret;
-        DisplayInfo[] DI = new DisplayInfo[Displays.values().size()];
-        //
-        int cnt = 0;
-        //
-        for (DisplayView DV : Displays.values()) {
-            DI[cnt] = DV.Connector.GetDisplayInfo();
-            cnt++;
-        }
-        //     
-        Ret = new PinLedData();
-        Ret.DisplayState = DI;
-        Ret.LedDataType = DisplayConstants.KK_DISPLAY_DATA.DISPLAY_KKSYS_DISPLAY_STATE;
-        Ret.UIContextID=SystemConsts.KK_BASE_UICONTEXT_DEFAULT;
-        //
-        DISPLAY_SendPluginMessageData(CurrentFeature.get(SystemConsts.KK_BASE_UICONTEXT_DEFAULT), Ret);
-        //
-    }
 
+    private DisplayPage GetPage(String FeatureID,String UIContext,String PageName)
+    {
+        if (!DPages.containsKey(FeatureID))
+            DPages.put(FeatureID, new HashMap<>());
+        
+        if (!DPages.get(FeatureID).containsKey(UIContext))
+            DPages.get(FeatureID).put(UIContext, new HashMap<>());
+        
+        if (!DPages.get(FeatureID).get(UIContext).containsKey(PageName))
+            DPages.get(FeatureID).get(UIContext).put(PageName, Utils.DISPLAY_GetUIDisplayPage(PageName));
+        
+        return DPages.get(FeatureID).get(UIContext).get(PageName);
+        
+    }
+    
+    
+    private List<DisplayView> GetDisplayViewsForPage(DisplayPage Page)
+    {
+        List<DisplayView> Ret;
+        Ret=new ArrayList();
+        
+        for (String UICtx:Page.UIContexts)
+        {
+            if (!Displays.containsKey(UICtx))
+            {
+                for (DisplayView DW:Displays.get(UICtx))
+                    Ret.add(DW);
+            }
+        }
+        
+        return Ret;
+    }
     //////////////////
     ///////////////////
     private void SendTextToPage(String FeatureID,String UIContext, String PageID, String[] Text) {
@@ -270,14 +219,19 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     private void SendTextToPage(String FeatureID,String UIContext, String PageID, String Text) {
         //
-        for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
+        DisplayPage DP;
+        DP=GetPage(FeatureID,UIContext,PageID);
+        //
+        for (DisplayView DV : GetDisplayViewsForPage(DP)) {
             DV.SendText(Text);
         }
     }
 
-    private void UpdateTextOnPage(String FeatureID,String UIContext, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
-
-        for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
+    private void UpdateTextOnPage(String FeatureID, String UIContext, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
+        DisplayPage DP;
+        DP = GetPage(FeatureID, UIContext, PageID);
+        //
+        for (DisplayView DV : GetDisplayViewsForPage(DP)) {
             for (int i = 0; i <= Text.length; i++) {
                 DV.UpdateText(Text[i], PositionsCol[i], PositionRow[i]);
             }
@@ -285,9 +239,9 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     }
 
-    private void UpdatePageUIFrames(String FeatureID,String UIContext, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
+    private void UpdatePageUIFrames(String FeatureID, String UIContext, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
 
-        DisplayPage DP = DPages.get(FeatureID).get(UIContext).get(PageID);
+        DisplayPage DP = GetPage(FeatureID, UIContext, PageID);
 
         if (UIFrames != null) {
             DP.UIFramesValues = UIFrames;
@@ -297,7 +251,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             return;
         }
         //
-        for (DisplayView DV : DViews.get(FeatureID).get(PageID)) {
+        for (DisplayView DV : GetDisplayViewsForPage(DP)) {
             //When change page, set new uiframes
             if (SetUIFrames) {
                 DV.SetUIFrames(DP.UIFrames, DP.DynamicElements);
@@ -312,7 +266,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         if (!CurrentPage.containsKey(UIContext))
             CurrentPage.put(UIContext, new HashMap<>());
         //
-        System.out.println(UIContext+ " " + FeatureID + " " + PageID);
+        System.out.println("[LCD] set page active " + UIContext+ " " + FeatureID + " " + PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
@@ -331,12 +285,13 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         if (PageID==null) // CHECK THIS!!!
             return; 
         //
-        DViews.get(FeatureID).get(PageID).stream().forEach((DV) -> {
+        GetDisplayViewsForPage(GetPage(FeatureID, UIContext, PageID)).stream().forEach((DV) -> {
             DV.ClearDisplay();
         });
     }
 
     private void ChangeFeature( String FeatureID,String UIContext) {
+        System.out.println("[LCD] Change FTR" + FeatureID +" "+UIContext);
         if (CurrentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }

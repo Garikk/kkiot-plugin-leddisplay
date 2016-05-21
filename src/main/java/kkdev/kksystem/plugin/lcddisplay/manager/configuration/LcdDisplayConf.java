@@ -15,7 +15,6 @@ import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
  */
 public class LcdDisplayConf  extends ExternalConfiguration {
     public String ConfName;
-    public DisplayPage[] DisplayPages;
     public DisplayHW[] HWDisplays;
     
     public String DefaultFeature;

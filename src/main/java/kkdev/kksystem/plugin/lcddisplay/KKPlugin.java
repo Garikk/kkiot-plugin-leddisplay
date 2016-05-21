@@ -8,6 +8,7 @@ package kkdev.kksystem.plugin.lcddisplay;
 import kkdev.kksystem.base.classes.plugins.PluginInfo;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
+import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 
@@ -18,17 +19,19 @@ import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
  */
 public final class KKPlugin extends KKPluginBase   {
     String DisplayID;
-    
+        public IKKControllerUtils SysUtils;
     public KKPlugin()
     {
         super(new LEDPluginInfo());
         Global.PM=new LcdDisplayManager();
+        
         DisplayID=java.util.UUID.randomUUID().toString();
     }
 
     @Override
     public void PluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
         super.PluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
+         SysUtils = BaseConnector.SystemUtilities();
         Global.PM.Init(this);
     }
 
@@ -39,4 +42,8 @@ public final class KKPlugin extends KKPluginBase   {
         Global.PM.ReceivePin(Pin.FeatureID,Pin.PinName,Pin.PinData);
         return null;
     }
+        public IKKControllerUtils GetUtils() {
+        return SysUtils;
+    }
+
 }
