@@ -99,8 +99,8 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
         Ret.DisplayType = UIDisplayType.DISPLAY_TEXT;
         Ret.MaxBackLight = 255;
         Ret.MaxContrast = 255;
-        Ret.Text_Width_chars = LCD_COLUMNS;
-        Ret.Text_Height_chars = LCD_ROWS;
+        Ret.Text_COLS = LCD_COLUMNS;
+        Ret.Text_ROWS = LCD_ROWS;
         Ret.Graphic_Height_px = 0;
         Ret.Graphic_Width_px = 0;
 

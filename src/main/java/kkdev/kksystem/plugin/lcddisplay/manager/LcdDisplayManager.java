@@ -69,7 +69,11 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         for (String CTX:UIContext)
         {
             if (!Displays.containsKey(CTX))
+            {
                 Displays.put(CTX, new ArrayList<>());
+                Utils.UICONTEXT_AddUIContext(CTX);
+                Utils.UICONTEXT_UpdateDisplayInUIContext(CTX, DW.Connector.GetDisplayInfo());
+            }
             //
             Displays.get(CTX).add(DW);
             
@@ -197,13 +201,17 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     {
         List<DisplayView> Ret;
         Ret=new ArrayList();
-        
         for (String UICtx:Page.UIContexts)
         {
+            System.out.println(Page.PageName + " " +Page.UIContexts[0]);
             if (!Displays.containsKey(UICtx))
             {
+                 
                 for (DisplayView DW:Displays.get(UICtx))
+                {
+                   
                     Ret.add(DW);
+                }
             }
         }
         
