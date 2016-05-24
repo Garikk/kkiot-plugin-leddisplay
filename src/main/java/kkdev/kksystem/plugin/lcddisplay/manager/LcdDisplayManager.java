@@ -55,7 +55,6 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
             {
                 if (!CurrentFeature.containsKey(UIC))
                 {
-                    System.out.println("[LCD] Reg CTX " + UIC + " " + PluginSettings.MainConfiguration.DefaultFeature);
                     CurrentFeature.put(UIC,PluginSettings.MainConfiguration.DefaultFeature);
                 }
             }
@@ -75,8 +74,9 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                 Utils.UICONTEXT_UpdateDisplayInUIContext(CTX, DW.Connector.GetDisplayInfo());
             }
             //
+           // System.out.println("[LCD] ADD DW "+CTX +" " + DW);
             Displays.get(CTX).add(DW);
-            
+                     
         }            
                 
     }
@@ -190,7 +190,11 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             DPages.get(FeatureID).put(UIContext, new HashMap<>());
         
         if (!DPages.get(FeatureID).get(UIContext).containsKey(PageName))
+        {
             DPages.get(FeatureID).get(UIContext).put(PageName, Utils.DISPLAY_GetUIDisplayPage(PageName));
+            DPages.get(FeatureID).get(UIContext).get(PageName).InitUIFrames(Utils.UICONTEXT_GetUIContextInfo(UIContext).UIDisplay.Text_ROWS);
+        }
+        
         
         return DPages.get(FeatureID).get(UIContext).get(PageName);
         
@@ -203,14 +207,11 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         Ret=new ArrayList();
         for (String UICtx:Page.UIContexts)
         {
-            System.out.println(Page.PageName + " " +Page.UIContexts[0]);
-            if (!Displays.containsKey(UICtx))
+               if (Displays.containsKey(UICtx))
             {
-                 
-                for (DisplayView DW:Displays.get(UICtx))
+                for (DisplayView DV:Displays.get(UICtx))
                 {
-                   
-                    Ret.add(DW);
+                    Ret.add(DV);
                 }
             }
         }
@@ -250,7 +251,6 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     private void UpdatePageUIFrames(String FeatureID, String UIContext, String PageID, boolean SetUIFrames, UIFramesKeySet UIFrames) {
 
         DisplayPage DP = GetPage(FeatureID, UIContext, PageID);
-
         if (UIFrames != null) {
             DP.UIFramesValues = UIFrames;
         }
@@ -265,6 +265,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
                 DV.SetUIFrames(DP.UIFrames, DP.DynamicElements);
             }
             //Update values
+              System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.PageName);
             DV.UpdateFrameVariables(DP.UIFramesValues);
         }
 
@@ -274,7 +275,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         if (!CurrentPage.containsKey(UIContext))
             CurrentPage.put(UIContext, new HashMap<>());
         //
-        System.out.println("[LCD] set page active " + UIContext+ " " + FeatureID + " " + PageID);
+        //System.out.println("[LCD] set page active " + UIContext+ " " + FeatureID + " " + PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
@@ -299,7 +300,6 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     }
 
     private void ChangeFeature( String FeatureID,String UIContext) {
-        System.out.println("[LCD] Change FTR" + FeatureID +" "+UIContext);
         if (CurrentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }

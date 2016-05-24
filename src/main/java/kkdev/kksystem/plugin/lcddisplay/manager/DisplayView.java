@@ -30,7 +30,6 @@ public class DisplayView {
     public boolean Enabled;
     public boolean ErrorState;
     public boolean DynamicView;
-    Map<String,DisplayPage> Pages;
 
     String[] UIFrames;
     String[] DisplayedFrames;
@@ -115,7 +114,7 @@ public class DisplayView {
         if (!Enabled) {
             return;
         }
-        DisplayedFrames = UIFrames.clone();
+
         if (UIFrames == null) {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
@@ -124,6 +123,7 @@ public class DisplayView {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;
         }
+         DisplayedFrames = UIFrames.clone();
 
         StoredUIFrameValues = UIFramesValues;
 
@@ -132,15 +132,26 @@ public class DisplayView {
             for (int i = 0; i < DisplayedFrames.length; i++) {
                 for (String ii : StoredUIFrameValues.FrameValues.keySet()) {
                     if (DisplayedFrames[i] != null) {
-                        DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
+                        try
+                        {
+                            DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
+                        }
+                        catch (Exception ex)
+                        {
+                            System.out.println("UNO " + DisplayedFrames[i]);
+                            System.out.println("UNO " +ii);
+                            System.out.println("UNO " +StoredUIFrameValues==null);
+                            System.out.println("UNO " +DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii)));
+                        }
                     }
                 }
+
             }
         }
         DisplayedFrames = FillPluginFeaturedFields(DisplayedFrames);
         //
         //TODO TEMPORARY!!!!
-        if (DisplayID==KK_BASE_UICONTEXT_GFX2)
+        if (DisplayID == KK_BASE_UICONTEXT_GFX2)
             Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter, 3);
         else
             Connector.DisplayTextSetUIFrames(DisplayedFrames, DynamicFramesCounter, 2);
@@ -162,7 +173,7 @@ public class DisplayView {
 
     public void SetUIFrames(String[] Frames, boolean EnableDynamic) {
    
-       
+             
         UIFrames = Frames;
         if (EnableDynamic & (DynamicView != EnableDynamic)) {
             RunDynamicView();

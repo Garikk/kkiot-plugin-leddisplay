@@ -16,7 +16,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
  * @author blinov_is
  */
 public class DisplayDebug implements IDisplayConnectorHW {
-        final int LCD_ROWS = 2;
+        final int LCD_ROWS = 5;
         final int LCD_ROW_1 = 0;
         final int LCD_ROW_2 = 1;
         final int LCD_COLUMNS = 16;
@@ -90,7 +90,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
         String[] ShowFrame=Frames[Offset].split("\r\n");
         for (String L:ShowFrame)
         {
-            System.out.println(L);
+            System.out.println("[LCD][DBG] OS " + Offset+  " "  + L);
         }
     }
 
