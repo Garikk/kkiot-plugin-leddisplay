@@ -265,7 +265,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
                 DV.SetUIFrames(DP.UIFrames, DP.DynamicElements);
             }
             //Update values
-              System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.PageName);
+              //System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.PageName);
             DV.UpdateFrameVariables(DP.UIFramesValues);
         }
 

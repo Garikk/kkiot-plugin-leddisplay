@@ -110,7 +110,7 @@ public class DisplayView {
         Connector.DisplayTextUpdate(Text, Col, Row);
     }
 
-    public void UpdateFrameVariables(UIFramesKeySet UIFramesValues) {
+    public synchronized void UpdateFrameVariables(UIFramesKeySet UIFramesValues) {
         if (!Enabled) {
             return;
         }
@@ -132,17 +132,8 @@ public class DisplayView {
             for (int i = 0; i < DisplayedFrames.length; i++) {
                 for (String ii : StoredUIFrameValues.FrameValues.keySet()) {
                     if (DisplayedFrames[i] != null) {
-                        try
-                        {
                             DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
-                        }
-                        catch (Exception ex)
-                        {
-                            System.out.println("UNO " + DisplayedFrames[i]);
-                            System.out.println("UNO " +ii);
-                            System.out.println("UNO " +StoredUIFrameValues==null);
-                            System.out.println("UNO " +DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii)));
-                        }
+
                     }
                 }
 

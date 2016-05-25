@@ -90,7 +90,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
         String[] ShowFrame=Frames[Offset].split("\r\n");
         for (String L:ShowFrame)
         {
-            System.out.println("[LCD][DBG] OS " + Offset+  " "  + L);
+            System.out.println(L);
         }
     }
 
