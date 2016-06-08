@@ -64,11 +64,11 @@ public class DisplayOLEDOnExConn implements IDisplayConnectorHW {
 
     private DisplayInfo GetMyInfo() {
         DisplayInfo Ret = new DisplayInfo();
-        Ret.DisplayType = UIDisplayType.DISPLAY_TEXT;
-        Ret.MaxBackLight = 255;
-        Ret.MaxContrast = 255;
-        Ret.Graphic_Height_px = 64;
-        Ret.Graphic_Width_px = 128;
+        Ret.displayType = UIDisplayType.DISPLAY_TEXT;
+        Ret.maxBackLight = 255;
+        Ret.maxContrast = 255;
+        Ret.gfxMode_Height = 64;
+        Ret.gfxMode_Width = 128;
 
         return Ret;
     }

@@ -14,7 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kkdev.kksystem.base.classes.display.pages.UIFramesKeySet;
+import kkdev.kksystem.base.classes.display.pages.framesKeySet;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_UICONTEXT_GFX2;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
 import kkdev.kksystem.base.classes.display.pages.DisplayPage;
@@ -34,7 +34,7 @@ public class DisplayView {
     String[] UIFrames;
     String[] DisplayedFrames;
 
-    UIFramesKeySet StoredUIFrameValues;
+    framesKeySet StoredUIFrameValues;
 
     Timer DynamicTimer;
     int DynamicFramesCounter;
@@ -42,7 +42,7 @@ public class DisplayView {
     public DisplayView(IDisplayConnectorHW InitConn) {
         Connector = InitConn;
         //
-        DisplayID = Connector.GetDisplayInfo().DisplayID;
+        DisplayID = Connector.GetDisplayInfo().displayID;
         //
         Enabled = true; //Change this!
     }
@@ -110,7 +110,7 @@ public class DisplayView {
         Connector.DisplayTextUpdate(Text, Col, Row);
     }
 
-    public synchronized void UpdateFrameVariables(UIFramesKeySet UIFramesValues) {
+    public synchronized void UpdateFrameVariables(framesKeySet UIFramesValues) {
         if (!Enabled) {
             return;
         }
@@ -130,9 +130,9 @@ public class DisplayView {
         //not data
         if (StoredUIFrameValues != null) {
             for (int i = 0; i < DisplayedFrames.length; i++) {
-                for (String ii : StoredUIFrameValues.FrameValues.keySet()) {
+                for (String ii : StoredUIFrameValues.frameValues.keySet()) {
                     if (DisplayedFrames[i] != null) {
-                            DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.FrameValues.get(ii));
+                            DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.frameValues.get(ii));
 
                     }
                 }

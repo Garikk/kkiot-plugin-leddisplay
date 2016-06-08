@@ -5,7 +5,6 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
-import kkdev.kksystem.base.classes.plugins.PluginInfo;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.base.interfaces.IKKControllerUtils;
@@ -29,15 +28,15 @@ public final class KKPlugin extends KKPluginBase   {
     }
 
     @Override
-    public void PluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
-        super.PluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
-         SysUtils = BaseConnector.SystemUtilities();
+    public void pluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
+        super.pluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
+         SysUtils = BaseConnector.systemUtilities();
         Global.PM.Init(this);
     }
 
     @Override
-    public PluginMessage ExecutePin(PluginMessage Pin) {
-        super.ExecutePin(Pin);
+    public PluginMessage executePin(PluginMessage Pin) {
+        super.executePin(Pin);
         
         Global.PM.ReceivePin(Pin.FeatureID,Pin.PinName,Pin.PinData);
         return null;

@@ -27,13 +27,13 @@ public abstract class PluginSettings {
         Settings=new SettingsManager(DISPLAY_CONF,LcdDisplayConf.class);
         
      //   System.out.println("[LCDDisplay][CONFIG] Load configuration");
-        MainConfiguration=(LcdDisplayConf)Settings.LoadConfig();
+        MainConfiguration=(LcdDisplayConf)Settings.loadConfig();
         
         if (MainConfiguration==null)
         {
             System.out.println("[LCDDisplay][CONFIG] Error Load configuration, try create default config");
-            Settings.SaveConfig(kk_DefaultConfig.MakeDefaultConfig());
-            MainConfiguration=(LcdDisplayConf)Settings.LoadConfig();
+            Settings.saveConfig(kk_DefaultConfig.MakeDefaultConfig());
+            MainConfiguration=(LcdDisplayConf)Settings.loadConfig();
         }
         if (MainConfiguration==null)
         {

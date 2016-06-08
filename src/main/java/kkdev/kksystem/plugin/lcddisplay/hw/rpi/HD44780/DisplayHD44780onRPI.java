@@ -96,13 +96,13 @@ public class DisplayHD44780onRPI implements IDisplayConnectorHW {
 
     private DisplayInfo GetMyInfo() {
         DisplayInfo Ret = new DisplayInfo();
-        Ret.DisplayType = UIDisplayType.DISPLAY_TEXT;
-        Ret.MaxBackLight = 255;
-        Ret.MaxContrast = 255;
-        Ret.Text_COLS = LCD_COLUMNS;
-        Ret.Text_ROWS = LCD_ROWS;
-        Ret.Graphic_Height_px = 0;
-        Ret.Graphic_Width_px = 0;
+        Ret.displayType = UIDisplayType.DISPLAY_TEXT;
+        Ret.maxBackLight = 255;
+        Ret.maxContrast = 255;
+        Ret.textMode_Columns = LCD_COLUMNS;
+        Ret.textMode_Rows = LCD_ROWS;
+        Ret.gfxMode_Height = 0;
+        Ret.gfxMode_Width = 0;
 
         return Ret;
     }
