@@ -165,7 +165,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                UpdatePageUIFrames(Data.featureID,UIContext, Data.targetPage, false, Data.displayFrames);
+                updatePageUIFrames(Data.featureID,UIContext, Data.targetPage, false, Data.displayFrames);
                 break;
         }
     }
@@ -222,11 +222,11 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     ///////////////////
     private void SendTextToPage(String FeatureID,String UIContext, String PageID, String[] Text) {
         for (String TL : Text) {
-            SendTextToPage( FeatureID,UIContext, PageID, TL);
+            sendTextToPage( FeatureID,UIContext, PageID, TL);
         }
     }
 
-    private void SendTextToPage(String FeatureID,String UIContext, String PageID, String Text) {
+    private void sendTextToPage(String FeatureID,String UIContext, String PageID, String Text) {
         //
         DisplayPage DP;
         DP=GetPage(FeatureID,UIContext,PageID);
@@ -236,7 +236,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         }
     }
 
-    private void UpdateTextOnPage(String FeatureID, String UIContext, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
+    private void updateTextOnPage(String FeatureID, String UIContext, String PageID, String[] Text, int[] PositionsCol, int[] PositionRow) {
         DisplayPage DP;
         DP = GetPage(FeatureID, UIContext, PageID);
         //
@@ -248,7 +248,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     }
 
-    private void UpdatePageUIFrames(String FeatureID, String UIContext, String PageID, boolean SetUIFrames, framesKeySet UIFrames) {
+    private void updatePageUIFrames(String FeatureID, String UIContext, String PageID, boolean SetUIFrames, framesKeySet UIFrames) {
 
         DisplayPage DP = GetPage(FeatureID, UIContext, PageID);
         if (UIFrames != null) {
@@ -265,7 +265,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
                 DV.SetUIFrames(DP.frames, DP.dynamicElements);
             }
             //Update values
-              //System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.pageName);
+             // System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.pageName);
             DV.UpdateFrameVariables(DP.framesValues);
         }
 
@@ -283,7 +283,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             return;
         }
         //
-        UpdatePageUIFrames( FeatureID,UIContext, PageID, true, null);
+        updatePageUIFrames( FeatureID,UIContext, PageID, true, null);
     }
 
     private void SetPageToInactive(String FeatureID,String UIContext, String PageID) {
