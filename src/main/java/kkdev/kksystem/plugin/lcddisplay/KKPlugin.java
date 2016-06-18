@@ -20,7 +20,7 @@ public final class KKPlugin extends KKPluginBase   {
     String DisplayID;
         public IKKControllerUtils SysUtils;
     public KKPlugin()
-    {
+    { 
         super(new LEDPluginInfo());
         Global.PM=new LcdDisplayManager();
         
