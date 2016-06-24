@@ -272,7 +272,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         if (!CurrentPage.containsKey(UIContext))
             CurrentPage.put(UIContext, new HashMap<>());
         //
-        //System.out.println("[LCD] set page active " + UIContext+ " " + featureID + " " + pageID);
+        System.out.println("[LCD] set page active " + FeatureID+ " " + UIContext + " " + PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
