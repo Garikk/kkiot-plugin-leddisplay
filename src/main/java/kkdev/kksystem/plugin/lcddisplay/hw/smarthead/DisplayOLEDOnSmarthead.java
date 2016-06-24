@@ -5,7 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.hw.smarthead;
 
-import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
+import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
@@ -134,7 +134,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     
     private void SendSmartheadPin(String SmartHeadData)
     {
-        PinBaseDataTaggedObj Dat;
+        PinDataTaggedObj Dat;
         //
         ConnManager.SendPIN_ObjPin(SmartHeadDisplay_PFX, SmartHeadData);
     }

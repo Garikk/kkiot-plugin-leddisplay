@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kkdev.kksystem.base.classes.base.PinBaseCommand;
-import kkdev.kksystem.base.classes.base.PinBaseData;
-import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
-import kkdev.kksystem.base.classes.display.PinLedCommand;
-import kkdev.kksystem.base.classes.display.PinLedData;
+import kkdev.kksystem.base.classes.base.PinData;
+import kkdev.kksystem.base.classes.base.PinDataFtrCtx;
+import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
+import kkdev.kksystem.base.classes.display.PinDataLed;
 import kkdev.kksystem.base.classes.display.pages.framesKeySet;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
@@ -121,18 +120,18 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
-                PinLedCommand CMD;
-                CMD = (PinLedCommand) PinData;
-                 ProcessCommand(FeatureID,CMD.changeUIContextID, CMD);
+                PinDataLed CMD;
+                CMD = (PinDataLed) PinData;
+                 ProcessCommand(FeatureID,CMD.contextID, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
-                PinLedData DAT;
-                DAT = (PinLedData) PinData;
+                PinDataLed DAT;
+                DAT = (PinDataLed) PinData;
                 ProcessData(DAT.contextID, DAT);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
-                PinBaseCommand BaseCMD;
-                BaseCMD = (PinBaseCommand) PinData;
+                PinDataFtrCtx BaseCMD;
+                BaseCMD = (PinDataFtrCtx) PinData;
 
                 ProcessBaseCommand(BaseCMD);
         }
@@ -140,7 +139,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     ///////////////////
     ///////////////////
-    private void ProcessCommand(String FeatureID,String UIContext,  PinLedCommand Command) {
+    private void ProcessCommand(String FeatureID,String UIContext,  PinDataLed Command) {
 
 
         switch (Command.command) {
@@ -155,7 +154,7 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         }
     }
 
-    private void ProcessData(String UIContext, PinLedData Data) {
+    private void ProcessData(String UIContext, PinDataLed Data) {
 
         switch (Data.ledDataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
@@ -170,12 +169,10 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
         }
     }
 
-    private void ProcessBaseCommand(PinBaseCommand Command) {
-        switch (Command.baseCommand) {
-            case CHANGE_FEATURE:
+    private void ProcessBaseCommand(PinDataFtrCtx Command) {
+        switch (Command.managementCommand) {
+            case ChangeFeature:
                 ChangeFeature(Command.changeFeatureID,Command.changeUIContextID);
-                break;
-            case PLUGIN:
                 break;
         }
     }
@@ -313,12 +310,11 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
     @Override
     public void SendPIN_ObjPin(String Tag, Object Data) {
-        PinBaseDataTaggedObj ObjDat;
-        ObjDat = new PinBaseDataTaggedObj();
-        ObjDat.dataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
+        PinDataTaggedObj ObjDat;
+        ObjDat = new PinDataTaggedObj();
         ObjDat.tag = Tag;
         ObjDat.value = Data;
-        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
 
 }
