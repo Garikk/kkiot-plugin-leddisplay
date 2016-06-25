@@ -134,9 +134,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     
     private void SendSmartheadPin(String SmartHeadData)
     {
-        PinDataTaggedObj Dat;
-        //
-        ConnManager.SendPIN_ObjPin(SmartHeadDisplay_PFX, SmartHeadData);
+        ConnManager.sendPIN_StringPin(SmartHeadDisplay_PFX, SmartHeadData);
     }
 
 }

@@ -132,6 +132,7 @@ public class DisplayView {
             for (int i = 0; i < DisplayedFrames.length; i++) {
                 for (String ii : StoredUIFrameValues.frameValues.keySet()) {
                     if (DisplayedFrames[i] != null) {
+                        if (StoredUIFrameValues.frameValues.get(ii)!=null)
                             DisplayedFrames[i] = DisplayedFrames[i].replace("[" + ii + "]", StoredUIFrameValues.frameValues.get(ii));
 
                     }

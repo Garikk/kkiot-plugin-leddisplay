@@ -14,8 +14,10 @@ import java.util.Map;
 import kkdev.kksystem.base.classes.base.PinData;
 import kkdev.kksystem.base.classes.base.PinDataFtrCtx;
 import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
+import kkdev.kksystem.base.classes.base.PinDataTaggedString;
 import kkdev.kksystem.base.classes.display.PinDataLed;
 import kkdev.kksystem.base.classes.display.pages.framesKeySet;
+import kkdev.kksystem.base.classes.notify.PinDataNotifySystemState;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.base.constants.SystemConsts;
@@ -44,17 +46,14 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
 
     public void Init(KKPlugin Conn) {
         connector = Conn;
-        Utils=Conn.GetUtils();
+        Utils = Conn.GetUtils();
 
         PluginSettings.InitConfig(Conn.globalConfID, Conn.pluginInfo.getPluginInfo().PluginUUID);
         //
-        for (DisplayHW HD:PluginSettings.MainConfiguration.HWDisplays)
-        {
-            for (String UIC:HD.HWDisplay_UIContext)
-            {
-                if (!currentFeature.containsKey(UIC))
-                {
-                    currentFeature.put(UIC,PluginSettings.MainConfiguration.DefaultFeature);
+        for (DisplayHW HD : PluginSettings.MainConfiguration.HWDisplays) {
+            for (String UIC : HD.HWDisplay_UIContext) {
+                if (!currentFeature.containsKey(UIC)) {
+                    currentFeature.put(UIC, PluginSettings.MainConfiguration.DefaultFeature);
                 }
             }
         }
@@ -62,24 +61,21 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         ConfigAndHWInit();
     }
 
-    private void InitDisplayView(String[] UIContext, DisplayView DW)
-    {
-        for (String CTX:UIContext)
-        {
-            if (!Displays.containsKey(CTX))
-            {
+    private void InitDisplayView(String[] UIContext, DisplayView DW) {
+        for (String CTX : UIContext) {
+            if (!Displays.containsKey(CTX)) {
                 Displays.put(CTX, new ArrayList<>());
                 Utils.UICONTEXT_AddUIContext(CTX);
                 Utils.UICONTEXT_UpdateDisplayInUIContext(CTX, DW.Connector.GetDisplayInfo());
             }
             //
-           // System.out.println("[LCD] ADD DW "+CTX +" " + DW);
+            // System.out.println("[LCD] ADD DW "+CTX +" " + DW);
             Displays.get(CTX).add(DW);
-                     
-        }            
-                
+
+        }
+
     }
-    
+
     private void ConfigAndHWInit() {
         //DViews = new HashMap<>();
         Displays = new HashMap<>();
@@ -93,7 +89,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                 switch (DH.HWBoard) {
                     case RaspberryPI_B:
                         if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
-                           InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
+                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -103,7 +99,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                         break;
                     case Smarthead_Arduino:
                         if (DH.HWDisplay == HWDisplayTypes.OLED_VIRTUAL_128x64) {
-                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this,DH.HWBoardPins[0])));
+                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this, DH.HWBoardPins[0])));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -114,41 +110,37 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                 }
             }
         }
-}
+    }
 
-public void ReceivePin( String FeatureID, String PinName, Object PinData) {
-
+    public void ReceivePin(String FeatureID, String UIContext, String PinName, Object PinData) {
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinDataLed CMD;
                 CMD = (PinDataLed) PinData;
-                 ProcessCommand(FeatureID,CMD.contextID, CMD);
+                ProcessCommand(FeatureID, UIContext, CMD);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_LED_DATA:
                 PinDataLed DAT;
                 DAT = (PinDataLed) PinData;
-                ProcessData(DAT.contextID, DAT);
+                ProcessData(UIContext, DAT);
                 break;
             case PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND:
-                PinDataFtrCtx BaseCMD;
-                BaseCMD = (PinDataFtrCtx) PinData;
-
-                ProcessBaseCommand(BaseCMD);
+                ProcessBaseCommand((PinDataFtrCtx)PinData);
+                break;
         }
     }
 
     ///////////////////
     ///////////////////
-    private void ProcessCommand(String FeatureID,String UIContext,  PinDataLed Command) {
-
+    private void ProcessCommand(String FeatureID, String UIContext, PinDataLed Command) {
 
         switch (Command.command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
 
-                SetPageToActive(FeatureID,UIContext, Command.pageID);
+                setPageToActive(FeatureID, UIContext, Command.pageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
-              //  AnswerDisplayInfo();
+                //  AnswerDisplayInfo();
                 break;
 
         }
@@ -158,13 +150,13 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
 
         switch (Data.ledDataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextToPage(Data.featureID,UIContext, Data.targetPage, Data.directDisplayText);
+                SendTextToPage(Data.featureID, UIContext, Data.targetPage, Data.directDisplayText);
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                updatePageUIFrames(Data.featureID,UIContext, Data.targetPage, false, Data.displayFrames);
+                updatePageUIFrames(Data.featureID, UIContext, Data.targetPage, false, Data.displayFrames);
                 break;
         }
     }
@@ -172,61 +164,55 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
     private void ProcessBaseCommand(PinDataFtrCtx Command) {
         switch (Command.managementCommand) {
             case ChangeFeature:
-                ChangeFeature(Command.changeFeatureID,Command.changeUIContextID);
+                changeFeature(Command.changeFeatureID, Command.changeUIContextID);
                 break;
         }
     }
 
-
-    private DisplayPage GetPage(String FeatureID,String UIContext,String PageName)
-    {
-        if (!DPages.containsKey(FeatureID))
+    private DisplayPage GetPage(String FeatureID, String UIContext, String PageName) {
+        if (!DPages.containsKey(FeatureID)) {
             DPages.put(FeatureID, new HashMap<>());
-        
-        if (!DPages.get(FeatureID).containsKey(UIContext))
+        }
+
+        if (!DPages.get(FeatureID).containsKey(UIContext)) {
             DPages.get(FeatureID).put(UIContext, new HashMap<>());
-        
-        if (!DPages.get(FeatureID).get(UIContext).containsKey(PageName))
-        {
+        }
+
+        if (!DPages.get(FeatureID).get(UIContext).containsKey(PageName)) {
             DPages.get(FeatureID).get(UIContext).put(PageName, Utils.DISPLAY_GetUIDisplayPage(PageName));
             DPages.get(FeatureID).get(UIContext).get(PageName).initUIFrames(Utils.UICONTEXT_GetUIContextInfo(UIContext).UIDisplay.textMode_Rows);
         }
-        
-        
+
         return DPages.get(FeatureID).get(UIContext).get(PageName);
-        
+
     }
-    
-    
-    private List<DisplayView> GetDisplayViewsForPage(DisplayPage Page)
-    {
+
+    private List<DisplayView> GetDisplayViewsForPage(DisplayPage Page) {
         List<DisplayView> Ret;
-        Ret=new ArrayList();
-        for (String UICtx:Page.contexts)
-        {
-               if (Displays.containsKey(UICtx))
-            {
-                for (DisplayView DV:Displays.get(UICtx))
-                {
+        Ret = new ArrayList();
+        for (String UICtx : Page.contexts) {
+            if (Displays.containsKey(UICtx)) {
+                for (DisplayView DV : Displays.get(UICtx)) {
                     Ret.add(DV);
                 }
             }
         }
-        
+
         return Ret;
     }
+
     //////////////////
     ///////////////////
-    private void SendTextToPage(String FeatureID,String UIContext, String PageID, String[] Text) {
+    private void SendTextToPage(String FeatureID, String UIContext, String PageID, String[] Text) {
         for (String TL : Text) {
-            sendTextToPage( FeatureID,UIContext, PageID, TL);
+            sendTextToPage(FeatureID, UIContext, PageID, TL);
         }
     }
 
-    private void sendTextToPage(String FeatureID,String UIContext, String PageID, String Text) {
+    private void sendTextToPage(String FeatureID, String UIContext, String PageID, String Text) {
         //
         DisplayPage DP;
-        DP=GetPage(FeatureID,UIContext,PageID);
+        DP = GetPage(FeatureID, UIContext, PageID);
         //
         for (DisplayView DV : GetDisplayViewsForPage(DP)) {
             DV.SendText(Text);
@@ -262,17 +248,18 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
                 DV.SetUIFrames(DP.frames, DP.dynamicElements);
             }
             //Update values
-             // System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.pageName);
+            // System.out.println("[LCD][DBG]" + SetUIFrames+ " " + DP.pageName);
             DV.UpdateFrameVariables(DP.framesValues);
         }
 
     }
 
-    private void SetPageToActive(String FeatureID,String UIContext, String PageID) {
-        if (!CurrentPage.containsKey(UIContext))
+    private void setPageToActive(String FeatureID, String UIContext, String PageID) {
+        if (!CurrentPage.containsKey(UIContext)) {
             CurrentPage.put(UIContext, new HashMap<>());
+        }
         //
-        System.out.println("[LCD] set page active " + FeatureID+ " " + UIContext + " " + PageID);
+        //System.out.println("[LCD] set page active " + FeatureID + " " + UIContext + " " + PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
@@ -280,41 +267,51 @@ public void ReceivePin( String FeatureID, String PinName, Object PinData) {
             return;
         }
         //
-        updatePageUIFrames( FeatureID,UIContext, PageID, true, null);
+        updatePageUIFrames(FeatureID, UIContext, PageID, true, null);
     }
 
-    private void SetPageToInactive(String FeatureID,String UIContext, String PageID) {
+    private void SetPageToInactive(String FeatureID, String UIContext, String PageID) {
         if (!FeatureID.equals(currentFeature.get(UIContext))) {
             return;
         }
         //
-        if (PageID==null) // CHECK THIS!!!
-            return; 
+        if (PageID == null) // CHECK THIS!!!
+        {
+            return;
+        }
         //
         GetDisplayViewsForPage(GetPage(FeatureID, UIContext, PageID)).stream().forEach((DV) -> {
             DV.ClearDisplay();
         });
     }
 
-    private void ChangeFeature( String FeatureID,String UIContext) {
+    private void changeFeature(String FeatureID, String UIContext) {
         if (currentFeature.get(UIContext).equals(FeatureID)) {
             return;
         }
         // Set Current page of feature to Active
-        SetPageToInactive(currentFeature.get(UIContext),UIContext, CurrentPage.get(UIContext).get(currentFeature));
+        SetPageToInactive(currentFeature.get(UIContext), UIContext, CurrentPage.get(UIContext).get(currentFeature));
         currentFeature.put(UIContext, FeatureID);
-        SetPageToActive(FeatureID,UIContext,CurrentPage.get(UIContext).get(FeatureID));
+        setPageToActive(FeatureID, UIContext, CurrentPage.get(UIContext).get(FeatureID));
 
         //
     }
 
     @Override
-    public void SendPIN_ObjPin(String Tag, Object Data) {
+    public void sendPIN_StringPin(String Tag, String Data) {
+        PinDataTaggedString ObjDat;
+        ObjDat = new PinDataTaggedString();
+        ObjDat.tag = Tag;
+        ObjDat.value = Data;
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+    }
+
+    @Override
+    public void sendPIN_ObjPin(String Tag, Object Data) {
         PinDataTaggedObj ObjDat;
         ObjDat = new PinDataTaggedObj();
         ObjDat.tag = Tag;
         ObjDat.value = Data;
-        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
-
 }

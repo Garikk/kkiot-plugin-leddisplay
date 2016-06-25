@@ -12,5 +12,6 @@ import kkdev.kksystem.base.classes.plugins.PluginMessage;
  * @author blinov_is
  */
 public interface IObjPinProcessing {
-    public void SendPIN_ObjPin(String Tag,Object Data);
+    public void sendPIN_ObjPin(String Tag,Object Data);
+      public void sendPIN_StringPin(String Tag,String Data);
 }
