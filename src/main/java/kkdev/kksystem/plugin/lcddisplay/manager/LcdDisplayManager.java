@@ -164,7 +164,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
     private void ProcessBaseCommand(PinDataFtrCtx Command) {
         switch (Command.managementCommand) {
             case ChangeFeature:
-                changeFeature(Command.changeFeatureID, Command.changeUIContextID);
+                changeFeature(Command.manageFeatureID, Command.manageUIContextID);
                 break;
         }
     }
