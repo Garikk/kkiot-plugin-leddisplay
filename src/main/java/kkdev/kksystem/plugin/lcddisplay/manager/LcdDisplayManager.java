@@ -45,7 +45,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
     static Map<String, Map<String, String>> CurrentPage;              //Feature => UIContext =>pageName
 
     public void Init(KKPlugin Conn) {
-        connector = Conn;
+        setPluginConnector(Conn);
         Utils = Conn.GetUtils();
 
         PluginSettings.InitConfig(Conn.globalConfID, Conn.pluginInfo.getPluginInfo().PluginUUID);
@@ -58,10 +58,10 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
             }
         }
         //
-        ConfigAndHWInit();
+        configAndHWInit();
     }
 
-    private void InitDisplayView(String[] UIContext, DisplayView DW) {
+    private void initDisplayView(String[] UIContext, DisplayView DW) {
         for (String CTX : UIContext) {
             if (!Displays.containsKey(CTX)) {
                 Displays.put(CTX, new ArrayList<>());
@@ -76,7 +76,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
 
     }
 
-    private void ConfigAndHWInit() {
+    private void configAndHWInit() {
         //DViews = new HashMap<>();
         Displays = new HashMap<>();
         CurrentPage = new HashMap<>();
@@ -89,17 +89,17 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
                 switch (DH.HWBoard) {
                     case RaspberryPI_B:
                         if (DH.HWDisplay == HWDisplayTypes.HD44780_4bit) {
-                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
+                            initDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayHD44780onRPI()));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
                         break;
                     case DisplayDebug:
-                        InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
+                        initDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayDebug()));
                         break;
                     case Smarthead_Arduino:
                         if (DH.HWDisplay == HWDisplayTypes.OLED_VIRTUAL_128x64) {
-                            InitDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this, DH.HWBoardPins[0])));
+                            initDisplayView(DH.HWDisplay_UIContext, new DisplayView(new DisplayOLEDOnSmarthead(this, DH.HWBoardPins[0])));
                         } else {
                             System.out.println("[LCDDisplay][CONFLOADER] Unknown display type in config!! + " + DH.HWBoard);
                         }
@@ -112,7 +112,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         }
     }
 
-    public void ReceivePin(String FeatureID, String UIContext, String PinName, Object PinData) {
+    public void receivePin(String FeatureID, String UIContext, String PinName, Object PinData) {
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinDataLed CMD;
