@@ -22,26 +22,26 @@ public final class KKPlugin extends KKPluginBase   {
     public KKPlugin()
     { 
         super(new LEDPluginInfo());
-        Global.PM=new LcdDisplayManager();
-        
-        DisplayID=java.util.UUID.randomUUID().toString();
+        Global.PM = new LcdDisplayManager();
+
+        DisplayID = java.util.UUID.randomUUID().toString();
     }
 
     @Override
     public void pluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
         super.pluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
-         SysUtils = BaseConnector.systemUtilities();
+        SysUtils = BaseConnector.systemUtilities();
         Global.PM.Init(this);
     }
 
     @Override
-    public PluginMessage executePin(PluginMessage Pin) {
+    public void executePin(PluginMessage Pin) {
         super.executePin(Pin);
-        
-        Global.PM.receivePin(Pin.FeatureID,Pin.UIContextID,Pin.pinName,Pin.getPinData());
-        return null;
+
+        Global.PM.receivePin(Pin.FeatureID, Pin.UIContextID, Pin.pinName, Pin.getPinData());
     }
-        public IKKControllerUtils GetUtils() {
+
+    public IKKControllerUtils GetUtils() {
         return SysUtils;
     }
 

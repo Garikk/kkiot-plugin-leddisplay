@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import kkdev.kksystem.base.classes.base.PinData;
 import kkdev.kksystem.base.classes.base.PinDataFtrCtx;
 import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
@@ -112,7 +113,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         }
     }
 
-    public void receivePin(String FeatureID, String UIContext, String PinName, Object PinData) {
+    public void receivePin(Set<String> FeatureID, String UIContext, String PinName, Object PinData) {
         switch (PinName) {
             case PluginConsts.KK_PLUGIN_BASE_LED_COMMAND:
                 PinDataLed CMD;
@@ -132,12 +133,12 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
 
     ///////////////////
     ///////////////////
-    private void ProcessCommand(String FeatureID, String UIContext, PinDataLed Command) {
+    private void ProcessCommand(Set<String> FeatureID, String UIContext, PinDataLed Command) {
 
         switch (Command.command) {
             case DISPLAY_KKSYS_PAGE_ACTIVATE:
 
-                setPageToActive(FeatureID, UIContext, Command.pageID);
+                setPageToActive(FeatureID.iterator().next(), UIContext, Command.pageID);
                 break;
             case DISPLAY_KKSYS_GETINFO:
                 //  AnswerDisplayInfo();
@@ -150,13 +151,21 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
 
         switch (Data.ledDataType) {
             case DISPLAY_KKSYS_TEXT_SIMPLE_OUT:
-                SendTextToPage(Data.featureID, UIContext, Data.targetPage, Data.directDisplayText);
+                for (String FTR:Data.featureID)
+                {
+                     if (!FTR.equals(SystemConsts.KK_BASE_FEATURES_SYSTEM_BROADCAST_UID) && !FTR.equals(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID) )
+                        SendTextToPage(FTR, UIContext, Data.targetPage, Data.directDisplayText);
+                }
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_DIRECT:
 
                 break;
             case DISPLAY_KKSYS_TEXT_UPDATE_FRAME:
-                updatePageUIFrames(Data.featureID, UIContext, Data.targetPage, false, Data.displayFrames);
+                for (String FTR:Data.featureID)
+                {
+                    if (!FTR.equals(SystemConsts.KK_BASE_FEATURES_SYSTEM_BROADCAST_UID) && !FTR.equals(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID) )
+                        updatePageUIFrames(FTR, UIContext, Data.targetPage, false, Data.displayFrames);
+                }
                 break;
         }
     }
@@ -170,6 +179,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
     }
 
     private DisplayPage GetPage(String FeatureID, String UIContext, String PageName) {
+        
         if (!DPages.containsKey(FeatureID)) {
             DPages.put(FeatureID, new HashMap<>());
         }
@@ -259,7 +269,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
             CurrentPage.put(UIContext, new HashMap<>());
         }
         //
-        //System.out.println("[LCD] set page active " + FeatureID + " " + UIContext + " " + PageID);
+       // System.out.println("[LCD] set page active " + FeatureID + " " + UIContext + " " + PageID);
         //
         CurrentPage.get(UIContext).put(FeatureID, PageID);
         //
@@ -290,7 +300,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
             return;
         }
         // Set Current page of feature to Active
-        SetPageToInactive(currentFeature.get(UIContext), UIContext, CurrentPage.get(UIContext).get(currentFeature));
+        SetPageToInactive(currentFeature.get(UIContext), UIContext, CurrentPage.get(UIContext).get(currentFeature.get(UIContext)));
         currentFeature.put(UIContext, FeatureID);
         setPageToActive(FeatureID, UIContext, CurrentPage.get(UIContext).get(FeatureID));
 
