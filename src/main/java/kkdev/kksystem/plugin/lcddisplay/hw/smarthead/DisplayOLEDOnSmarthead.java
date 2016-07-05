@@ -29,7 +29,9 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     private int MyDisplayID;
     
     private int ROWS;
-    private int COLS;
+    private int COLS_Size_1;
+    private int COLS_Size_2;
+    private int COLS_Size_3;
     private int ROW_Pix_Size=12;
     
 
@@ -39,7 +41,9 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
         MyDisplayID=SmartheadDisplayID;
         //
         ROWS=5;
-        COLS=14;
+        COLS_Size_1=14;
+        COLS_Size_2=10;
+        COLS_Size_3=5;
     }
 
     @Override
@@ -77,13 +81,37 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     @Override
     public DisplayInfo GetDisplayInfo() {
         return GetMyInfo();
-    }   
-
-    private void DisplayText_Internal(boolean ClearFlag,boolean RefreshFlag,boolean InvertFlag,int Font, int PosX,int PosY,String Text)
-    {
-      SendSmartheadPin(SmardheadBuilderDisplay.BuildSmartheadDisplayString(MyDisplayID, RefreshFlag,ClearFlag,InvertFlag,Font, PosX, PosY, Text));
     }
-    
+
+    private String cropText(String Text, int font) {
+        switch (font) {
+            case 1:
+                if (Text.length() > COLS_Size_1) {
+                    Text = Text.substring(0, COLS_Size_1);
+                }
+                break;
+            case 2:
+                if (Text.length() > COLS_Size_2) {
+                    Text = Text.substring(0, COLS_Size_2);
+                }
+                break;
+            case 3:
+                if (Text.length() > COLS_Size_3) {
+                    Text = Text.substring(0, COLS_Size_3);
+                }
+                break;
+            default:
+                break;
+        }
+        return Text;
+    }
+
+    private void DisplayText_Internal(boolean ClearFlag, boolean RefreshFlag, boolean InvertFlag, int Font, int PosX, int PosY, String Text) {
+        
+        
+        SendSmartheadPin(SmardheadBuilderDisplay.BuildSmartheadDisplayString(MyDisplayID, RefreshFlag, ClearFlag, InvertFlag, Font, PosX, PosY, cropText(Text,Font)));
+    }
+
     private DisplayInfo GetMyInfo() {
         DisplayInfo Ret = new DisplayInfo();
         Ret.displayType = UIDisplayType.DISPLAY_GRAPHIC;

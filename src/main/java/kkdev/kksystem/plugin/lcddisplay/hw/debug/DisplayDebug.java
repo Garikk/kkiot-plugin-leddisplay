@@ -60,6 +60,28 @@ public class DisplayDebug implements IDisplayConnectorHW {
         return GetMyInfo();
     }
 
+    private String cropText(String Text, int font) {
+        switch (font) {
+            case 1:
+                if (Text.length() > LCD_COLUMNS) {
+                    Text = Text.substring(0, LCD_COLUMNS);
+                }
+                break;
+            case 2:
+                if (Text.length() > LCD_COLUMNS) {
+                    Text = Text.substring(0, LCD_COLUMNS);
+                }
+                break;
+            case 3:
+                if (Text.length() > LCD_COLUMNS) {
+                    Text = Text.substring(0, LCD_COLUMNS);
+                }
+                break;
+            default:
+                break;
+        }
+        return Text;
+    }
     private DisplayInfo GetMyInfo() {
         DisplayInfo Ret = new DisplayInfo();
         Ret.displayType = UIDisplayType.DISPLAY_TEXT;
@@ -90,7 +112,7 @@ public class DisplayDebug implements IDisplayConnectorHW {
         String[] ShowFrame=Frames[Offset].split("\r\n");
         for (String L:ShowFrame)
         {
-            System.out.println(L);
+            System.out.println(cropText(L,Font));
         }
     }
 
