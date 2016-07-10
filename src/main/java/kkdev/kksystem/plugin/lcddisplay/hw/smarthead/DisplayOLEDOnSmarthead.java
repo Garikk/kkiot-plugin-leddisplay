@@ -41,9 +41,9 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
         MyDisplayID=SmartheadDisplayID;
         //
         ROWS=5;
-        COLS_Size_1=14;
-        COLS_Size_2=10;
-        COLS_Size_3=5;
+        COLS_Size_1=16;
+        COLS_Size_2=14;
+        COLS_Size_3=6;
     }
 
     @Override
@@ -162,6 +162,7 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
     
     private void SendSmartheadPin(String SmartHeadData)
     {
+       // System.out.println(SmartHeadData);
         ConnManager.sendPIN_StringPin(SmartHeadDisplay_PFX, SmartHeadData);
     }
 
