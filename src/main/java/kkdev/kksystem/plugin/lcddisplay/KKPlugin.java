@@ -7,9 +7,9 @@ package kkdev.kksystem.plugin.lcddisplay;
 
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
-import kkdev.kksystem.base.interfaces.IKKControllerUtils;
-import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
+import kkdev.kksystem.base.interfaces.IPluginBaseConnection;
+import kkdev.kksystem.base.interfaces.IControllerUtils;
 
 
 /**     
@@ -18,7 +18,7 @@ import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
  */
 public final class KKPlugin extends KKPluginBase   {
     String DisplayID;
-        public IKKControllerUtils SysUtils;
+        public IControllerUtils SysUtils;
     public KKPlugin()
     { 
         super(new LEDPluginInfo());
@@ -28,7 +28,7 @@ public final class KKPlugin extends KKPluginBase   {
     }
 
     @Override
-    public void pluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
+    public void pluginInit(IPluginBaseConnection BaseConnector, String GlobalConfUID) {
         super.pluginInit(BaseConnector, GlobalConfUID); //To change body of generated methods, choose Tools | Templates.
         SysUtils = BaseConnector.systemUtilities();
         Global.PM.Init(this);
@@ -41,7 +41,7 @@ public final class KKPlugin extends KKPluginBase   {
         Global.PM.receivePin(Pin.FeatureID, Pin.UIContextID, Pin.pinName, Pin.getPinData());
     }
 
-    public IKKControllerUtils GetUtils() {
+    public IControllerUtils GetUtils() {
         return SysUtils;
     }
 

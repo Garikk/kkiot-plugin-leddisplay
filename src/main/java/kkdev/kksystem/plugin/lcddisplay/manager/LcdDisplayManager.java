@@ -22,13 +22,13 @@ import kkdev.kksystem.base.classes.notify.PinDataNotifySystemState;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.base.constants.SystemConsts;
-import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.plugin.lcddisplay.KKPlugin;
 import kkdev.kksystem.plugin.lcddisplay.hw.debug.DisplayDebug;
 import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 import kkdev.kksystem.plugin.lcddisplay.hw.rpi.HD44780.DisplayHD44780onRPI;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW.HWDisplayTypes;
 import kkdev.kksystem.plugin.lcddisplay.hw.smarthead.DisplayOLEDOnSmarthead;
+import kkdev.kksystem.base.interfaces.IControllerUtils;
 
 /**
  *
@@ -39,7 +39,7 @@ import kkdev.kksystem.plugin.lcddisplay.hw.smarthead.DisplayOLEDOnSmarthead;
  */
 public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProcessing {
 
-    static IKKControllerUtils Utils;
+    static IControllerUtils Utils;
     static String DefaultDisplay;
     static Map<String, List<DisplayView>> Displays;                         //UIContext - DView
     static Map<String, Map<String, Map<String, DisplayPage>>> DPages;              //Feature => UIContext => Page=>DisplayPage
