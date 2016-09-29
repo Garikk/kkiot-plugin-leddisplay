@@ -12,13 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import kkdev.kksystem.base.classes.base.PinData;
 import kkdev.kksystem.base.classes.base.PinDataFtrCtx;
 import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
 import kkdev.kksystem.base.classes.base.PinDataTaggedString;
 import kkdev.kksystem.base.classes.display.PinDataLed;
 import kkdev.kksystem.base.classes.display.pages.framesKeySet;
-import kkdev.kksystem.base.classes.notify.PinDataNotifySystemState;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerLCD;
 import kkdev.kksystem.base.constants.PluginConsts;
 import kkdev.kksystem.base.constants.SystemConsts;
@@ -66,8 +64,8 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         for (String CTX : UIContext) {
             if (!Displays.containsKey(CTX)) {
                 Displays.put(CTX, new ArrayList<>());
-                Utils.UICONTEXT_AddUIContext(CTX);
-                Utils.UICONTEXT_UpdateDisplayInUIContext(CTX, DW.Connector.GetDisplayInfo());
+                Utils.ContextFunctions().AddUIContext(CTX);
+                Utils.ContextFunctions().UpdateDisplayInUIContext(CTX, DW.Connector.GetDisplayInfo());
             }
             //
             // System.out.println("[LCD] ADD DW "+CTX +" " + DW);
@@ -189,8 +187,8 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         }
 
         if (!DPages.get(FeatureID).get(UIContext).containsKey(PageName)) {
-            DPages.get(FeatureID).get(UIContext).put(PageName, Utils.DISPLAY_GetUIDisplayPage(PageName));
-            DPages.get(FeatureID).get(UIContext).get(PageName).initUIFrames(Utils.UICONTEXT_GetUIContextInfo(UIContext).UIDisplay.textMode_Rows);
+            DPages.get(FeatureID).get(UIContext).put(PageName, Utils.DisplayFunctions().GetUIDisplayPage(PageName));
+            DPages.get(FeatureID).get(UIContext).get(PageName).initUIFrames(Utils.ContextFunctions().GetUIContextInfo(UIContext).UIDisplay.textMode_Rows);
         }
 
         return DPages.get(FeatureID).get(UIContext).get(PageName);
