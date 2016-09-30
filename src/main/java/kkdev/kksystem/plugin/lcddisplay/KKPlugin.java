@@ -5,11 +5,13 @@
  */
 package kkdev.kksystem.plugin.lcddisplay;
 
+import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.plugin.lcddisplay.manager.LcdDisplayManager;
 import kkdev.kksystem.base.interfaces.IPluginBaseConnection;
 import kkdev.kksystem.base.interfaces.IControllerUtils;
+import kkdev.kksystem.plugin.lcddisplay.manager.configuration.PluginSettings;
 
 
 /**     
@@ -44,5 +46,8 @@ public final class KKPlugin extends KKPluginBase   {
     public IControllerUtils GetUtils() {
         return SysUtils;
     }
-
+ @Override
+    public PluginConfiguration getPluginSettings() {
+       return PluginSettings.MainConfiguration;
+    }
 }
