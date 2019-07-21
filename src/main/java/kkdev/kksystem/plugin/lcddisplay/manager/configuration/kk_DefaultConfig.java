@@ -5,11 +5,7 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
-import kkdev.kksystem.base.classes.display.pages.DisplayPage;
-import static kkdev.kksystem.base.classes.display.pages.PageConsts.KK_DISPLAY_PAGES_SIMPLECLOCK_TXT_PREFIX;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
-import kkdev.kksystem.base.classes.display.pages.UIFrameData;
-import kkdev.kksystem.base.classes.display.pages.UIFramePack;
 import kkdev.kksystem.base.constants.SystemConsts;
 import static kkdev.kksystem.base.constants.SystemConsts.*;
 

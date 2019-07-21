@@ -5,7 +5,6 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.hw.smarthead;
 
-import kkdev.kksystem.base.classes.base.PinDataTaggedObj;
 import kkdev.kksystem.base.classes.display.DisplayInfo;
 import kkdev.kksystem.base.classes.display.DisplayInfo.UIDisplayType;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
@@ -18,10 +17,7 @@ import kkdev.kksystem.plugin.lcddisplay.manager.IObjPinProcessing;
 public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
 
     final String SmartHeadDisplay_PFX="SMARTHEAD";
-    
-    private boolean NotWork;
-    private boolean NotWork2;
-    
+
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static String ARCH = System.getProperty("os.arch").toLowerCase();
 
@@ -125,10 +121,10 @@ public class DisplayOLEDOnSmarthead implements IDisplayConnectorHW {
 
     @Override
     public void InitDisplayHW() {
-        NotWork = (OS.contains("win"));
-        NotWork2 = (!ARCH.contains("ARM"));
+        boolean notWork = (OS.contains("win"));
+        boolean notWork2 = (!ARCH.contains("ARM"));
 
-        if (NotWork || NotWork2) {
+        if (notWork || notWork2) {
             return;
         }
 

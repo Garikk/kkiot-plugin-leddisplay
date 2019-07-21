@@ -5,21 +5,19 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.hw;
 
-import java.io.Serializable;
-
 /**
  *
  * @author blinov_is
  */
 public class DisplayHW  {
-    public static enum HWHostTypes
+    public enum HWHostTypes
     {
         RaspberryPI_B,
         I2C,
         Smarthead_Arduino,
         DisplayDebug
     }
-    public static enum HWDisplayTypes
+    public enum HWDisplayTypes
     {
         HD44780_4bit,
         OLED_VIRTUAL_128x64,

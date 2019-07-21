@@ -5,11 +5,8 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager;
 
-import static java.lang.System.out;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -17,7 +14,6 @@ import java.util.logging.Logger;
 import kkdev.kksystem.base.classes.display.pages.framesKeySet;
 import static kkdev.kksystem.base.constants.SystemConsts.KK_BASE_UICONTEXT_GFX2;
 import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
-import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 
 /**
  *
@@ -115,10 +111,6 @@ public class DisplayView {
             return;
         }
 
-        if (UIFrames == null) {
-            Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
-            return;
-        }
         if (UIFrames == null) {
             Logger.getLogger("lcddisplay").log(Level.WARNING, "[LCDDisplay][DisplayView]Not UIFrames [" + DisplayID + "]");
             return;

@@ -5,7 +5,6 @@
  */
 package kkdev.kksystem.plugin.lcddisplay.manager.configuration;
 
-import kkdev.kksystem.base.classes.display.pages.DisplayPage;
 import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
 import kkdev.kksystem.plugin.lcddisplay.hw.DisplayHW;
 

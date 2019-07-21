@@ -15,9 +15,6 @@ import kkdev.kksystem.plugin.lcddisplay.hw.IDisplayConnectorHW;
  */
 public class DisplayOLEDOnI2C implements IDisplayConnectorHW {
 
-    private boolean NotWork;
-    private boolean NotWork2;
-    
     private static String OS = System.getProperty("os.name").toLowerCase();
     private static String ARCH = System.getProperty("os.arch").toLowerCase();
 
@@ -75,10 +72,10 @@ public class DisplayOLEDOnI2C implements IDisplayConnectorHW {
 
     @Override
     public void InitDisplayHW() {
-        NotWork = (OS.contains("win"));
-        NotWork2 = (!ARCH.contains("ARM"));
+        boolean notWork = (OS.contains("win"));
+        boolean notWork2 = (!ARCH.contains("ARM"));
 
-        if (NotWork || NotWork2) {
+        if (notWork || notWork2) {
             return;
         }
 

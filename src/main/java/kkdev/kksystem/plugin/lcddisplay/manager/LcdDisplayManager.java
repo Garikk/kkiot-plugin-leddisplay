@@ -200,9 +200,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
         Ret = new ArrayList();
         for (String UICtx : Page.contexts) {
             if (Displays.containsKey(UICtx)) {
-                for (DisplayView DV : Displays.get(UICtx)) {
-                    Ret.add(DV);
-                }
+                Ret.addAll(Displays.get(UICtx));
             }
         }
 
@@ -288,9 +286,7 @@ public class LcdDisplayManager extends PluginManagerLCD implements IObjPinProces
             return;
         }
         //
-        GetDisplayViewsForPage(GetPage(FeatureID, UIContext, PageID)).stream().forEach((DV) -> {
-            DV.ClearDisplay();
-        });
+        GetDisplayViewsForPage(GetPage(FeatureID, UIContext, PageID)).stream().forEach(DisplayView::ClearDisplay);
     }
 
     private void changeFeature(String FeatureID, String UIContext) {

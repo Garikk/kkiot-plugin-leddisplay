@@ -13,9 +13,8 @@ import kkdev.kksystem.base.classes.plugins.simple.SettingsManager;
  * @author blinov_is
  */
 public abstract class PluginSettings {
-   
-   private static SettingsManager Settings;
-   public static String DISPLAY_CONF;
+
+    public static String DISPLAY_CONF;
    public static final String DISPLAY_CONF_FRAMES_DIR="//";
     
     public static LcdDisplayConf MainConfiguration;
@@ -23,17 +22,17 @@ public abstract class PluginSettings {
     public static void InitConfig(String GlobalConfigUID, String MyUID)
     {
         DISPLAY_CONF=GlobalConfigUID+"_"+MyUID + ".json";
-        
-        Settings=new SettingsManager(DISPLAY_CONF,LcdDisplayConf.class);
+
+        SettingsManager settings = new SettingsManager(DISPLAY_CONF, LcdDisplayConf.class);
         
      //   System.out.println("[LCDDisplay][CONFIG] Load configuration");
-        MainConfiguration=(LcdDisplayConf)Settings.loadConfig();
+        MainConfiguration=(LcdDisplayConf) settings.loadConfig();
         
         if (MainConfiguration==null)
         {
             System.out.println("[LCDDisplay][CONFIG] Error Load configuration, try create default config");
-            Settings.saveConfig(kk_DefaultConfig.MakeDefaultConfig());
-            MainConfiguration=(LcdDisplayConf)Settings.loadConfig();
+            settings.saveConfig(kk_DefaultConfig.MakeDefaultConfig());
+            MainConfiguration=(LcdDisplayConf) settings.loadConfig();
         }
         if (MainConfiguration==null)
         {
