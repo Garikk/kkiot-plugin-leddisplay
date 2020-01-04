@@ -28,7 +28,4 @@ public class DisplayHW  {
     public HWHostTypes HWBoard;
     public HWDisplayTypes HWDisplay;
     public int[] HWBoardPins;
-    
-            
-    
 }

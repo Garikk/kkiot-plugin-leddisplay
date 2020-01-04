@@ -11,5 +11,5 @@ package kkdev.kksystem.plugin.lcddisplay.manager;
  */
 public interface IObjPinProcessing {
     void sendPIN_ObjPin(String Tag, Object Data);
-      void sendPIN_StringPin(String Tag, String Data);
+    void sendPIN_StringPin(String Tag, String Data);
 }

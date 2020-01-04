@@ -52,7 +52,7 @@ public abstract class kk_DefaultConfig {
         DefConf.HWDisplays[2].HWDisplay_UIContext[0] = KK_BASE_UICONTEXT_GFX2;
         DefConf.HWDisplays[2].HWBoardPins=new int[1]; //DisplayID
         DefConf.HWDisplays[2].HWBoardPins[0]=2;
-        
+                
        return DefConf;
     }
 }
